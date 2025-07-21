@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.ant-input-outlined {
+    border-color: #CBA135;
+    color: white;
+}
+
+.ant-input-outlined:focus-within{
+    background-color: #866716;
+    color: white;
+}
