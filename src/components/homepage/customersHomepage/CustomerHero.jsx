@@ -1,0 +1,80 @@
+import { Button } from 'antd';
+import React, { useEffect, useState } from 'react';
+
+const images = [
+  'https://images.unsplash.com/photo-1740137660835-8a755519b9ed?q=80&w=1115&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  'https://images.unsplash.com/photo-1657481193951-553fc6f7dec3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  'https://images.unsplash.com/photo-1577977404260-4bf12328b122?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+];
+
+const CustomerHero = () => {
+  const [current, setCurrent] = useState(0);
+
+  // Auto-slide every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Manual pagination control
+  const handleDotClick = (index) => {
+    setCurrent(index);
+  };
+
+  return (
+<div>
+        <div className="flex flex-col items-center md:flex-row justify-around p-6 py-24 gap-6" style={{
+        background: 'linear-gradient(90deg, #EAE7E1 0%, #FAF8F2 100%)'
+    }}>
+      {/* Text Section */}
+      <div className="max-w-xl space-y-3 text-center md:text-left">
+        <h2 className="text-[48px] font-bold mb-4 text-gray-800">
+          Furnish Your Home with Timeless Elegance
+        </h2>
+        <h4 className="text-lg mb-6 text-gray-600">
+          Discover premium furniture that transforms your space into a warm, elegant home.
+        </h4>
+        <div className="flex justify-center md:justify-start gap-4">
+          <Button className="bg-[#CBA135] py-5 text-white border-none hover:opacity-90">
+            Shop New Arrivals
+          </Button>
+          <Button className="bg-white py-5 border-[#CBA135] px-8 text-[#CBA135] hover:bg-[#CBA135]/10">
+            View Wishlist
+          </Button>
+        </div>
+      </div>
+
+      {/* Image Section */}
+      <div className="flex flex-col justify-center items-center gap-3">
+        <img
+          className="w-[592px] h-[320px] object-cover rounded-lg shadow-md"
+          src={images[current]}
+          alt={`Slide ${current + 1}`}
+        />
+
+
+        {/* Pagination Dots */}
+        <div className="  flex gap-2">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => handleDotClick(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                current === index ? 'bg-[#CBA135]' : 'bg-white border border-[#CBA135]'
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+    <div className='px-20 py-16 bg-[#FAF8F2]'>
+        <h3 className='text-[36px] font-bold'>Welcome back, Kabita</h3>
+        <p className='text-[16px]'>Here are some items you might love</p>
+    </div>
+</div>
+  );
+};
+
+export default CustomerHero;

@@ -11,3 +11,34 @@
     background-color: #866716;
     color: white;
 }
+
+/* Keep your custom track and handle color */
+.ant-slider .ant-slider-track {
+  background-color: #CBA135;
+}
+
+:where(.css-dev-only-do-not-override-7t2xvq).ant-slider .ant-slider-handle::after {
+  background-color: #CBA135;
+}
+
+/* Disable hover effect on the handle */
+:where(.css-dev-only-do-not-override-7t2xvq).ant-slider:hover .ant-slider-handle::after {
+  background-color: #CBA135 !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+/* Optional: Disable hover effect on the track */
+:where(.css-dev-only-do-not-override-7t2xvq).ant-slider:hover .ant-slider-track {
+  background-color: #CBA135 !important;
+}
+
+.ant-rate .ant-rate-star{
+    color: #CBA135;
+}
+
+.ant-pagination .ant-pagination-item-active{
+background-color: #CBA135;
+border: none;
+color: white;
+}

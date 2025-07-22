@@ -15,6 +15,10 @@ import ForgetPass from './components/auth/ForgetPass.jsx';
 import VerifyCode from './components/auth/VerifyCode.jsx';
 import ResetPass from './components/auth/ResetPass.jsx';
 import Congratulations from './components/auth/Congratulations.jsx';
+import ProductFilter from './components/homepage/productDetailAndFilter/ProductFilter.jsx';
+import Details from './components/homepage/productDetailAndFilter/Details.jsx';
+import WhiteList from './components/CartNWhitelist/WhiteList.jsx';
+import Cart from './components/CartNWhitelist/Cart.jsx';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +27,25 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Homepage />
+        element: <Homepage />,
+        children:[
+          {
+            path: 'filter',
+            element: <ProductFilter />
+          },
+          {
+            path: 'details',
+            element: <Details />
+          },
+          {
+            path: 'whitelist',
+            element: <WhiteList />
+          },
+          {
+            path: 'cart',
+            element: <Cart />
+          },
+        ]
       },
       {
         path: 'login',

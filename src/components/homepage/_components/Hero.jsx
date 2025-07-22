@@ -19,7 +19,7 @@ const Hero = () => {
             border: '1.5px solid',
             borderImageSource:
               'linear-gradient(109.49deg, rgba(138, 103, 75, 0.6) 0%, rgba(184, 200, 205, 0.6) 100%)',
-            backdropFilter: 'blur(30px)',
+            backdropFilter: 'blur(10px)',
             WebkitBackdropFilter: 'blur(30px)',
           }}
         >

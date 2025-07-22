@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button, Input } from 'antd';
 import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { Link } from 'react-router-dom';
 
 const Signup = () => {
   const [agree, setAgree] = useState(false);
@@ -15,7 +16,7 @@ const Signup = () => {
 
       {/* Sign Up Card */}
       <div
-        className="absolute top-1/2 left-1/2 z-20 transform -translate-x-1/2 -translate-y-1/2 p-12 py-24 rounded-xl w-[90%] max-w-xl text-white space-y-5"
+        className="absolute top-1/2 left-1/2 z-20 transform -translate-x-1/2 -translate-y-1/2 p-12 py-16 rounded-xl w-[90%] max-w-xl text-white space-y-5"
         style={{
           background:
             'linear-gradient(111.03deg, rgba(169, 141, 45, 0.37) -4.98%, rgba(64, 49, 22, 0.37) 100%)',
@@ -26,10 +27,10 @@ const Signup = () => {
           WebkitBackdropFilter: 'blur(30px)',
         }}
       >
-        <h2 className="text-[34px] font-semibold text-center">Welcome Back</h2>
+        <h2 className="text-[34px] font-semibold text-center">Create your account</h2>
         <p className="text-sm text-center">
-          Don’t have an account?{" "}
-          <span className="text-[#CBA135] cursor-pointer font-medium">Sign Up</span>
+          Already have an account?{" "}
+          <Link to='/login' className="text-[#CBA135] cursor-pointer font-medium">Sign In</Link>
         </p>
 
         {/* Form Fields */}
