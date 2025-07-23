@@ -19,6 +19,8 @@ import ProductFilter from './components/homepage/productDetailAndFilter/ProductF
 import Details from './components/homepage/productDetailAndFilter/Details.jsx';
 import WhiteList from './components/CartNWhitelist/WhiteList.jsx';
 import Cart from './components/CartNWhitelist/Cart.jsx';
+import Checkout from './components/checkout/Checkout.jsx';
+import ConfirmOrder from './components/checkout/ConfirmOrder.jsx';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
             path: 'cart',
             element: <Cart />
           },
+          {
+            path: 'checkout',
+            element: <Checkout />
+          },
+          {
+            path: 'confirm-order',
+            element: <ConfirmOrder />
+          }
         ]
       },
       {
