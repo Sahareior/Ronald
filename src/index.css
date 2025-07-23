@@ -42,3 +42,12 @@ background-color: #CBA135;
 border: none;
 color: white;
 }
+
+.ant-modal .ant-modal-content {
+  padding: 0 0 0 0;
+  background-color: #FAF8F2;
+}
+
+.PhoneInputCountry{
+  padding-right: 10px;
+}

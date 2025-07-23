@@ -21,6 +21,11 @@ import WhiteList from './components/CartNWhitelist/WhiteList.jsx';
 import Cart from './components/CartNWhitelist/Cart.jsx';
 import Checkout from './components/checkout/Checkout.jsx';
 import ConfirmOrder from './components/checkout/ConfirmOrder.jsx';
+import ConfirmationPage from './components/checkout/ConfirmationPage.jsx';
+import OrderTracking from './components/checkout/OrderTracking.jsx';
+import ActiveUsers from './components/ChatComponents/ActiveUsers.jsx';
+import Profile from './components/profile/Profile.jsx';
+import SellerReg from './components/homepage/sellersHomepage/sellerRoutes/SellerReg.jsx';
 
 const router = createBrowserRouter([
   {
@@ -54,7 +59,29 @@ const router = createBrowserRouter([
           {
             path: 'confirm-order',
             element: <ConfirmOrder />
+          },
+          {
+            path: 'order-tracking',
+            element: <OrderTracking />
+          },
+          {
+            path: 'order-confirmation',
+            element: <ConfirmationPage />
+          },
+          {
+            path: 'active',
+            element: <ActiveUsers />
+          },
+          {
+            path: 'profile',
+            element: <Profile />
+          },
+          // seller routes
+          {
+            path: 'regester-seller',
+            element: <SellerReg />
           }
+
         ]
       },
       {

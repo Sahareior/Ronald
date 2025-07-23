@@ -9,15 +9,20 @@ import Footer from './_components/Footer';
 import CustomerLayout from './layouts/CustomerLayout';
 import GuestLayout from './layouts/GuestLayout';
 import { Outlet, useLocation } from 'react-router-dom';
+import SellersLayout from './layouts/SellersLayout';
 
 const Homepage = () => {
     const location= useLocation()
     console.log(location)
     return (
         <div>
-            <Navbar />
+            {/* <Navbar /> */}
+{/* <CustomerLayout /> */}
+{/* <SellersLayout />
+wer
+*/}
 <Outlet />
-<Footer />
+{/* <Footer /> */}
         </div>
     );
 };

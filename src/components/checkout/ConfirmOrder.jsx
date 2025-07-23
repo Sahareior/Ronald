@@ -1,15 +1,24 @@
 import React from 'react';
 import { Radio } from 'antd';
 import { LockOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import Breadcrumb from '../others/Breadcrumb';
 
 const ConfirmOrder = () => {
   return (
-    <div className="bg-[#F5F1E9] p-6 md:p-10 max-w-3xl mx-auto rounded-xl space-y-6">
+<div className='bg-[#F5F1E9] pb-16'>
+  <div className='  p mx-40'>
+  <Breadcrumb />
+  <div className='p-5 space-y-3 '>
+    <h4 className='text-[30px] font-bold'>Confirm Order</h4>
+    <h5 className='text-[16px]'>Almost there! Confirm your details to complete your order</h5>
+  </div>
+      <div className=" bg-[#EAE7E1] p-6 md:p-10 py- max-w-3xl mx-auto rounded-xl space-y-6">
       {/* Header */}
-      <div className="flex items-center gap-2">
+<div className='bg-white p-4'>
+        <div className="flex items-center py-4 gap-2">
         <LockOutlined className="text-[#CBA135]" />
         <h3 className="text-lg font-semibold">Payment Method</h3>
-        <span className="text-sm text-green-600 ml-auto">Secure & Encrypted</span>
+        <span className="text-sm text-[#CBA135] text-[16px] font-semibold">Secure & Encrypted</span>
       </div>
 
       {/* Payment Options */}
@@ -43,16 +52,21 @@ const ConfirmOrder = () => {
       </Radio.Group>
 
       {/* Security Notice */}
-      <div className="bg-yellow-100 border border-yellow-300 rounded-md p-3 flex items-start text-sm text-yellow-700">
+      <div className="bg-[#FAF8F2] border border-[#E5E7EB] rounded-md p-5 mt-5 flex items-start text-sm text-yellow-700">
         <InfoCircleOutlined className="mt-1 mr-2" />
         <p>Your payment information is encrypted and secure</p>
       </div>
+</div>
 
       {/* Confirm Button */}
-      <button className="w-full bg-[#CBA135] text-white font-semibold text-sm py-3 rounded-md hover:bg-yellow-600">
+<div className='flex justify-center items-center'>
+        <button className=" px-8 mx-auto bg-[#CBA135] text-white font-semibold text-sm py-3 rounded-md hover:bg-yellow-600">
         Confirm Order
       </button>
+</div>
     </div>
+</div>
+</div>
   );
 };
 
