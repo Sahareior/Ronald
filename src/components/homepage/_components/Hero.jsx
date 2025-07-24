@@ -12,7 +12,7 @@ const Hero = () => {
         />
 
         <div
-          className="absolute top-1/4 left-4 sm:left-8 md:left-12 lg:left-16 w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-2/5 p-4 sm:p-6 lg:p-8 flex flex-col gap-4 sm:gap-6 rounded-xl"
+          className="absolute top-1/4 left-4 sm:left-8 md:left-12 lg:left-16 w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-2/5 p-4 sm:p-6 lg:p-10 flex flex-col gap-4 sm:gap-6 rounded-xl"
           style={{
             background:
               'linear-gradient(109.56deg, rgba(147, 116, 86, 0.37) 0.39%, rgba(131, 162, 137, 0.37) 50.67%, rgba(172, 185, 188, 0.37) 100%)',
@@ -23,7 +23,7 @@ const Hero = () => {
             WebkitBackdropFilter: 'blur(30px)',
           }}
         >
-          <div>
+          <div className='popbold'>
             <h3 className="text-3xl sm:text-4xl lg:text-6xl leading-tight font-bold text-white">
               Timeless Furniture.
             </h3>
@@ -32,12 +32,12 @@ const Hero = () => {
             </h4>
           </div>
 
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white">
+          <p className="popmed sm:text-lg md:text-xl lg:text-2xl text-white">
             Discover premium furniture from trusted local vendors. Transform your
             space with quality craftsmanship.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+          <div className="flex flex-col sm:flex-row gap-4 popbold sm:gap-6">
             <Button className="bg-[#CBA135] text-white px-6 sm:px-10 py-4 sm:py-6 border-none">
               Shop New Arrivals
             </Button>

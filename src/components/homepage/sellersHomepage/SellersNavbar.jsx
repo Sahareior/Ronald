@@ -19,9 +19,9 @@ const SellersNavbar = () => {
 
         <div className="flex items-center gap-[1rem] text-sm font-medium">
           <Link to='/login'>
-          <h4 className="cursor-pointer hover:text-blue-600 transition">Already a seller? Log in</h4>
+          <h4 className="cursor-pointer popreg hover:text-blue-600 transition">Already a seller? Log in</h4>
           </Link>
-          <Link to='/regester-seller' className="cursor-pointer bg-[#CBA135] px-4 py-2 rounded-[8px] text-white hover:text-blue-600 transition">Apply to Sell</Link>
+          <Link to='/regester-seller' className="cursor-pointer bg-[#CBA135] px-4 py-2 rounded-[8px] popreg text-white hover:text-blue-600 transition">Apply to Sell</Link>
 
         
         </div>

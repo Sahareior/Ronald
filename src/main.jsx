@@ -26,6 +26,7 @@ import OrderTracking from './components/checkout/OrderTracking.jsx';
 import ActiveUsers from './components/ChatComponents/ActiveUsers.jsx';
 import Profile from './components/profile/Profile.jsx';
 import SellerReg from './components/homepage/sellersHomepage/sellerRoutes/SellerReg.jsx';
+import Checkout1 from './components/checkout/Checkout1.jsx';
 
 const router = createBrowserRouter([
   {
@@ -41,11 +42,13 @@ const router = createBrowserRouter([
           { path: "whitelist", element: <WhiteList /> },
           { path: "cart", element: <Cart /> },
           { path: "checkout", element: <Checkout /> },
+          { path: "cart/checkout1", element: <Checkout1 /> },
           { path: "confirm-order", element: <ConfirmOrder /> },
           { path: "order-track", element: <OrderTracking /> },
           { path: "order-confirmation", element: <ConfirmationPage /> },
           { path: "active", element: <ActiveUsers /> },
           { path: "profile", element: <Profile /> },
+          { path: "regester-seller", element: <SellerReg /> }, // accessible at /regester-seller
         ],
       },
       // ✅ These are outside Homepage layout
@@ -55,7 +58,6 @@ const router = createBrowserRouter([
       { path: "forget", element: <ForgetPass /> },
       { path: "reset", element: <ResetPass /> },
       { path: "congratulations", element: <Congratulations /> },
-      { path: "regester-seller", element: <SellerReg /> }, // accessible at /regester-seller
     ],
   },
 ]);

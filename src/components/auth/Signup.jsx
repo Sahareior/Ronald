@@ -37,18 +37,18 @@ const Signup = () => {
         <div className="space-y-6">
           <div>
             <label className="text-sm block pb-1">Full Name</label>
-            <Input className="h-[48px] rounded-[16px] placeholder-[#A7A1A1] bg-[#403217]" placeholder="Enter Your Full Name" />
+            <Input className="h-[48px] rounded-[16px] placeholder-[#A7A1A1] bg-white" placeholder="Enter Your Full Name" />
           </div>
 
           <div>
             <label className="text-sm block pb-1">Email Address</label>
-            <Input className="h-[48px] placeholder-[#A7A1A1] rounded-[16px] bg-[#403217]" placeholder="Enter your email" type="email" />
+            <Input className="h-[48px] placeholder-[#A7A1A1] rounded-[16px] bg-white" placeholder="Enter your email" type="email" />
           </div>
 
           <div>
             <label className="text-sm block pb-1">Password</label>
             <div className="relative">
-              <Input className="h-[48px] placeholder-[#A7A1A1] rounded-[16px] bg-[#403217]" placeholder="Enter your password" type="password" />
+              <Input className="h-[48px] placeholder-[#A7A1A1] rounded-[16px] bg-white" placeholder="Enter your password" type="password" />
               <MdOutlineRemoveRedEye size={19} className="absolute top-4 right-4 text-gray-500 cursor-pointer" />
             </div>
           </div>

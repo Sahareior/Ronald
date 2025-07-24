@@ -1,0 +1,7 @@
+.custom-modal-position .ant-modal {
+  top: 20px !important;
+  right: 10px !important;
+  left: auto !important;
+  transform: none !important;
+  margin: 0;
+}

@@ -30,17 +30,17 @@ const CustomerHero = () => {
     }}>
       {/* Text Section */}
       <div className="max-w-xl space-y-3 text-center md:text-left">
-        <h2 className="text-[48px] font-bold mb-4 text-gray-800">
+        <h2 className="text-[48px] popbold mb-4 text-gray-800">
           Furnish Your Home with Timeless Elegance
         </h2>
-        <h4 className="text-lg mb-6 text-gray-600">
+        <h4 className="text-lg popreg mb-6 text-gray-600">
           Discover premium furniture that transforms your space into a warm, elegant home.
         </h4>
         <div className="flex justify-center md:justify-start gap-4">
-          <Button className="bg-[#CBA135] py-5 text-white border-none hover:opacity-90">
+          <Button className="bg-[#CBA135] py-5 text-white border-none popbold hover:bg-pink-500">
             Shop New Arrivals
           </Button>
-          <Button className="bg-white py-5 border-[#CBA135] px-8 text-[#CBA135] hover:bg-[#CBA135]/10">
+          <Button className="bg-white py-5 popbold border-[#CBA135] px-8 text-[#CBA135] hover:bg-[#CBA135]/10">
             View Wishlist
           </Button>
         </div>
@@ -70,8 +70,8 @@ const CustomerHero = () => {
       </div>
     </div>
     <div className='px-20 py-16 bg-[#FAF8F2]'>
-        <h3 className='text-[36px] font-bold'>Welcome back, Kabita</h3>
-        <p className='text-[16px]'>Here are some items you might love</p>
+        <h3 className='text-[36px] popbold font-bold'>Welcome back, Kabita</h3>
+        <p className='text-[16px] popreg mt-2'>Here are some items you might love</p>
     </div>
 </div>
   );

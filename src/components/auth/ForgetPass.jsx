@@ -33,7 +33,7 @@ const ForgetPass = () => {
         {/* Phone Input */}
             <div className=' py-5'>
           <label className="text-sm block py-4 ">Email</label>
-          <Input className='h-[48px] placeholder-[#CBA135] bg-[#403217]' placeholder="Enter your email" />
+          <Input className='h-[48px] placeholder-[#CBA135] bg-white' placeholder="Enter your email" />
         </div>
          <Link to='/verify'>
          <Button className="w-full bg-[#CBA135] text-white font-medium py-5" type="primary">

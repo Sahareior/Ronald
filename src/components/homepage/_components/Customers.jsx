@@ -7,8 +7,8 @@ const Customers = () => {
     return (
         <section className=" p-12 bg-[#FAF8F2]">
             <div className="text-center mb-10">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-800">What Our Customers Say</h2>
-                <p className="text-gray-600 mt-2">Real experiences from satisfied customers</p>
+                <h2 className="text-2xl md:text-3xl popmed text-gray-800">What Our Customers Say</h2>
+                <p className="text-gray-600 popreg mt-2">Real experiences from satisfied customers</p>
             </div>
 
             <div className="flex flex-wrap justify-center gap-6">
@@ -24,7 +24,7 @@ const Customers = () => {
                                 alt="Customer profile"
                             />
                             <div>
-                                <h4 className="font-semibold text-gray-800">Sahareior Sijan</h4>
+                                <h4 className="popreg text-gray-800 ">Sahareior Sijan</h4>
                                 <div className="flex gap-1 text-[#CBA135]">
                                     <LiaStarSolid />
                                     <LiaStarSolid />
@@ -34,7 +34,7 @@ const Customers = () => {
                                 </div>
                             </div>
                         </div>
-                        <p className="text-gray-700 italic mb-4">
+                        <p className="text-gray-700 popreg italic mb-4">
                             “Absolutely love my new sofa! The quality is exceptional and it fits perfectly in my living room.”
                         </p>
                         <img

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Input, Checkbox, Button, Select } from 'antd';
 import Breadcrumb from '../others/Breadcrumb';
+import { Link } from 'react-router-dom';
 
 const { Option } = Select;
 
@@ -13,11 +14,11 @@ const Checkout = () => {
 
   return (
 <div className='bg-[#FAF8F2]'>
-  <div className=' pb-7 px-20'>
+  <div className=' pb-7 px-40'>
      <Breadcrumb />
    <div className='py-4 pb-6'>
-    <h2 className='text-[30px] pb-3 font-bold'>Checkout</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, reiciendis?</p>
+    <h2 className='text-[30px] pb-3 popbold font-bold'>Checkout</h2>
+    <p className='popreg'>Almost there! Confirm your details to complete your order</p>
 
    </div>
        <div className=' flex gap-8'>
@@ -28,7 +29,7 @@ const Checkout = () => {
         form={form}
         layout="vertical"
         onFinish={onFinish}
-        className="space-y-4"
+        className="space-y-5"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Form.Item name="fullname" label="Full Name" rules={[{ required: true, message: 'Please enter your full name' }]}>
@@ -86,11 +87,11 @@ const Checkout = () => {
           </Form.Item>
         </div>
 
-        <Form.Item className="mt-9">
+        <Form.Item className="mt-1 mx-auto flex justify-center items-center">
           <Button
             type="primary"
             htmlType="submit"
-            className="bg-[#CBA135] hover:bg-yellow-600 mx-auto text-white w-4/12 h-[48px] text-md font-semibold"
+            className="bg-[#CBA135] hover:bg-yellow-600 mx-auto text-white px-16 h-[48px] text-md font-semibold"
           >
             Save Address
           </Button>
@@ -98,7 +99,7 @@ const Checkout = () => {
       </Form>
     </div>
     <div className="bg-white p-6 rounded-xl shadow-md w-full max-w-md mx-auto">
-  <h3 className="text-lg font-semibold mb-4">Order Summary</h3>
+  <h3 className="text-lg popbold font-semibold mb-4">Order Summary</h3>
 
   {/* Order Items */}
   <div className="space-y-4">
@@ -107,18 +108,18 @@ const Checkout = () => {
         <div className="flex gap-4">
           <img src="/image/featured/img1.png" alt="Sofa" className="w-16 h-16 object-cover rounded-md" />
           <div>
-            <h4 className="text-sm font-semibold">Luxury Velvet Sectional Sofa</h4>
-            <p className="text-xs text-gray-500">by Elegant Furniture Co.</p>
-            <p className="text-xs text-gray-500">Qty: 1</p>
+            <h4 className="text-sm popmed">Luxury Velvet Sectional Sofa</h4>
+            <p className="text-xs popreg text-gray-500">by Elegant Furniture Co.</p>
+            <p className="text-xs popreg text-gray-500">Qty: 1</p>
           </div>
         </div>
-        <p className="text-sm font-semibold text-right">$3000.00</p>
+        <p className="text-sm popreg text-[#666666] font-semibold text-right">$3000.00</p>
       </div>
     ))}
   </div>
 
   {/* Price Summary */}
-  <div className="border-t border-gray-300 mt-6 pt-4 space-y-2 text-sm text-gray-700">
+  <div className="border-t border-gray-300 popreg mt-6 pt-4 space-y-2 text-sm text-gray-700">
     <div className="flex justify-between">
       <span>Subtotal (3 items)</span>
       <span>$7000.00</span>
@@ -139,19 +140,21 @@ const Checkout = () => {
 <div className='h-[0.8px] mt-2 bg-black w-full' />
   {/* Total */}
   <div className="flex justify-between items-center mt-4">
-    <h4 className="text-base font-semibold">Total</h4>
+    <h4 className="text-base popbold font-semibold">Total</h4>
     <h4 className="text-xl font-bold text-[#CBA135]">$7030.00</h4>
   </div>
 
   {/* Place Order Button */}
-  <button className="w-full bg-[#CBA135] text-white font-semibold text-sm py-3 mt-5 rounded-md hover:bg-yellow-600">
+<Link to='/confirm-order'>
+  <button className="w-full bg-[#CBA135] popbold text-white font-semibold text-sm py-3 mt-5 rounded-md hover:bg-yellow-600">
     Place Order
   </button>
+</Link>
 
   {/* Policy Note */}
-  <p className="text-[11px] text-center text-gray-500 mt-2">
+  <p className="text-[11px] popreg text-center text-gray-500 mt-2">
     By clicking Place Order, you accept WRIKXO’s <br />
-    <a href="#" className="text-blue-500 underline">return & shipping policies</a>
+    <a href="#" className="text-[#CBA135] underline">return & shipping policies</a>
   </p>
 </div>
 

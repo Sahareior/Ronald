@@ -1,15 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
 .ant-input-outlined {
-    border-color: #CBA135;
-    color: white;
+    border-color: white;
+    color: black;
 }
 
 .ant-input-outlined:focus-within{
-    background-color: #866716;
-    color: white;
+    background-color: white;
+    color: black;
 }
 
 /* Keep your custom track and handle color */
@@ -49,5 +51,52 @@ color: white;
 }
 
 .PhoneInputCountry{
-  padding-right: 10px;
+  /* padding-right: 4px; */
+  
+}
+
+
+/* 👇 Remove border and focus ring from the input */
+.PhoneInput input {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  padding: 3px;
+}
+
+.PhoneInput input:focus {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+
+
+.poplight {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.popreg {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.popmed {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.popbold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* global.css or wherever your styles are */
+.ant-rate-star-full .anticon {
+  color: #FACC15 !important;
 }

@@ -39,11 +39,11 @@ const ResetPass = () => {
 
             <div className=' py-5'>
           <label className="text-sm block py-1 ">Password</label>
-          <Input className='h-[48px] placeholder-[#CBA135] bg-[#403217]' placeholder="Enter your new Password" />
+          <Input className='h-[48px] placeholder-[#CBA135] bg-white' placeholder="Enter your new Password" />
         </div>
           <label className="text-sm block pb-2">Confirm Password</label>
           <div className="relative">
-            <Input className='h-[48px] placeholder-[#CBA135] bg-[#403217]'  placeholder="confirm password"/>
+            <Input className='h-[48px] placeholder-[#CBA135] bg-white'  placeholder="confirm password"/>
             <MdOutlineRemoveRedEye size={19} className="absolute top-4 right-4  cursor-pointer" />
           </div>
         </div>

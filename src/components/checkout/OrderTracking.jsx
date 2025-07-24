@@ -79,7 +79,7 @@ return (
             <div className="flex gap-2">
               <Input className="h-[46px]" placeholder="Latitude" />
               <Input className="h-[46px]" placeholder="Longitude" />
-              <button className="w-12 h-[46px] bg-[#CBA135] rounded-[12px] flex justify-center items-center text-white">
+              <button className="w-24 h-[46px] bg-[#CBA135] rounded-[12px] flex justify-center items-center text-white">
                 <FaLocationDot size={18} />
               </button>
             </div>

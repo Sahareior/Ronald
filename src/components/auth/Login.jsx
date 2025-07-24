@@ -43,11 +43,11 @@ const Login = () => {
 
             <div className=' py-5'>
           <label className="text-sm block py-1 ">Phone Number</label>
-          <Input className='h-[48px] placeholder-[#CBA135] bg-[#403217]' placeholder="015103264" />
+          <Input className='h-[48px] placeholder-[#CBA135] bg-white text-black' placeholder="015103264" />
         </div>
           <label className="text-sm block pb-2">Password</label>
           <div className="relative">
-            <Input className='h-[48px] bg-[#403217]'  placeholder="Enter your password" type="password" />
+            <Input className='h-[48px] bg-white'  placeholder="Enter your password" type="password" />
             <MdOutlineRemoveRedEye size={19} className="absolute top-4 right-4 text-gray-500 cursor-pointer" />
           </div>
         </div>

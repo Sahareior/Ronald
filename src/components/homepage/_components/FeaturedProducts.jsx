@@ -7,7 +7,7 @@ const FeaturedProducts = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h2 className="text-[30px] font-bold">Featured Products</h2>
+          <h2 className="text-[30px] popbold font-extrabold">Featured Products</h2>
           <p className="text-[18px] text-gray-600">
             Explore our curated furniture categories
           </p>
@@ -35,15 +35,15 @@ const FeaturedProducts = () => {
 
 <div className='p-5'>
               {/* Title + Subtitle */}
-          <h2 className="text-[16px] font-semibold text-gray-800">
+          <h2 className="text-[16px] popbold text-gray-800">
             Glass Coffee Table
           </h2>
-          <p className="text-sm text-gray-500 mb-3">Round, Chrome Base</p>
+          <p className="text-sm popreg text-gray-500 mb-3">Round, Chrome Base</p>
 
           {/* Price + Button */}
           <div className="flex justify-between items-center">
-            <h4 className="text-[#CBA135] font-bold text-[16px]">XAF 449</h4>
-            <Button className="bg-[#CBA135] text-white border-none px-4 py-1 rounded">
+            <h4 className="text-[#CBA135] popbold text-[16px]">XAF 449</h4>
+            <Button className="bg-[#CBA135] popbold text-white border-none px-4 py-1 rounded">
               Add to Cart
             </Button>
           </div>

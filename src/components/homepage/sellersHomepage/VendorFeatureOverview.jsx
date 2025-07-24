@@ -39,7 +39,7 @@ const VendorFeatureOverview = () => {
   return (
     <div className="bg-[#EAE7E1] py-16">
       <div className="px-40 mx-auto ">
-        <h3 className="text-3xl md:text-4xl font-semibold text-center mb-12">
+        <h3 className="text-3xl md:text-4xl popbold text-center mb-12">
           Vendor Features Overview
         </h3>
         <div className="grid justify-items-center grid-cols-1  sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -49,8 +49,8 @@ const VendorFeatureOverview = () => {
               className="bg-white p-6 w-12/12  rounded-xl shadow-md text-start hover:shadow-lg transition"
             >
               <div className="mb-4 flex justify-start">{feature.icon}</div>
-              <h4 className="text-xl font-bold mb-2">{feature.title}</h4>
-              <p className="text-gray-700">{feature.description}</p>
+              <h4 className="text-xl popbold font-extrabold mb-2">{feature.title}</h4>
+              <p className="text-gray-700 popreg" >{feature.description}</p>
             </div>
           ))}
         </div>

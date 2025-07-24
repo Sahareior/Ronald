@@ -2,13 +2,26 @@ import React from 'react';
 import Breadcrumb from '../others/Breadcrumb';
 import { AiOutlineMinus, AiOutlinePlus, AiOutlineClose, AiOutlineEdit } from 'react-icons/ai';
 import TextArea from 'antd/es/input/TextArea';
-import { Button, Input, Radio } from 'antd';
+import { Button, Input, Radio, Rate } from 'antd';
+import { IoChatbubblesOutline } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
+  const brands = ['Home Decor Masters', 'Modern Living Co.', 'Vintage Comfort', 'Elite Furniture', 'Elegant Furniture Co.', 'other' , 'hudai', 'bata'];
+
+    const products = Array.from({ length: 4 }).map((_, index) => ({
+  id: index + 1,
+  title: `Sofa ${index + 1}`,
+  brand: brands[index % brands.length],
+  price: 1200 + index * 200,
+  rating: (3 + (index % 3)),
+  img: 'https://images.unsplash.com/photo-1577977404260-4bf12328b122?q=80&w=1169&auto=format&fit=crop'
+}));
+
   const clicked = false
   return (
     <div className="bg-[#FAF8F2] min-h-screen py-10">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4">
         <Breadcrumb />
 
         <h2 className="text-3xl font-bold mt-4">My Cart</h2>
@@ -86,6 +99,8 @@ const Cart = () => {
                 placeholder="Add any specific delivery notes here..."
               />
             </div>
+
+           
           </div>
 }
 
@@ -124,9 +139,12 @@ const Cart = () => {
 
             {/* Checkout Buttons */}
             <div className="mt-6 flex flex-col gap-3">
-              <Button className="h-[56px] bg-[#CBA135] text-white font-semibold hover:bg-yellow-600">
-                Proceed to Checkout
-              </Button>
+<Link to='checkout1' className='w-full block'>
+  <Button className="h-[56px] w-full bg-[#CBA135] text-white font-semibold hover:bg-yellow-600">
+    Proceed to Checkout
+  </Button>
+</Link>
+
               <Button className="h-[56px] border-gray-300">Save for Later</Button>
             </div>
           </div>
@@ -140,7 +158,70 @@ const Cart = () => {
     </div>
 </div>
         </div>
+<div className='py-9'>
+          <div className='flex py-9 justify-between '>
+          <h4 className='popmed text-[30px]'>You may also need</h4>
+          <h5 className='popbold text-[16px] text-[#CBA135]'>View All</h5>
+        </div>
+
+                  <div className="grid grid-cols-1   sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <div key={product.id} className="bg-white  rounded-2xl shadow-md relative">
+              <img src={product.img} alt={product.title} className="w-full rounded-t-2xl h-64 object-cover  mb-4" />
+             <div className='px-4 space-y-2 pb-5'>
+                 <h3 className="font-semibold text-lg">{product.title}</h3>
+              <p className="text-sm text-gray-500 mb-1">{product.brand}</p>
+  
+                <div className='flex justify-between items-center gap-10'>
+                                  <p className="text-lg text-[#CBA135] font-bold mb-3">${product.price}</p>
+              <Button type="primary" block className="bg-yellow-600 max-w-[10rem] py-4 hover:bg-yellow-700">
+                Add to Cart
+              </Button>
+                </div>
+             </div>
+              {/* Wishlist icon (top right) */}
+            <div className="absolute top-2 right-2 text-red-600 w-6 h-6 flex items-center justify-center hover:text-red-500 bg-slate-200 rounded-full cursor-pointer text-lg">
+  ♡
+</div>
+
+            </div>
+          ))}
+        </div>
+</div>
+
+
       </div>
+
+
+<div className="flex flex-col md:flex-col lg:flex-row justify-between items-center gap-10 bg-[#E6E3DD] px-5 sm:px-10 md:px-10 lg:px-20 xl:px-60 py-12  w-full">
+  {/* Left Block */}
+  <div className="flex flex-col gap-4 w-full lg:max-w-md text-center lg:text-left">
+    <div className="flex items-center justify-center lg:justify-start gap-3">
+      <img src="/image/hand.png" alt="hand" className="w-10 h-10" />
+      <h2 className="text-[22px] sm:text-[24px] md:text-[26px] lg:text-[28px] popmed">Shopping Assistance</h2>
+    </div>
+    <p className="text-[14px] sm:text-[15px] md:text-[16px] popmed">
+      Have a question before you checkout? We’re here to help!
+    </p>
+    <button className="flex items-center justify-center lg:justify-start gap-2 text-[#CBA135] text-[15px] sm:text-[16px] hover:underline">
+      <IoChatbubblesOutline className="text-xl" /> Chat Now
+    </button>
+  </div>
+
+  {/* Right Block */}
+  <div className="flex flex-col gap-4 w-full lg:max-w-md text-center lg:text-right">
+    <div className="flex items-center justify-center lg:justify-end gap-3">
+      <img src="/image/hand.png" alt="hand" className="w-10 h-10" />
+      <h2 className="text-[22px] sm:text-[24px] md:text-[26px] lg:text-[28px] popmed">30- Day Returns</h2>
+    </div>
+    <p className="text-[14px] text-start sm:text-[15px] md:text-[16px] popmed">
+      Not lovinging it? We offer return for most item within 30 Days delivery for a refund or store credit.
+    </p>
+    <button className="flex items-center justify-center lg:justify-end gap-2 text-[#CBA135] text-[15px] sm:text-[16px] hover:underline">
+      Learn more
+    </button>
+  </div>
+</div>
     </div>
   );
 };

@@ -45,7 +45,7 @@ const VerifyCode = () => {
               <Input
                 key={index}
                 maxLength={1}
-                className="!h-[48px] !w-[48px] text-center text-lg font-bold bg-[#403217] border border-[#CBA135] text-white"
+                className="!h-[48px] !w-[48px] text-center text-lg font-bold bg-white border border-[#CBA135] text-white"
               />
             ))}
         </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Input, Modal } from 'antd';
+import { Link } from 'react-router-dom';
 
 const CustomModal = ({ isModalOpen, setIsModalOpen }) => {
   const [orderId, setOrderId] = useState('');
@@ -54,7 +55,8 @@ const CustomModal = ({ isModalOpen, setIsModalOpen }) => {
             />
           </div>
 
-          <Button
+    <Link to='/order-track'>
+              <Button
             type='primary'
             className='bg-[#CBA135] w-full mt-4'
             size='large'
@@ -66,6 +68,7 @@ const CustomModal = ({ isModalOpen, setIsModalOpen }) => {
           >
             Track My Order
           </Button>
+    </Link>
         </div>
       </Modal>
     </>

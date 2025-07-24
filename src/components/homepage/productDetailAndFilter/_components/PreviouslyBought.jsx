@@ -49,12 +49,7 @@ const products = [
     price: 1122,
     image: '/image/featured/img1.png',
   },
-  {
-    id: 9,
-    title: 'Modern Chair',
-    price: 1122,
-    image: '/image/featured/img1.png',
-  },
+ 
 ];
 
 const PreviouslyBought = () => {
@@ -67,8 +62,8 @@ const PreviouslyBought = () => {
         >
           <img src={image} alt={title} className="h-48 w-full object-cover rounded-md mb-4" />
 <div className='p-4'>
-              <h2 className="text-lg font-semibold mb-1">{title}</h2>
-          <p className="text-[#CBA135] font-bold">${price}</p>
+              <h2 className="text-[16px] popreg mb-1">{title}</h2>
+          <p className="text-[#CBA135] text-[16px] popreg">${price}</p>
 </div>
         </div>
       ))}

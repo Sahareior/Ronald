@@ -2,6 +2,8 @@ import React from 'react';
 import { Radio } from 'antd';
 import { LockOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import Breadcrumb from '../others/Breadcrumb';
+import { FaShieldAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const ConfirmOrder = () => {
   return (
@@ -52,17 +54,19 @@ const ConfirmOrder = () => {
       </Radio.Group>
 
       {/* Security Notice */}
-      <div className="bg-[#FAF8F2] border border-[#E5E7EB] rounded-md p-5 mt-5 flex items-start text-sm text-yellow-700">
-        <InfoCircleOutlined className="mt-1 mr-2" />
+      <div className="bg-[#FAF8F2] border border-[#E5E7EB] rounded-md p-5 mt-5 flex items-start text-sm text-[#CBA135]">
+        <FaShieldAlt  className="mt-1 mr-2 " />
         <p>Your payment information is encrypted and secure</p>
       </div>
 </div>
 
       {/* Confirm Button */}
 <div className='flex justify-center items-center'>
+<Link to='/order-confirmation'>
         <button className=" px-8 mx-auto bg-[#CBA135] text-white font-semibold text-sm py-3 rounded-md hover:bg-yellow-600">
         Confirm Order
       </button>
+</Link>
 </div>
     </div>
 </div>
