@@ -29,14 +29,18 @@ const Navbar = () => {
           </Link>
           <h4 className="cursor-pointer bg-[#CBA135] px-4 py-1 rounded-[8px] text-white hover:text-blue-600 transition">Register</h4>
 
+     <Link to='whitelist'>
           <MdFavorite
             size={22}
             className="cursor-pointer hover:text-red-500 transition"
           />
+     </Link>
+          <Link to='cart'>
           <FaCartShopping
             size={20}
             className="cursor-pointer hover:text-green-600 transition"
           />
+          </Link>
         </div>
       </div>
     </div>

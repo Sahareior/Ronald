@@ -1,30 +1,31 @@
-import React from 'react';
-import Navbar from './_components/Navbar';
-import Hero from './_components/Hero';
-import FeaturedProducts from './_components/FeaturedProducts';
-import WhyUs from './_components/WhyUs';
-import Customers from './_components/Customers';
-import Coupon from './_components/Coupon';
-import Footer from './_components/Footer';
+// Homepage.jsx
+import { Outlet } from 'react-router-dom';
 import CustomerLayout from './layouts/CustomerLayout';
 import GuestLayout from './layouts/GuestLayout';
-import { Outlet, useLocation } from 'react-router-dom';
 import SellersLayout from './layouts/SellersLayout';
 
 const Homepage = () => {
-    const location= useLocation()
-    console.log(location)
+  const userType = 'customer'; // hardcoded for now
+
+  if (userType === 'customer') {
     return (
-        <div>
-            {/* <Navbar /> */}
-{/* <CustomerLayout /> */}
-{/* <SellersLayout />
-wer
-*/}
-<Outlet />
-{/* <Footer /> */}
-        </div>
+      <CustomerLayout>
+        <Outlet />
+      </CustomerLayout>
     );
+  } else if (userType === 'seller') {
+    return (
+      <SellersLayout>
+        <Outlet />
+      </SellersLayout>
+    );
+  } else {
+    return (
+      <GuestLayout>
+        <Outlet />
+      </GuestLayout>
+    );
+  }
 };
 
 export default Homepage;

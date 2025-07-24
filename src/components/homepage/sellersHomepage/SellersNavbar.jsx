@@ -21,7 +21,7 @@ const SellersNavbar = () => {
           <Link to='/login'>
           <h4 className="cursor-pointer hover:text-blue-600 transition">Already a seller? Log in</h4>
           </Link>
-          <h4 className="cursor-pointer bg-[#CBA135] px-4 py-2 rounded-[8px] text-white hover:text-blue-600 transition">Apply to Sell</h4>
+          <Link to='/regester-seller' className="cursor-pointer bg-[#CBA135] px-4 py-2 rounded-[8px] text-white hover:text-blue-600 transition">Apply to Sell</Link>
 
         
         </div>

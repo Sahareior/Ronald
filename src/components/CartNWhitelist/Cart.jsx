@@ -2,10 +2,10 @@ import React from 'react';
 import Breadcrumb from '../others/Breadcrumb';
 import { AiOutlineMinus, AiOutlinePlus, AiOutlineClose, AiOutlineEdit } from 'react-icons/ai';
 import TextArea from 'antd/es/input/TextArea';
-import { Button, Input } from 'antd';
+import { Button, Input, Radio } from 'antd';
 
 const Cart = () => {
-  const clicked = true
+  const clicked = false
   return (
     <div className="bg-[#FAF8F2] min-h-screen py-10">
       <div className="max-w-6xl mx-auto px-4">
@@ -90,7 +90,8 @@ const Cart = () => {
 }
 
           {/* Right: Order Summary */}
-          <div className="w-full lg:w-[350px] bg-white p-6 rounded-xl shadow-sm h-fit">
+<div className='flex flex-col gap-12'>
+            <div className="w-full lg:w-[350px] bg-white p-6 rounded-xl shadow-sm h-fit">
             <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
 
             <div className="space-y-3 text-sm text-gray-700">
@@ -129,6 +130,15 @@ const Cart = () => {
               <Button className="h-[56px] border-gray-300">Save for Later</Button>
             </div>
           </div>
+ <div className="bg-white p-4 py-8 rounded-lg shadow-sm space-y-3">
+      <h3 className="text-lg font-semibold text-gray-800">Delivery Type</h3>
+      <Radio.Group className="flex flex-col  gap-4">
+        <Radio value="standard">Standard</Radio>
+        <Radio value="express">Express</Radio>
+        <Radio value="pickup">Pickup</Radio>
+      </Radio.Group>
+    </div>
+</div>
         </div>
       </div>
     </div>

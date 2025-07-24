@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Checkbox, InputNumber, Select, Slider, Pagination, Rate } from 'antd';
+import { RxCross1 } from "react-icons/rx";
 import Radio from 'antd/es/radio/radio';
+import Breadcrumb from '../../others/Breadcrumb';
+import { Link } from 'react-router-dom';
 
 const categories = ['Sofas', 'Sectionals', 'Loveseats','others'];
 const brands = ['Home Decor Masters', 'Modern Living Co.', 'Vintage Comfort', 'Elite Furniture', 'Elegant Furniture Co.', 'other' , 'hudai', 'bata'];
@@ -25,9 +28,7 @@ const ProductFilter = () => {
   return (
 <div className='bg-[#FAF8F2]'>
         <div className='flex px-40 gap-2 pb-6 pt-1'>
-        <p>Home > </p>
-        <p>Living Room ></p>
-        <p>Sofa </p>
+     <Breadcrumb />
     </div>
         <div className="flex gap-6 p-7 px-40 ">
       {/* Filters */}
@@ -124,7 +125,7 @@ const ProductFilter = () => {
 
       {/* Product Section */}
       <div className="flex-1 px-6">
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center mb-1">
           <div>
             <h2 className="text-2xl font-semibold">Search Results for "modern sofa"</h2>
             <p className="text-gray-500">24 products found</p>
@@ -134,11 +135,19 @@ const ProductFilter = () => {
             <Select className='w-36' value={sort} onChange={setSort} options={[{ value: 'Newest' }, { value: 'Price: Low to High' }, { value: 'Price: High to Low' }]} />
           </div>
         </div>
-
+<div className='flex flex-1 py-3 gap-2'>
+{
+  [1,2,3,4].map(items=>(
+      <div className='bg-[#CBA135]  px-4 py-1 rounded-2xl'>
+<p className='flex text-white text-xl items-center gap-1'>Sofas <RxCross1 /></p>
+  </div>
+  ))
+}
+</div>
         {/* Product Grid */}
         <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => (
-            <div key={product.id} className="bg-white  rounded-2xl shadow-md relative">
+            <Link to='/details' key={product.id} className="bg-white  rounded-2xl shadow-md relative">
               <img src={product.img} alt={product.title} className="w-full rounded-t-2xl h-64 object-cover  mb-4" />
              <div className='px-4 space-y-2 p-5'>
                  <h3 className="font-semibold text-lg">{product.title}</h3>
@@ -159,7 +168,7 @@ const ProductFilter = () => {
   ♡
 </div>
 
-            </div>
+            </Link>
           ))}
         </div>
 

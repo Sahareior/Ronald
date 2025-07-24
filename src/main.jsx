@@ -30,86 +30,33 @@ import SellerReg from './components/homepage/sellersHomepage/sellerRoutes/Seller
 const router = createBrowserRouter([
   {
     path: "/",
-    element:<App /> ,
+    element: <App />,
     children: [
       {
-        path: '/',
-        element: <Homepage />,
-        children:[
-          {
-            path: 'filter',
-            element: <ProductFilter />
-          },
-          {
-            path: 'details',
-            element: <Details />
-          },
-          {
-            path: 'whitelist',
-            element: <WhiteList />
-          },
-          {
-            path: 'cart',
-            element: <Cart />
-          },
-          {
-            path: 'checkout',
-            element: <Checkout />
-          },
-          {
-            path: 'confirm-order',
-            element: <ConfirmOrder />
-          },
-          {
-            path: 'order-tracking',
-            element: <OrderTracking />
-          },
-          {
-            path: 'order-confirmation',
-            element: <ConfirmationPage />
-          },
-          {
-            path: 'active',
-            element: <ActiveUsers />
-          },
-          {
-            path: 'profile',
-            element: <Profile />
-          },
-          // seller routes
-          {
-            path: 'regester-seller',
-            element: <SellerReg />
-          }
-
-        ]
+        path: "/", // default homepage layout
+        element: <Homepage />, // this handles Guest/Customer/Seller layout
+        children: [
+          { path: "filter", element: <ProductFilter /> },
+          { path: "details", element: <Details /> },
+          { path: "whitelist", element: <WhiteList /> },
+          { path: "cart", element: <Cart /> },
+          { path: "checkout", element: <Checkout /> },
+          { path: "confirm-order", element: <ConfirmOrder /> },
+          { path: "order-track", element: <OrderTracking /> },
+          { path: "order-confirmation", element: <ConfirmationPage /> },
+          { path: "active", element: <ActiveUsers /> },
+          { path: "profile", element: <Profile /> },
+        ],
       },
-      {
-        path: 'login',
-        element: <Login />
-      },
-      {
-        path: 'signup',
-        element: <Signup />
-      },
-      {
-        path: 'verify',
-        element: <VerifyCode />
-      },
-      {
-        path:'forget',
-        element: <ForgetPass />
-      },
-      {
-        path:'reset',
-        element: <ResetPass />
-      },
-      {
-        path:'congratulations',
-        element: <Congratulations />
-      },
-      
-    ]
+      // ✅ These are outside Homepage layout
+      { path: "login", element: <Login /> },
+      { path: "signup", element: <Signup /> },
+      { path: "verify", element: <VerifyCode /> },
+      { path: "forget", element: <ForgetPass /> },
+      { path: "reset", element: <ResetPass /> },
+      { path: "congratulations", element: <Congratulations /> },
+      { path: "regester-seller", element: <SellerReg /> }, // accessible at /regester-seller
+    ],
   },
 ]);
 

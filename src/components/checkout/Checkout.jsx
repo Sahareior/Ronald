@@ -12,15 +12,16 @@ const Checkout = () => {
   };
 
   return (
-<div className=' pb-7 px-20'>
+<div className='bg-[#FAF8F2]'>
+  <div className=' pb-7 px-20'>
      <Breadcrumb />
    <div className='py-4 pb-6'>
     <h2 className='text-[30px] pb-3 font-bold'>Checkout</h2>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, reiciendis?</p>
 
    </div>
-       <div className=' flex gap-4'>
-        <div className=" bg-[#E5E7EB] p-6 md:p-5 max-w-2xl mx-auto rounded-lg">
+       <div className=' flex gap-8'>
+        <div className=" bg-[#E5E7EB] p-6 md:p-5 w-full  mx-auto rounded-lg">
       <h2 className="text-xl font-semibold mb-6">Shipping Information</h2>
 
       <Form
@@ -68,7 +69,7 @@ const Checkout = () => {
           </Form.Item>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid w-8/12 grid-cols-1 md:grid-cols-2 gap-4">
           <Form.Item name="city" label="City">
             <Input placeholder="Dhaka" />
           </Form.Item>
@@ -85,11 +86,11 @@ const Checkout = () => {
           </Form.Item>
         </div>
 
-        <Form.Item className="mt-4">
+        <Form.Item className="mt-9">
           <Button
             type="primary"
             htmlType="submit"
-            className="bg-[#CBA135] hover:bg-yellow-600 text-white w-full h-[48px] text-md font-semibold"
+            className="bg-[#CBA135] hover:bg-yellow-600 mx-auto text-white w-4/12 h-[48px] text-md font-semibold"
           >
             Save Address
           </Button>
@@ -135,7 +136,7 @@ const Checkout = () => {
       <span className="text-green-600">-$100.00</span>
     </div>
   </div>
-
+<div className='h-[0.8px] mt-2 bg-black w-full' />
   {/* Total */}
   <div className="flex justify-between items-center mt-4">
     <h4 className="text-base font-semibold">Total</h4>
@@ -154,6 +155,7 @@ const Checkout = () => {
   </p>
 </div>
 
+</div>
 </div>
 </div>
   );

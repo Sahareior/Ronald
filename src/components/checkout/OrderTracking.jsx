@@ -18,7 +18,7 @@ const onChange = checked => {
 
 return (
 <div className="bg-[#FAF8F2] pb-10">
-  <div className="mx-40 px-4">
+  <div className="mx-20 px-4">
     <Breadcrumb />
 
     {/* Header */}

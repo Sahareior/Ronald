@@ -46,7 +46,7 @@ const VendorFeatureOverview = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-white p-6 w-11/12  rounded-xl shadow-md text-start hover:shadow-lg transition"
+              className="bg-white p-6 w-12/12  rounded-xl shadow-md text-start hover:shadow-lg transition"
             >
               <div className="mb-4 flex justify-start">{feature.icon}</div>
               <h4 className="text-xl font-bold mb-2">{feature.title}</h4>
