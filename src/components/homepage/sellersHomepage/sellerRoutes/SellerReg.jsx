@@ -16,7 +16,7 @@ const SellerReg = () => {
         <div className="flex justify-center text-[#CBA135] mb-3">
           <FaHandshakeSimple size={48} />
         </div>
-        <h2 className="text-[32px] md:text-[48px] font-semibold mb-3">🛍️ Partner with WIROKO</h2>
+        <h2 className="text-[32px] md:text-[48px] popbold mb-3">🛍️ Partner with WIROKO</h2>
         <p className="text-[18px] md:text-[20px] text-gray-700">
           Join our curated network of premium furniture vendors and reach customers worldwide
         </p>
@@ -56,31 +56,34 @@ const SellerReg = () => {
 
         {/* Form */}
         <div className="grid md:grid-cols-2  gap-4">
-          <div>
-            <label className="block mb-1 font-semibold text-[14px] text-gray-700">First Name</label>
-            <Input placeholder="Enter First Name" className="h-[44px]" />
+                   <div className='mt-2'>
+            <label className="block mb-1 popbold text-[14px] text-gray-700">First Name</label>
+            <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
-          <div>
-            <label className="block mb-1 font-semibold text-[14px] text-gray-700">Last Name *</label>
-            <Input placeholder="Enter Last Name" className="h-[44px]" />
+
+                  <div className='mt-2'>
+            <label className="block mb-1 popbold text-[14px] text-gray-700">Last Name *</label>
+            <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
+
           <div>
-            <label className="block mb-1 font-semibold text-[14px] text-gray-700">Job Title *</label>
+            <label className="block mb-1 popbold text-[14px] text-gray-700">Job Title *</label>
             <Select placeholder="Select Your Role" className="w-full h-[44px]">
               <Option value="owner">Owner</Option>
               <Option value="manager">Manager</Option>
               <Option value="designer">Designer</Option>
             </Select>
           </div>
-          <div>
-            <label className="block mb-1 font-semibold text-[14px] text-gray-700">Email Address *</label>
-            <Input placeholder="Enter Email Address" className="h-[44px]" />
+
+                  <div className='mt-2'>
+            <label className="block mb-1 popbold text-[14px] text-gray-700">Email Address *</label>
+            <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
           
         </div>
                   <div className='mt-2'>
-            <label className="block mb-1 font-semibold text-[14px] text-gray-700">First Name</label>
-            <Input placeholder="Enter First Name" className="h-[44px]" />
+            <label className="block mb-1 popbold text-[14px] text-gray-700">Phone Number *</label>
+            <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
       </div>
       {/* Business */}
@@ -97,26 +100,26 @@ const SellerReg = () => {
         {/* Form */}
 
                   <div className='mt-2'>
-            <label className="block mb-1 font-semibold text-[14px] text-gray-700">First Name</label>
+            <label className="block mb-1 popbold text-[14px] text-gray-700">Legal Business Name *</label>
             <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
 
                             <div className='mt-2'>
-            <label className="block mb-1 font-semibold text-[14px] text-gray-700">First Name</label>
+            <label className="block mb-1 popbold text-[14px] text-gray-700">Business Address *</label>
                  <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
         
         <div className="grid md:grid-cols-2 mt-3 gap-4">
           <div>
-            <label className="block mb-1 font-semibold text-[14px] text-gray-700">First Name</label>
+            <label className="block mb-1 popbold text-[14px] text-gray-700">Country *</label>
                 <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-[14px] text-gray-700">Last Name *</label>
+            <label className="block mb-1 popbold text-[14px] text-gray-700">City/Town *</label>
                  <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-[14px] text-gray-700">Job Title *</label>
+            <label className="block mb-1 popbold text-[14px] text-gray-700">State/Province *</label>
             <Select placeholder="Select Your Role" className="w-full h-[44px]">
               <Option value="owner">Owner</Option>
               <Option value="manager">Manager</Option>
@@ -124,22 +127,22 @@ const SellerReg = () => {
             </Select>
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-[14px] text-gray-700">Email Address *</label>
+            <label className="block mb-1 popbold text-[14px] text-gray-700">Postal Code *</label>
                  <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
           
         </div>
         <div className="grid md:grid-cols-2 mt-3 gap-4">
           <div>
-            <label className="block mb-1 font-semibold text-[14px] text-gray-700">First Name</label>
+            <label className="block mb-1 popbold text-[14px] text-gray-700">Date*</label>
                 <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-[14px] text-gray-700">Last Name *</label>
+            <label className="block mb-1 popbold text-[14px] text-gray-700">Business Type *</label>
                  <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-[14px] text-gray-700">Job Title *</label>
+            <label className="block mb-1 popbold text-[14px] text-gray-700">Taxpayer Number*</label>
             <Select placeholder="Select Your Role" className="w-full h-[44px]">
               <Option value="owner">Owner</Option>
               <Option value="manager">Manager</Option>
@@ -147,7 +150,7 @@ const SellerReg = () => {
             </Select>
           </div>
           <div>
-            <label className="block mb-1 font-semibold text-[14px] text-gray-700">Email Address *</label>
+            <label className="block mb-1 popbold text-[14px] text-gray-700">Trade register number*</label>
                  <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
           
@@ -285,7 +288,7 @@ const SellerReg = () => {
 
         <div className="border rounded-md p-5 w-full max-w-sm space-y-3">
           {/* Captcha text */}
-          <div className="text-2xl font-mono font-semibold">ZWzybux6</div>
+          <div className="text-2xl font-mono popbold">ZWzybux6</div>
 
           {/* Label */}
           <div className="bg-gray-200 text-sm px-2  rounded">ReCaptcha text enter below</div>
