@@ -6,8 +6,8 @@ import {
 } from "react-router-dom";
 import './index.css'
 import App from './App.jsx'
-import Dashboard from './components/dashboard/Dashboard.jsx';
-import DashHome from './components/dashboard/pages/DashHome.jsx';
+import Dashboard from './components/AdminDashboard/AdminDashboard.jsx';
+import DashHome from './components/AdminDashboard/pages/Overview/DashHome.jsx';
 import Login from './components/auth/Login.jsx';
 import Homepage from './components/homepage/Homepage.jsx';
 import Signup from './components/auth/Signup.jsx';
@@ -27,6 +27,9 @@ import ActiveUsers from './components/ChatComponents/ActiveUsers.jsx';
 import Profile from './components/profile/Profile.jsx';
 import SellerReg from './components/homepage/sellersHomepage/sellerRoutes/SellerReg.jsx';
 import Checkout1 from './components/checkout/Checkout1.jsx';
+import AdminDashboard from './components/AdminDashboard/AdminDashboard.jsx';
+import Orders from './components/AdminDashboard/pages/order/Orders.jsx';
+import Analytics from './components/AdminDashboard/pages/analytics/Analytics.jsx';
 
 const router = createBrowserRouter([
   {
@@ -60,6 +63,25 @@ const router = createBrowserRouter([
       { path: "congratulations", element: <Congratulations /> },
     ],
   },
+  {
+    path:'admin-dashboard',
+    element: <AdminDashboard />,
+    children: [
+      {
+        path: 'admin-overview',
+        element: <DashHome />
+      },
+      {
+        path: 'admin-orders',
+        element: <Orders />
+      },
+      {
+        path: 'analytics',
+        element: <Analytics />
+      }
+    ]
+
+  }
 ]);
 
 

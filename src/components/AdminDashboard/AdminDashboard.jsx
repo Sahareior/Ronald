@@ -10,31 +10,35 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu, theme, Input, Badge, Avatar } from 'antd';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { GoGraph } from 'react-icons/go';
+import { FaCartShopping } from 'react-icons/fa6';
+import { FaFantasyFlightGames } from 'react-icons/fa';
 
 const { Header, Content, Sider } = Layout;
 
 const items = [
   {
     key: '1',
-    icon: <HomeOutlined />,
-    label: <Link to="dashboard">Home</Link>,
+    icon: <GoGraph />,
+    label: <Link to="admin-overview">Home</Link>,
   },
   {
     key: '2',
-    icon: <ShoppingCartOutlined />,
-    label: <Link to="order">Order</Link>,
+    icon: <FaCartShopping />,
+    label: <Link to="admin-orders">Orders</Link>,
+  },
+  {
+    key: '3',
+    icon: <FaFantasyFlightGames />,
+    label: <Link to="analytics">Analytics</Link>,
   },
 ];
 
-const Dashboard = () => {
+const AdminDashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (location.pathname === '/') {
-      navigate('/dashboard');
-    }
-  }, [location.pathname]);
+
 
   const {
     token: { colorBgContainer },
@@ -82,7 +86,7 @@ const Dashboard = () => {
        </div>
         </Header>
 
-        <Content className="h-[90vh] px-6" style={{ margin: '0' }}>
+        <Content className="bg-[#FAF8F2] px-6" style={{ margin: '0' }}>
           <Outlet />
         </Content>
       </Layout>
@@ -90,4 +94,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;
