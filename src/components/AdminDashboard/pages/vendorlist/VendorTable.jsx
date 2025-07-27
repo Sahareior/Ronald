@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
-import { Table, Select, Checkbox, Button, message } from 'antd';
+import { Table, Select, Checkbox, Button, message, Popover } from 'antd';
 import { FaEdit } from 'react-icons/fa';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 import { RiArrowDropDownLine } from 'react-icons/ri';
-import CustomModal from '../../../checkout/modal/CustomModal';
-import CustomerModal from './CustomerModal/CustomerModal';
+
+import VendorModal from './VendorModal/VendorModal';
 
 const { Option } = Select;
 
-const CustomerTable = () => {
+const VendorTable = () => {
   const [pageSize, setPageSize] = useState(10);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
      const [isModalOpen, setIsModalOpen] = useState(false);
+         const [open, setOpen] = useState(false);
+         const [openPopoverKey, setOpenPopoverKey] = useState(null);
+
+     
   const [dataSource, setDataSource] = useState(
     Array.from({ length: 247 }, (_, i) => ({
       key: i + 1,
@@ -24,6 +28,15 @@ const CustomerTable = () => {
       status: ['Paid', 'Processing', 'Pending'][i % 3],
     }))
   );
+
+          const hide = () => {
+         setOpen(false);
+       };
+       
+       const handleOpenChange = newOpen => {
+         setOpen(newOpen);
+       };
+
 
   const columns = [
     {
@@ -80,11 +93,36 @@ const CustomerTable = () => {
         <div className="flex items-center gap-3">
         
           <IoEyeOutline onClick={()=> setIsModalOpen(true)} className="text-gray-400 cursor-pointer" size={20} />
-          <MdDelete
-            className="text-red-400 cursor-pointer"
-            size={20}
-            onClick={() => handleDelete([record.key])}
-          />
+
+<Popover
+  content={
+    <div className="space-y-2 py-3 px-4 flex flex-col gap-4 items-center text-center">
+      <p className="text-gray-700">Do you want to delete this order?</p>
+      <Button
+        className="bg-[#CBA135] text-white hover:bg-yellow-600"
+        onClick={() => {
+          handleDelete([record.key]);
+          setOpenPopoverKey(null); // Close after deletion
+        }}
+      >
+        Delete
+      </Button>
+    </div>
+  }
+  title={<h3 className="text-red-500 text-center font-semibold">Are you sure!!</h3>}
+  trigger="click"
+  open={openPopoverKey === record.key}
+  onOpenChange={(newOpen) => {
+    setOpenPopoverKey(newOpen ? record.key : null);
+  }}
+>
+  <MdDelete
+    className="text-red-400 cursor-pointer"
+    size={20}
+  />
+</Popover>
+
+
         </div>
       ),
     },
@@ -170,9 +208,9 @@ const CustomerTable = () => {
           </div>
         )}
       />
-      <CustomerModal setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
+      <VendorModal setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
     </div>
   );
 };
 
-export default CustomerTable;
+export default VendorTable;

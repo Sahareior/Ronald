@@ -8,7 +8,8 @@ const ProductsList = () => {
   return (
     <div className="space-y-8 ">
 
-<div className='flex justify-end pt-4'>
+<div className='flex justify-between items-center pt-4'>
+  <p className='text-[34px] popbold'>Products List</p>
        <Button className='bg-[#CBA135] flex justify-end py-5 text-end text-white'>Add New Products</Button>
 
 </div>
@@ -16,7 +17,7 @@ const ProductsList = () => {
       <div className="grid grid-cols-1 p-6 bg-white items-center rounded-md md:grid-cols-3 gap-5">
         {/* First Name */}
         <div>
-          <label className="block mb-1  font-semibold text-sm text-gray-700">First Name</label>
+   
           <input
             type="text"
             placeholder="Enter First Name"
@@ -26,7 +27,8 @@ const ProductsList = () => {
 
         {/* Job Title */}
         <div>
-          <label className="block mb-1 font-semibold text-sm text-gray-700">Job Title *</label>
+    
+
           <Select
             placeholder="Select Your Role"
             className="w-full"
@@ -41,16 +43,21 @@ const ProductsList = () => {
 
         {/* Department */}
         <div>
-          <label className="block mb-1 font-semibold text-sm text-gray-700">Department</label>
+          
           <Select
             placeholder="Select Department"
             className="w-full"
             size="large"
-             defaultValue="All Status"
+             defaultValue="All"
           >
-            <Option value="sales">Sales</Option>
-            <Option value="development">Development</Option>
-            <Option value="marketing">Marketing</Option>
+            <Option value="All">All</Option>
+            <Option value="None">None</Option>
+            <Option value="In Stock">In Stock</Option>
+            <Option value="Out of stock">Out of stock</Option>
+            <Option value="Low stock">Low stock</Option>
+            <Option value="Approve">Approve</Option>
+            <Option value="Reject">Reject</Option>
+            <Option value="Pending">Pending</Option>
           </Select>
         </div>
       </div>

@@ -13,8 +13,8 @@ const Content = () => {
     <div className="p-6 bg-[#fefcf7] min-h-screen space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-semibold">Homepage Banner Manager</h2>
-        <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+        <h2 className="text-[20px] popbold">Homepage Banner Manager</h2>
+        <button className="bg-[#CBA135] hover:bg-yellow-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
           <FaSave /> Save Changes
         </button>
       </div>
@@ -24,25 +24,29 @@ const Content = () => {
         {/* Left Form */}
         <div className="col-span-2 bg-white p-6 rounded-xl shadow space-y-4">
           {/* Upload Area */}
-          <div className="border-2 border-dashed border-yellow-400 rounded-lg p-6 text-center text-sm text-gray-600">
+          <div className="border-2 border-dashed bg-[#CBA1351A] border-yellow-400 rounded-lg p-12 text-center text-sm text-gray-600">
             <FaCloudUploadAlt size={32} className="mx-auto text-yellow-500" />
-            <p>
+            <p className="popreg">
               Drag & drop banner image or{" "}
               <span className="text-yellow-500 cursor-pointer">browse files</span>
             </p>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs popreg text-gray-400 mt-1">
               Recommended: 1920x600px, JPG/PNG
             </p>
           </div>
 
           {/* Form Fields */}
-          <input
+<div>
+  <h5 className="text-[16px] popmed py-1">Banner Title</h5>
+            <input
             type="text"
             placeholder="Enter banner title"
             className="w-full border border-gray-300 rounded-md px-3 py-2"
             value={bannerTitle}
             onChange={(e) => setBannerTitle(e.target.value)}
           />
+</div>
+  <h5 className="text-[16px] popmed py-1">Subheading (Optional)</h5>
           <input
             type="text"
             placeholder="Enter subheading"
@@ -50,6 +54,7 @@ const Content = () => {
             value={subheading}
             onChange={(e) => setSubheading(e.target.value)}
           />
+            <h5 className="text-[16px] popmed py-1">CTA Link/URL</h5>
           <input
             type="text"
             placeholder="https://example.com"
@@ -60,23 +65,29 @@ const Content = () => {
 
           {/* Date Pickers */}
           <div className="flex gap-4">
+            <div className="w-full">
+                <h5 className="text-[16px] popmed py-1">Start Date</h5>
             <input
               type="date"
               className="w-full border border-gray-300 rounded-md px-3 py-2"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
             />
+            </div>
+             <div className="w-full">
+               <h5 className="text-[16px] popmed py-1">End Date</h5>
             <input
               type="date"
               className="w-full border border-gray-300 rounded-md px-3 py-2"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
             />
+             </div>
           </div>
 
           {/* Show Banner + Button */}
           <div className="flex items-center justify-between">
-            <label className="flex items-center gap-2 text-sm">
+            <label className="flex items-center gap-2 text-[16px] popreg">
               <input
                 type="checkbox"
                 checked={showBanner}
@@ -97,9 +108,6 @@ const Content = () => {
             <div className="bg-gray-300 h-32 rounded flex items-center justify-center">
               <FaCloudUploadAlt className="text-gray-500 text-2xl" />
             </div>
-            <div className="bg-gray-300 h-32 rounded flex items-center justify-center">
-              <FaCloudUploadAlt className="text-gray-500 text-2xl" />
-            </div>
           </div>
         </div>
       </div>
@@ -113,8 +121,8 @@ const Content = () => {
             <p className="text-sm text-gray-500">Active until Aug 31, 2024</p>
           </div>
           <div className="flex gap-3 text-gray-600">
-            <FaEdit className="cursor-pointer hover:text-blue-500" />
-            <FaTrashAlt className="cursor-pointer hover:text-red-500" />
+            <FaEdit className="cursor-pointer  text-[#CBA135] hover:text-blue-500" />
+            <FaTrashAlt size={16} className="cursor-pointer text-[#EF4444] hover:text-red-500" />
           </div>
         </div>
       </div>

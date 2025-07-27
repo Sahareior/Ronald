@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar, Button, Input, Select } from 'antd';
 import CustomerTable from '../CustomerList/CustomerTable';
+import VendorTable from './VendorTable';
 // import CustomerTable from './CustomerTable';
 
 const { Option } = Select;
@@ -21,13 +22,11 @@ const VendorList = () => {
       <div className="flex rounded-md bg-white p-5 flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex flex-col sm:flex-row gap-5">
           <Input placeholder="Search customers" className="w-[300px]" />
-          <Select defaultValue="lucy" className="w-[300px]">
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">Yiminghe</Option>
-            <Option value="disabled" disabled>
-              Disabled
-            </Option>
+          <Select defaultValue="All Status" className="w-[300px]">
+            <Option value="All Status">All Status</Option>
+            <Option value="Active">Active</Option>
+            <Option value="Trial/Inactive">Trial/Inactive</Option>
+  
           </Select>
         </div>
         <p className="text-[14px] popreg text-gray-700">
@@ -35,7 +34,7 @@ const VendorList = () => {
         </p>
       </div>
       <div>
-        <CustomerTable />
+        <VendorTable />
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { Input, Select, DatePicker, Button } from 'antd';
 import { IoSearch } from 'react-icons/io5';
 import OrdersTable from './OrdersTable';
 import { FaDownload } from 'react-icons/fa';
+import { RiArrowDropDownLine } from 'react-icons/ri';
 // import { Input } from 'antd';
 const { TextArea } = Input;
 
@@ -16,56 +17,51 @@ const Orders = () => {
     <div className="px-6 py-4">
 
   <div className='border relative border-[#E5E7EB]'>
-      <TextArea className='border-slate-500 border popbold placeholder:text-[#66666666] placeholder:text-[24px] relative placeholder:pt-7 text-black' placeholder='Manage and track all customer orders' rows={5} />
+      <TextArea className='border-slate-500 border popbold placeholder:text-[#66666666] placeholder:text-[20px] relative placeholder:pt-7 text-black' placeholder='Manage and track all customer orders' rows={5} />
       <Button className='bg-[#CBA135] text-white popmed px-7 absolute top-9 right-6 py-5 '>
       <FaDownload />  Export Now
       </Button>
     </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 mt-6 py-6 bg-white md:grid-cols-4 gap-4">
-        {/* Search Input */}
-        <div className="p-4 bg-white rounded  w-full">
-          <h1 className="text-sm popmed mb-2">Search Orders</h1>
-          <div className="relative">
-            <input className="pl-10 h-[48px] border-slate-500 border focus:ring-0 shadow-md rounded-md focus:border-slate-500 w-full" placeholder="Search by order ID or customer" />
-            <IoSearch className="absolute top-1/2 -translate-y-1/2 left-3 text-gray-400 text-lg" />
-          </div>
-        </div>
+      <div className="flex rounded-xl bg-white p-5 flex-col sm:flex-row mt-6 justify-between items-start sm:items-center gap-4">
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full px-4 sm:px-10">
+  {/* Search Orders */}
+  <div className="w-full">
+    <p className="text-sm font-medium text-gray-700 mb-1">Search Orders</p>
+    <input
+      placeholder="Enter First Name"
+      className="w-full border popreg border-[#D1D5DB] rounded-md px-4 h-[45px] placeholder:text-sm focus:outline-none focus:ring-0 focus:border-[#CBA135]"
+    />
+  </div>
 
-        {/* Search Orders Dropdown */}
-        <div className="p-4 bg-white rounded  w-full">
-          <h1 className="text-sm popmed mb-2">Search Orders</h1>
-          <Select
-            placeholder="Select order type"
-            className="w-full h-[48px] rounded-md shadow-md border-slate-500 border"
-            options={[
-              { label: 'Online Orders', value: 'online' },
-              { label: 'Offline Orders', value: 'offline' },
-              { label: 'Pre-Orders', value: 'preorder' },
-            ]}
-          />
-        </div>
+  {/* Order Status Select */}
+  <div className="w-full">
+    <p className="text-sm font-medium text-gray-700 mb-1">Search Orders</p>
+    <Select
+      defaultValue="lucy"
+      className="w-full popreg h-[45px]"
+      suffixIcon={<RiArrowDropDownLine size={22} />}
+    >
+      <Option value="jack">Jack</Option>
+      <Option value="lucy">Lucy</Option>
+      <Option value="Yiminghe">Yiminghe</Option>
+      <Option value="disabled" disabled>
+        Disabled
+      </Option>
+    </Select>
+  </div>
 
-        {/* Order Status Dropdown */}
-        <div className="p-4 bg-white rounded  w-full">
-          <h1 className="text-sm popmed mb-2">Order Status</h1>
-          <Select
-            placeholder="Select status"
-            className="w-full h-[48px] border-slate-500 shadow-md border rounded-md"
-            options={[
-              { label: 'Processing', value: 'processing' },
-              { label: 'Shipped', value: 'shipped' },
-              { label: 'Delivered', value: 'delivered' },
-              { label: 'Cancelled', value: 'cancelled' },
-            ]}
-          />
-        </div>
+  {/* Date Picker */}
+  <div className="w-full">
+    <p className="text-sm font-medium text-gray-700 mb-1">Date Range</p>
+    <DatePicker
+      placeholder="mm/dd/yyyy"
+      className="w-full h-[45px] rounded-md border popreg border-[#D1D5DB]"
+      style={{ height: '45px', width: '100%' }}
+    />
+  </div>
+</div>
 
-        {/* Date Range Picker */}
-        <div className="p-4 bg-white rounded  w-full">
-          <h1 className="text-sm popmed mb-2">Date Range</h1>
-          <DatePicker className="w-full h-[48px] border-slate-500 border shadow-md" />
-        </div>
       </div>
 
       <div className='mt-12 bg-white p-6 shadow-md'>

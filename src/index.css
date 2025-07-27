@@ -50,8 +50,15 @@ color: white;
   background-color: #FAF8F2;
 }
 
-.PhoneInputCountry{
-  /* padding-right: 4px; */
+.ant-menu-item:hover {
+  background-color: #EAE7E1 !important;  /* Change to your preferred color */
+  color: #CBA135 !important;  /* Change text color on hover */
+}
+
+/* Optional: Change the active item (selected item) background color */
+.ant-menu-item-selected {
+  background-color: #EAE7E1 !important;  /* Change active item background color */
+  color: #CBA135 !important;  /* Active item text color */
   
 }
 
