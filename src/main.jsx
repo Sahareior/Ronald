@@ -30,6 +30,14 @@ import Checkout1 from './components/checkout/Checkout1.jsx';
 import AdminDashboard from './components/AdminDashboard/AdminDashboard.jsx';
 import Orders from './components/AdminDashboard/pages/order/Orders.jsx';
 import Analytics from './components/AdminDashboard/pages/analytics/Analytics.jsx';
+import Customers from './components/homepage/_components/Customers.jsx';
+import CustomerList from './components/AdminDashboard/pages/CustomerList/CustomerList.jsx';
+import VendorList from './components/AdminDashboard/pages/vendorlist/VendorList.jsx';
+import ProductsList from './components/AdminDashboard/pages/products/ProductsList.jsx';
+import AddnewProducts from './components/AdminDashboard/pages/products/AddnewProducts.jsx';
+import AllMessages from './components/AdminDashboard/pages/Messages/AllMessages.jsx';
+import Content from './components/AdminDashboard/pages/content/Content.jsx';
+import AdminProfile from './components/AdminDashboard/pages/Profile/AdminProfile.jsx';
 
 const router = createBrowserRouter([
   {
@@ -78,7 +86,35 @@ const router = createBrowserRouter([
       {
         path: 'analytics',
         element: <Analytics />
-      }
+      },
+      {
+        path: 'customers',
+        element: <CustomerList />
+      },
+      {
+        path: 'vendors',
+        element: <VendorList />
+      },
+      {
+        path: 'productslist',
+        element: <ProductsList />
+      },
+      {
+        path: 'addproducts',
+        element: <AddnewProducts />
+      },
+      {
+        path: 'messages',
+        element: <AllMessages />
+      },
+      {
+        path: 'content',
+        element: <Content />
+      },
+      {
+        path: 'adprofile',
+        element: <AdminProfile />
+      },
     ]
 
   }

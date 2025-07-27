@@ -32,11 +32,20 @@ const items = [
     icon: <FaFantasyFlightGames />,
     label: <Link to="analytics">Analytics</Link>,
   },
+  {
+    key: '4',
+    icon: <FaFantasyFlightGames />,
+    label: <Link to="customers">Customers</Link>,
+  },
+  {
+    key: '5',
+    icon: <FaFantasyFlightGames />,
+    label: <Link to="vendors">Vendor</Link>,
+  },
 ];
 
 const AdminDashboard = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+
 
 
 
