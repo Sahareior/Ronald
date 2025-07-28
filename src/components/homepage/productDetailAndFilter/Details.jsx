@@ -1,13 +1,15 @@
 import { Button, Rate, Tag } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaLongArrowAltDown } from "react-icons/fa";
 import Customers from '../_components/Customers';
 import { LiaStarSolid } from 'react-icons/lia';
 import Similier from './_components/Similier';
 import PreviouslyBought from './_components/PreviouslyBought';
 import Breadcrumb from '../../others/Breadcrumb';
+import DetailsModal from './_components/DetailsModal';
 
 const Details = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const productSpecs = [
   { label: 'Dimensions (W×H×D)', value: '88" × 35" × 38"' },
@@ -23,7 +25,7 @@ const Details = () => {
   return (
 <div className='bg-[#FAF8F2] '>
           <div className='px-40'>
-            <Breadcrumb />
+
           </div>
         <div className="p-6 w-full px-40 mx-auto rounded-lg">
       <div className="flex flex-col md:flex-row  gap-9">
@@ -137,9 +139,9 @@ const Details = () => {
 
 <div className='mt-24'>
                <div className=''>
-         <div className='flex popmed justify-between'>
-            <p className='border-b-2 text-[#CBA135] border-[#CBA135] w-24'>Review (127)</p>
-            <p className='text-[#CBA135] popbold w-24'>View all</p>
+         <div className='flex popmed w-full justify-between'>
+            <p className='border-b-2 text-[#CBA135] border-[#CBA135] w-36'>Review (127)</p>
+            <p onClick={()=> setIsModalOpen(true)} className='text-[#CBA135] hover:text-yellow-700 cursor-pointer popbold w-36'>Write a Review</p>
          </div>
          <div className='w-full -mt-1 shadow-md h-1' />
        </div>
@@ -202,6 +204,7 @@ const Details = () => {
         <PreviouslyBought />
     </div>
    </div>
+   <DetailsModal setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
 </div>
   );
 };

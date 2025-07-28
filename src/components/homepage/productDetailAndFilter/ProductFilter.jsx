@@ -3,11 +3,12 @@ import { Button, Checkbox, InputNumber, Select, Slider, Pagination, Rate } from 
 import { RxCross1 } from "react-icons/rx";
 import Radio from 'antd/es/radio/radio';
 import Breadcrumb from '../../others/Breadcrumb';
-import { Link } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 
 const categories = ['Sofas', 'Sectionals', 'Loveseats','others'];
 const brands = ['Home Decor Masters', 'Modern Living Co.', 'Vintage Comfort', 'Elite Furniture', 'Elegant Furniture Co.', 'other' , 'hudai', 'bata'];
+
 
 const products = Array.from({ length: 9 }).map((_, index) => ({
   id: index + 1,
@@ -26,12 +27,17 @@ const ProductFilter = () => {
   const [availability, setAvailability] = useState(false);
   const [sort, setSort] = useState('Newest');
 
+  const location = useLocation()
+
+  console.log(location.pathname)
+
   return (
 <div className='bg-[#FAF8F2]'>
         <div className='flex px-40 gap-2 pb-6 pt-1'>
      <Breadcrumb />
     </div>
-        <div className="flex gap-6 p-7 px-40 ">
+{
+  location.pathname === "/filter" &&         <div className="flex gap-6 p-7 px-40 ">
       {/* Filters */}
 
 
@@ -151,7 +157,7 @@ const ProductFilter = () => {
         {/* Product Grid */}
         <div className="grid grid-cols-1 m sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => (
-            <Link to='/details' key={product.id} className="bg-white  rounded-2xl shadow-md relative">
+            <Link to='details' key={product.id} className="bg-white  rounded-2xl shadow-md relative">
               <img src={product.img} alt={product.title} className="w-full rounded-t-2xl h-64 object-cover  mb-4" />
              <div className='px-4 space-y-2 p-5'>
                  <h3 className="popmed text-lg">{product.title}</h3>
@@ -183,6 +189,8 @@ const ProductFilter = () => {
         </div>
       </div>
     </div>
+}
+<Outlet />
 </div>
   );
 };

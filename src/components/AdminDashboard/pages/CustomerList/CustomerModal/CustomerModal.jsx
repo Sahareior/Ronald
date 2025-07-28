@@ -88,7 +88,7 @@ const CustomerModal = ({ isModalOpen, setIsModalOpen }) => {
         open={isOrderHistoryOpen}
         onCancel={() => setIsOrderHistoryOpen(false)}
         footer={null}
-        width={500}
+        width={600}
       >
         <OrderHistory />
       </Modal>

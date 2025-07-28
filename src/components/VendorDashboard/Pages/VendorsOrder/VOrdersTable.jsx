@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import { Table, Select, Checkbox, Button, message } from 'antd';
+import { Table, Select, message } from 'antd';
 import { FaEdit } from 'react-icons/fa';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 import { RiArrowDropDownLine } from 'react-icons/ri';
-import CustomModal from '../../../checkout/modal/CustomModal';
-import CustomerModal from './CustomerModal/CustomerModal';
+
 import Swal from 'sweetalert2';
+import VOrderModal from './VOrderModal/VOrderModal';
 
 const { Option } = Select;
 
-const CustomerTable = () => {
+const VOrdersTable = () => {
   const [pageSize, setPageSize] = useState(10);
+    const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-     const [isModalOpen, setIsModalOpen] = useState(false);
+  const [target,setTarget] = useState("")
   const [dataSource, setDataSource] = useState(
     Array.from({ length: 247 }, (_, i) => ({
       key: i + 1,
@@ -26,18 +27,12 @@ const CustomerTable = () => {
     }))
   );
 
-
-
   const columns = [
     {
       title: 'Order ID',
       dataIndex: 'orderId',
       key: 'orderId',
-      render: text => (
-        <div>
-          <a className="text-[#CBA135]">{text}</a>
-        </div>
-      ),
+      render: text => <a className="text-[#CBA135]">{text}</a>,
     },
     {
       title: 'Customer',
@@ -65,13 +60,7 @@ const CustomerTable = () => {
       dataIndex: 'status',
       key: 'status',
       render: status => (
-        <span
-          className={`px-2 py-1 rounded text-xs font-medium ${
-            status === 'Paid'
-              ? 'bg-green-100 text-green-600'
-              : 'bg-yellow-100 text-yellow-600'
-          }`}
-        >
+        <span className={`px-2 py-1 rounded text-xs font-medium ${status === 'Paid' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'}`}>
           {status}
         </span>
       ),
@@ -80,14 +69,25 @@ const CustomerTable = () => {
       title: 'Action',
       key: 'action',
       render: (_, record) => (
-        <div className="flex items-center gap-3">
-        
-          <IoEyeOutline onClick={()=> setIsModalOpen(true)} className="text-gray-400 cursor-pointer" size={20} />
-            <MdDelete
-                     className="text-red-400 cursor-pointer"
-                     size={20}
-                     onClick={() => handleDelete([record.key])}
-                   />
+        <div className="flex items-center gap-6">
+          <FaEdit onClick={()=>{
+            setIsModalOpen(true);
+            setTarget('edit')
+          }} className="text-[#CBA135] cursor-pointer" size={20} />
+          <IoEyeOutline
+  onClick={() => {
+    setIsModalOpen(true);
+    setTarget('eye');
+  }}
+  className="text-gray-400 cursor-pointer"
+  size={20}
+/>
+
+          <MdDelete
+            className="text-red-400 cursor-pointer"
+            size={20}
+            onClick={() => handleDelete([record.key])}
+          />
         </div>
       ),
     },
@@ -102,10 +102,9 @@ const CustomerTable = () => {
     if (action === 'delete') {
       handleDelete(selectedRowKeys);
     } else if (action === 'edit') {
-      message.info('Bulk edit not implemented in this example.');
+      message.info('Bulk edit not implemented.');
     }
   };
-
 
 const handleDelete = (keys) => {
   Swal.fire({
@@ -134,8 +133,8 @@ const handleDelete = (keys) => {
 
 
   return (
-    <div className="bg-white p-4 rounded relative shadow-md">
-      {/* Bulk Actions Header */}
+    <div className="bg-white p-4 rounded relative ">
+      {/* Bulk Action Dropdown */}
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-2">
           <Select
@@ -145,8 +144,11 @@ const handleDelete = (keys) => {
             onChange={handleBulkAction}
             suffixIcon={<RiArrowDropDownLine />}
           >
-            <Option value="delete">Delete Selected</Option>
-
+            <Option value="All">All</Option>
+            <Option value="none">None</Option>
+            <Option value="Paid">Paid</Option>
+            <Option value="Unpaid">Unpaid</Option>
+            {/* <Option value="edit">Edit Selected</Option> */}
           </Select>
           <span className="text-sm text-gray-500">
             {selectedRowKeys.length} selected
@@ -162,6 +164,7 @@ const handleDelete = (keys) => {
         }}
         columns={columns}
         dataSource={dataSource}
+        className="relative"
         pagination={{
           pageSize,
           total: dataSource.length,
@@ -193,9 +196,9 @@ const handleDelete = (keys) => {
           </div>
         )}
       />
-      <CustomerModal setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
+      <VOrderModal isModalOpen={isModalOpen} target={target} setIsModalOpen={setIsModalOpen} />
     </div>
   );
 };
 
-export default CustomerTable;
+export default VOrdersTable;

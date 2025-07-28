@@ -13,7 +13,7 @@ const Checkout = () => {
   };
 
   return (
-<div className='bg-[#FAF8F2]'>
+<div className='bg-[#FAF8F2] pb-12'>
   <div className=' pb-7 px-40'>
      <Breadcrumb />
    <div className='py-4 pb-6'>
@@ -22,7 +22,7 @@ const Checkout = () => {
 
    </div>
        <div className=' flex gap-8'>
-        <div className=" bg-[#E5E7EB] p-6 md:p-5 w-full  mx-auto rounded-lg">
+        <div className=" bg-[#EAE7E1] p-6 md:p-5 w-full  mx-auto rounded-lg">
       <h2 className="text-xl font-semibold mb-6">Shipping Information</h2>
 
       <Form
@@ -33,50 +33,47 @@ const Checkout = () => {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Form.Item name="fullname" label="Full Name" rules={[{ required: true, message: 'Please enter your full name' }]}>
-            <Input placeholder="Enter full name" />
+            <Input className='h-[40px]' placeholder="Enter full name" />
           </Form.Item>
 
           <Form.Item name="phone" label="Phone Number" rules={[{ required: true, message: 'Please enter your phone number' }]}>
-            <Input addonBefore={<Select defaultValue="+880" className="w-20">
-              <Option value="+880">BD</Option>
-              <Option value="+91">IN</Option>
-            </Select>} />
+<Input className='h-[40px]' placeholder="Enter phone number" />
           </Form.Item>
         </div>
 
         <Form.Item name="email" label="Email Address" rules={[{ type: 'email', message: 'Enter a valid email' }]}>
-          <Input placeholder="example@email.com" />
+          <Input className='h-[40px]' placeholder="example@email.com" />
         </Form.Item>
 
         <Form.Item name="street" label="Street Address">
-          <Input placeholder="House number and street name" />
+          <Input className='h-[40px]' placeholder="House number and street name" />
         </Form.Item>
 
         <Form.Item name="landmark" label="Landmark">
-          <Input placeholder="Near Central Mosque, opposite University" />
+          <Input className='h-[40px]' placeholder="Near Central Mosque, opposite University" />
         </Form.Item>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Form.Item name="apartment" label="Apartment name">
-            <Input placeholder="Aqua Tower" />
+            <Input className='h-[40px]' placeholder="Aqua Tower" />
           </Form.Item>
 
           <Form.Item name="floor" label="Floor Number">
-            <Input placeholder="5" />
+            <Input className='h-[40px]' placeholder="5" />
           </Form.Item>
 
           <Form.Item name="flat" label="Flat number">
-            <Input placeholder="C4" />
+            <Input className='h-[40px]' placeholder="C4" />
           </Form.Item>
         </div>
 
         <div className="grid w-8/12 grid-cols-1 md:grid-cols-2 gap-4">
           <Form.Item name="city" label="City">
-            <Input placeholder="Dhaka" />
+            <Input className='h-[40px]' placeholder="Dhaka" />
           </Form.Item>
 
           <Form.Item name="zip" label="Zip Code">
-            <Input placeholder="00000" />
+            <Input className='h-[40px]' placeholder="00000" />
           </Form.Item>
         </div>
 
@@ -87,7 +84,7 @@ const Checkout = () => {
           </Form.Item>
         </div>
 
-        <Form.Item className="mt-1 mx-auto flex justify-center items-center">
+        <Form.Item className="mt-4 mx-auto flex justify-center items-center">
           <Button
             type="primary"
             htmlType="submit"
@@ -160,6 +157,42 @@ const Checkout = () => {
 
 </div>
 </div>
+
+<div className="space-y-4  px-40 mx-auto ">
+<div className='bg-[#E6E3DD] p-6'>
+    <h3 className="text-[20px] py-9 popbold">Payment Method</h3>
+
+  <div className="flex flex-col md:flex-row gap-6">
+    {/* Left Textarea */}
+    <div className="w-full md:w-3/5">
+      <label htmlFor="sellerCode1" className="block popmed text-sm mb-2">
+        Seller Code (optional)
+      </label>
+      <textarea
+        id="sellerCode1"
+        rows={5}
+        placeholder="Enter seller code or comments"
+        className="w-full rounded-md border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] transition-all resize-none"
+      ></textarea>
+    </div>
+
+    {/* Right Textarea */}
+    <div className="w-full">
+      <label htmlFor="sellerCode2" className="block popmed text-sm mb-2">
+        Seller Code (optional)
+      </label>
+      <textarea
+        id="sellerCode2"
+        rows={5}
+        placeholder="Enter seller code or comments"
+        className="w-full rounded-md border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] transition-all resize-none"
+      ></textarea>
+    </div>
+  </div>
+</div>
+</div>
+
+
 </div>
   );
 };

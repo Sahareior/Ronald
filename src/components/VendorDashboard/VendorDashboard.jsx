@@ -24,61 +24,37 @@ const items = [
   {
     key: '1',
     icon: <GoGraph size={16} />,
-    label: <Link to="admin-overview">Home</Link>,
+    label: <Link to="vendor-overview">Home</Link>,
   },
   {
     key: '2',
     icon: <FaCartShopping size={16}/>,
-    label: <Link to="admin-orders">Orders</Link>,
+    label: <Link to="vendor-order">Orders</Link>,
   },
   {
     key: '3',
     icon: <IoIosPeople size={16}/>,
-    label: <Link to="customers">Customers</Link>,
+    label: <Link to="vendor-payment">Payment</Link>,
   },
   {
     key: '4',
     icon: <IoPricetagSharp size={16}/>,
-    label: <Link to="vendors">Vendor</Link>,
+    label: <Link to="promotion">Promotions</Link>,
   },
   {
     key: '5',
     icon: <FaBox  size={16}/>,
-    label: <Link to="productslist">Products</Link>,
+    label: <Link to="vendor-products">Products</Link>,
   },
   {
     key: '6',
     icon: <LuMessageSquareText size={16}/>,
-    label: <Link className='flex w-full items-center gap-2' to="messages">Message <p className='w-4 h-4 gap-5 flex justify-center items-center rounded-full bg-[#CBA135] text-white'>7</p></Link>,
+    label: <Link className='flex w-full items-center gap-2' to="vendor-message">Message <p className='w-4 h-4 gap-5 flex justify-center items-center rounded-full bg-[#CBA135] text-white'>7</p></Link>,
   },
-    {
-    key: '7',
-    icon: <GrAnalytics size={16}/>,
-    label: <Link to="analytics">Analytics</Link>,
-  },
-  {
-    key: '8',
-    icon: <FaEdit size={16}/>,
-    label: <Link to="content">Content</Link>,
-  },
- {
-    key: '9',
-    icon: <FaFantasyFlightGames size={16} />,
-    label: 'Settings',
-    children: [
-      {
-        key: '9-1',
-        label: <Link to="terms">Terms and Conditions</Link>,
-      },
-      {
-        key: '9-2',
-        label: <Link to="privacy">Privacy Policy</Link>,
-      },
-    ],
-  },
+ 
 ];
 
-const AdminDashboard = () => {
+const VendorDashboard = () => {
 
 
 
@@ -125,14 +101,14 @@ const AdminDashboard = () => {
          
             <BellOutlined style={{ fontSize: 16, cursor: 'pointer', Color:'black' }} />
         
-         <Link to='/admin-dashboard/admin-profile'>
+         <Link to='/vendor-dashboard/vendor-profile'>
           <Avatar className='w-[24px] h-[24px]' src="https://i.pravatar.cc/40" />
          </Link>
         </div>
        </div>
         </Header>
 
-        <Content className="bg-[#FAF8F2] px-2" style={{ margin: '0' }}>
+        <Content className="bg-[#FAF8F2] h-[85vh] overflow-y-scroll px-2" style={{ margin: '0' }}>
           <Outlet />
         </Content>
       </Layout>
@@ -140,4 +116,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default VendorDashboard;

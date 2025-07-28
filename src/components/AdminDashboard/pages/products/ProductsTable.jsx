@@ -5,6 +5,7 @@ import { IoEyeOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import ProductsModal from './ProductsModal/ProductsModal';
+import Swal from 'sweetalert2';
 
 const { Option } = Select;
 
@@ -24,12 +25,32 @@ const ProductsTable = () => {
     }))
   );
 
-  const handleDelete = (keys) => {
-    const newData = dataSource.filter(item => !keys.includes(item.key));
-    setDataSource(newData);
-    setSelectedRowKeys([]);
-    message.success(`${keys.length} product(s) deleted.`);
-  };
+
+const handleDelete = (keys) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const newData = dataSource.filter(item => !keys.includes(item.key));
+      setDataSource(newData);
+      setSelectedRowKeys([]);
+      message.success(`${keys.length} order(s) deleted.`);
+
+      Swal.fire({
+        title: "Deleted!",
+        text: "Your file has been deleted.",
+        icon: "success"
+      });
+    }
+  });
+};
+
 
   const handleBulkAction = (action) => {
     if (selectedRowKeys.length === 0) {

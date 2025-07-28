@@ -2,7 +2,7 @@ import { Avatar, Button, Popover } from 'antd';
 import React, { useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
-const OrderDetails = () => {
+const VOrderDetails = () => {
     const [open, setOpen] = useState(false);
 
      const hide = () => {
@@ -124,4 +124,4 @@ const OrderDetails = () => {
   );
 };
 
-export default OrderDetails;
+export default VOrderDetails;

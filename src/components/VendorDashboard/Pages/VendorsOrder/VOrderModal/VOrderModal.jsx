@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button, Modal } from 'antd';
-import OrderDetails from './OrderDetails';
-import EditOrder from './EditOrder';
 
-const OrderModal = ({ isModalOpen, setIsModalOpen,target }) => {
+import VOrderDetails from './VOrderDetails';
+import VEditOrder from './VEditOrder';
+
+const VOrderModal = ({ isModalOpen, setIsModalOpen,target }) => {
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -38,7 +39,7 @@ const OrderModal = ({ isModalOpen, setIsModalOpen,target }) => {
       >
       <div className='h-[70vh] px-4 pb-8 overflow-y-scroll'>
         {
-            target === 'eye'? <OrderDetails /> : <EditOrder />
+            target === 'eye'? <VOrderDetails /> : <VEditOrder />
         }
           {/* <OrderDetails /> */}
           {/* <EditOrder /> */}
@@ -48,4 +49,4 @@ const OrderModal = ({ isModalOpen, setIsModalOpen,target }) => {
   );
 };
 
-export default OrderModal;
+export default VOrderModal;

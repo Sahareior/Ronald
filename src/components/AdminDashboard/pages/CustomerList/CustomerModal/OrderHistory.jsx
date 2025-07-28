@@ -4,16 +4,16 @@ import { FiCopy } from 'react-icons/fi';
 
 const OrderHistory = () => {
   return (
-    <div className="flex items-center justify-center bg-black bg-opacity-50 ">
-      <div className="bg-[#f9f8f6] max-w-2xl w-full rounded-md shadow-lg">
+    <div className="flex  items-center justify-center bg-[#FAF8F2] bg-opacity-50 ">
+      <div className=" p-10 w-full rounded-md shadow-lg">
         {/* Header */}
-        <div className="border-b-4 border-blue-500 px-6 py-4 text-center">
+        <div className=" px-6 py-4 text-center">
           <h2 className="text-xl font-bold text-gray-800">Order History!</h2>
           <p className="text-sm text-gray-600">Thank You for Your Order!</p>
         </div>
 
         {/* Body */}
-        <div className="px-6 py-6 bg-white rounded-b-md">
+        <div className="px-6 py-6 rounded-b-md">
           {/* Order Details */}
           <div className="mb-4">
             <h3 className="font-semibold text-gray-700 text-sm mb-3">Order Details</h3>
@@ -31,7 +31,7 @@ const OrderHistory = () => {
             </div>
           </div>
 
-          <hr className="my-4" />
+          <div className="my-4 bg-black h-[0.7px]" />
 
           {/* Product List */}
           <div className="mb-4">
@@ -47,7 +47,7 @@ const OrderHistory = () => {
             ))}
           </div>
 
-          <hr className="my-4" />
+           <div className="my-4 bg-black h-[0.7px]" />
 
           {/* Price Breakdown */}
           <div className="text-sm text-gray-800 space-y-2">
@@ -67,8 +67,8 @@ const OrderHistory = () => {
               <p>Total Discount</p>
               <p>-$100.00</p>
             </div>
-
-            <div className="flex justify-between border-t pt-4 mt-2 font-semibold text-lg text-yellow-600">
+  <div className="my-4 bg-black h-[0.7px]" />
+            <div className="flex justify-between  pt-4 mt-2 font-semibold text-lg text-yellow-600">
               <p>Total</p>
               <p>$7030.00</p>
             </div>

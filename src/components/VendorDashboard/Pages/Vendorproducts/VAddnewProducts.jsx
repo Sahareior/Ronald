@@ -3,7 +3,7 @@ import { Button, Switch } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { FaFileUpload } from 'react-icons/fa';
 
-const AddnewProducts = () => {
+const VAddnewProducts = () => {
   return (
     <div>
       {/* Header */}
@@ -163,4 +163,4 @@ const AddnewProducts = () => {
   );
 };
 
-export default AddnewProducts;
+export default VAddnewProducts;

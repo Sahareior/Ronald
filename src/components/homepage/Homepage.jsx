@@ -5,7 +5,7 @@ import GuestLayout from './layouts/GuestLayout';
 import SellersLayout from './layouts/SellersLayout';
 
 const Homepage = () => {
-  const userType = 'seller'; // hardcoded for now
+  const userType = 'customer'; // hardcoded for now
 
   if (userType === 'customer') {
     return (

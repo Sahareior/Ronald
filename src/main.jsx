@@ -4,6 +4,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { Provider } from 'react-redux'
 import './index.css'
 import App from './App.jsx'
 import Dashboard from './components/AdminDashboard/AdminDashboard.jsx';
@@ -38,6 +39,21 @@ import AddnewProducts from './components/AdminDashboard/pages/products/AddnewPro
 import AllMessages from './components/AdminDashboard/pages/Messages/AllMessages.jsx';
 import Content from './components/AdminDashboard/pages/content/Content.jsx';
 import AdminProfile from './components/AdminDashboard/pages/Profile/AdminProfile.jsx';
+import ReturnExchangeForm from './components/homepage/customersHomepage/ReturnExchangeForm.jsx';
+import VendorDashboard from './components/VendorDashboard/VendorDashboard.jsx';
+import VendorOverview from './components/VendorDashboard/Pages/VendorsOverview/VendorOverview.jsx';
+import VOrders from './components/VendorDashboard/Pages/VendorsOrder/VOrders.jsx';
+import VendorPayment from './components/VendorDashboard/Pages/VendorPayment/VendorPayment.jsx';
+import PromotionsList from './components/VendorDashboard/Pages/Promotion/PromotionsList.jsx';
+import CreatePromotion from './components/VendorDashboard/Pages/Promotion/CreatePromotion .jsx';
+import VendorMessages from './components/VendorDashboard/Pages/VendorMessages/VendorMessages.jsx';
+import TermsConditions from './components/AdminDashboard/pages/Settings/TermsConditions.jsx';
+import PrivacyPolicySettings from './components/AdminDashboard/pages/Settings/PrivacyPolicySettings .jsx';
+import ReturnPolicyOverview from './components/homepage/customersHomepage/ReturnPolicyOverview.jsx';
+import { store } from './redux/store.js';
+import VendorProfile from './components/VendorDashboard/Pages/Profile/VendorProfile.jsx';
+
+import VProductsList from './components/VendorDashboard/Pages/Vendorproducts/VProductsList.jsx';
 
 const router = createBrowserRouter([
   {
@@ -48,8 +64,16 @@ const router = createBrowserRouter([
         path: "/", // default homepage layout
         element: <Homepage />, // this handles Guest/Customer/Seller layout
         children: [
-          { path: "filter", element: <ProductFilter /> },
-          { path: "details", element: <Details /> },
+        {
+      path: "filter",
+      element: <ProductFilter />,
+      children: [
+        {
+          path: "details", // now `/filter/details` will work
+          element: <Details />,
+        },
+      ],
+    },
           { path: "whitelist", element: <WhiteList /> },
           { path: "cart", element: <Cart /> },
           { path: "checkout", element: <Checkout /> },
@@ -59,7 +83,9 @@ const router = createBrowserRouter([
           { path: "order-confirmation", element: <ConfirmationPage /> },
           { path: "active", element: <ActiveUsers /> },
           { path: "profile", element: <Profile /> },
-          { path: "regester-seller", element: <SellerReg /> }, // accessible at /regester-seller
+          { path: "regester-seller", element: <SellerReg /> }, 
+          {path: "return",  element: <ReturnExchangeForm />},
+          {path: 'return-policy', element: <ReturnPolicyOverview />}
         ],
       },
       // ✅ These are outside Homepage layout
@@ -115,8 +141,58 @@ const router = createBrowserRouter([
         path: 'admin-profile',
         element: <AdminProfile />
       },
+       {
+        path: 'terms',
+        element: <TermsConditions />
+      },
+       {
+        path: 'privacy',
+        element: <PrivacyPolicySettings />
+      }
     ]
-
+  },
+  {
+    path: "vendor-dashboard",
+    element: <VendorDashboard />,
+    children: [
+      {
+        path: 'vendor-overview',
+        element: <VendorOverview />
+      },
+      {
+        path: "vendor-order",
+        element: <VOrders />
+      },
+      {
+        path: 'vendor-payment',
+        element: <VendorPayment />
+      },
+      {
+        path: 'addproducts',
+        element: <AddnewProducts />
+      },
+      {
+        path: 'vendor-products',
+        element: <VProductsList />
+      },
+      {
+        path: 'promotion',
+        element: <PromotionsList />
+      },
+      {
+            path: 'create-promotion',
+            element: <CreatePromotion />
+      },
+      {
+            path: 'vendor-message',
+            element: <VendorMessages />
+      },
+      {
+        path: 'vendor-profile',
+        element: <VendorProfile />
+      }
+     
+    ]
   }
 ]);
 
@@ -125,6 +201,9 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+        <Provider store={store}>
     <RouterProvider router={router} />
+  
+    </Provider>,
   </StrictMode>,
 )

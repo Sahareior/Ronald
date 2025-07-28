@@ -54,7 +54,7 @@ const Cart = () => {
   </div>
 </div>
 
-):          <div className="flex-1 p-5 bg-[#E5E7EB]">
+):          <div className="flex-1 p-5 bg-[#EAE7E1]">
             {[1, 2, 3].map((item, index) => (
               <div
                 key={index}

@@ -29,8 +29,8 @@ const Footer = () => {
           <ul className="space-y-2 text-gray-300">
             <li><a href="#" className="hover:text-white transition">Track Order</a></li>
             <li><Link to='/active' className="hover:text-white transition">Help Center/Live chat</Link></li>
-            <li><a href="#" className="hover:text-white transition">Return Request</a></li>
-            <li><a href="#" className="hover:text-white transition">Return Policy</a></li>
+            <li><Link to="/return" className="hover:text-white transition">Return Request</Link></li>
+            <li><Link to="/return-policy" className="hover:text-white transition">Return Policy</Link></li>
           </ul>
         </div>
       </div>
