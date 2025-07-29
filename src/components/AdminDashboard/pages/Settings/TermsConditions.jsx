@@ -1,34 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaEdit } from "react-icons/fa";
+import EditSection from "./editor/EditSection";
 
 const TermsConditions = () => {
+  const [clicked, setClicked] = useState(false)
+
   return (
     <div className="w-full mx-auto bg-white rounded-lg shadow-md p-6 mt-6">
       {/* Header */}
       <div className="flex justify-between items-start border-b pb-4 mb-4">
         <div>
-          <h2 className="text-lg font-semibold text-gray-800">
+          <h2 className="text-lg popbold text-gray-800">
             Terms & Conditions Document
           </h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm popreg text-gray-500 mt-1">
             Manage your platform’s terms and conditions that govern user interactions.
           </p>
         </div>
         <div className="text-sm text-gray-500 text-right">
-          <p className="text-xs">Last updated</p>
-          <p className="font-medium">July 18, 2025</p>
+          <p className="text-xs text-[#6B7280] popreg">Last updated</p>
+          <p className="popmed">July 18, 2025</p>
         </div>
       </div>
 
       {/* Display Settings */}
       <div className="mb-6 bg-[#F9FAFB] p-5">
-        <p className="font-medium text-gray-700 mb-2">Display Settings</p>
+        <p className="popmed text-[#111827] mb-2">Display Settings</p>
         <div className="flex flex-wrap gap-6">
-          <label className="flex items-center gap-2 text-sm text-gray-700">
-            <input type="checkbox" className="accent-[#CBA135]" />
+          <label className="flex items-center gap-2 text-sm popreg text-gray-700">
+            <input type="checkbox" className="accent-[#CBA135] " />
             Show on Registration
           </label>
-          <label className="flex items-center gap-2 text-sm text-gray-700">
+          <label className="flex items-center gap-2 popreg text-sm text-gray-700">
             <input type="checkbox" className="accent-[#CBA135]" />
             Show on Vendor Onboarding
           </label>
@@ -38,13 +41,16 @@ const TermsConditions = () => {
       {/* Content */}
       <div className="relative p-5">
         {/* Edit Icon */}
-        <button className="absolute right-0 top-0 text-yellow-600 hover:text-yellow-700">
+        <button onClick={()=> setClicked(state => !state)} className="absolute right-0 top-0 text-yellow-600 hover:text-yellow-700">
           <FaEdit size={17}/>
         </button>
 
-        <ol className="space-y-5 text-sm text-gray-800 leading-relaxed pl-4 list-decimal">
+ {
+  clicked? <EditSection /> :
+   <div>
+          <ol className="space-y-5 text-[20px] text-gray-800 leading-relaxed pl-4 list-decimal">
           <li>
-            <strong>Introduction</strong><br />
+            <strong className="popbold text-[20px]">Introduction</strong><br />
             Welcome to WRIKOO. These Terms and Conditions govern your use of our marketplace platform. By accessing or using our services, you agree to be bound by these terms.
           </li>
           <li>
@@ -72,6 +78,8 @@ const TermsConditions = () => {
             Payments are processed securely through our platform. Commission fees and payment schedules are outlined in the vendor agreement.
           </li>
         </ol>
+  </div>
+ }
       </div>
     </div>
   );

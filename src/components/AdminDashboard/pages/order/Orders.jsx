@@ -16,11 +16,13 @@ const Orders = () => {
   return (
     <div className="px-6 py-4">
 
-  <div className='border relative border-[#E5E7EB]'>
-      <TextArea className='border-slate-500 border popbold placeholder:text-[#66666666] placeholder:text-[20px] relative placeholder:pt-7 text-black' placeholder='Manage and track all customer orders' rows={5} />
-      <Button className='bg-[#CBA135] text-white popmed px-7 absolute top-9 right-6 py-5 '>
+  <div className='border w-full relative py-14 bg-[#FFFFFF] rounded-xl border-[#E5E7EB]'>
+  <div className='flex justify-between w-full items-center absolute top-5  p-4'>
+    <p className='popbold text-slate-400 text-xl'>Manage and track all customer orders</p>
+          <Button className='bg-[#CBA135] text-white popmed px-7 right-6 py-5 '>
       <FaDownload />  Export Now
       </Button>
+  </div>
     </div>
 
       <div className="flex rounded-xl bg-white p-5 flex-col sm:flex-row mt-6 justify-between items-start sm:items-center gap-4">

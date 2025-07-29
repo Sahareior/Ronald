@@ -14,6 +14,32 @@
     color: black;
 }
 
+/* For custom radio color #CBA135 */
+.custom-radio-brown .ant-radio-checked .ant-radio-inner {
+  border-color: #CBA135 !important;
+  background-color: #CBA135 !important;
+}
+
+.custom-radio-brown .ant-radio-inner {
+  border-width: 2px;
+}
+
+
+.custom-input:hover {
+  border-color: #d9d9d9 !important;
+  box-shadow: none !important;
+}
+/* Set brown color for selected radio */
+.custom-radio .ant-radio-checked .ant-radio-inner {
+  border-color: #CBA135; /* brown border */
+  background-color: #CBA135; /* brown fill */
+}
+
+.custom-radio .ant-radio-inner {
+  border-width: 2px; /* thicker border */
+}
+
+
 /* Keep your custom track and handle color */
 .ant-slider .ant-slider-track {
   background-color: #CBA135;
@@ -43,6 +69,11 @@
 background-color: #CBA135;
 border: none;
 color: white;
+}
+
+.ant-rate-star-zero svg {
+  fill: #a0a0a0 !important; /* Brighter gray for better visibility */
+  opacity: 1 !important;
 }
 
 .ant-modal .ant-modal-content {

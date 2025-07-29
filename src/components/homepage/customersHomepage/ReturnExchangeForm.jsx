@@ -8,7 +8,7 @@ const ReturnExchangeForm = () => {
      <div className='px-6'>
        <Breadcrumb />
      </div>
-      <div className=" flex items-center justify-center   px-4">
+      <div className=" flex items-center justify-center max-w-3xl mx-auto pb-11  px-4">
 <div className='bg-[#EAE7E1] w-full py-12 p-6'>
         <h2 className="text-center popbold  text-xl md:text-2xl font-semibold text-gray-800 mb-6">
           Return / Exchange Request

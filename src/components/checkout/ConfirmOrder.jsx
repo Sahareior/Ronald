@@ -24,9 +24,9 @@ const ConfirmOrder = () => {
       </div>
 
       {/* Payment Options */}
-      <Radio.Group className="w-full space-y-4" style={{ width: '100%' }}>
+      <Radio.Group className="w-full custom-radio-brown space-y-4" style={{ width: '100%' }}>
         <div className="border rounded-md p-4 hover:shadow transition">
-          <Radio value="mobile" className="w-full">
+          <Radio value="mobile" className="w-full ">
             <div>
               <span className="font-medium">Mobile Money</span>
               <p className="text-sm text-gray-500 mt-1">M-Pesa, Airtel Money, MTN MoMo</p>

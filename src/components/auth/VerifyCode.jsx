@@ -7,7 +7,7 @@ const VerifyCode = () => {
       {/* Background image */}
       <img
         className="w-full h-full object-cover absolute inset-0"
-        src="/image/auth.png"
+        src="/image/auth2.png"
         alt=""
       />
 
@@ -21,15 +21,14 @@ const VerifyCode = () => {
       {/* Verify Code Card */}
       <div
         className="absolute top-1/2 left-1/2 z-20 transform -translate-x-1/2 -translate-y-1/2 p-12 py-24 rounded-xl w-[90%] max-w-xl text-white space-y-8"
-        style={{
-          background:
-            "linear-gradient(111.03deg, rgba(169, 141, 45, 0.37) -4.98%, rgba(64, 49, 22, 0.37) 100%)",
-          border: "1.5px solid",
-          borderImageSource:
-            "linear-gradient(109.49deg, rgba(59, 44, 19, 0.6) 0%, rgba(166, 135, 31, 0.6) 100%)",
-          backdropFilter: "blur(30px)",
-          WebkitBackdropFilter: "blur(30px)",
-        }}
+  style={{
+    background: 'linear-gradient(109.52deg, rgba(205, 205, 205, 0.37) 0%, rgba(25, 22, 15, 0.37) 100%)',
+ 
+    borderImage: 'linear-gradient(109.49deg, rgba(59, 44, 19, 0.6) 0%, rgba(166, 135, 31, 0.6) 100%)',
+  
+    backdropFilter: 'blur(9px)',
+    WebkitBackdropFilter: 'blur(40px)',
+  }}
       >
         <h2 className="text-[34px] font-semibold text-center">Verify Code</h2>
 

@@ -4,15 +4,29 @@ import { FaCalendar } from 'react-icons/fa';
 import { MdOutlineAttachMoney } from 'react-icons/md';
 import LineCharts from './_components/LineChart';
 import BarCharts from './_components/BarCharts';
+import { IoIosWarning } from "react-icons/io";
+import {
+ 
+  MdOutlineShoppingCart,
+  MdPeopleAlt,
+  MdStore,
+  MdInventory,
+  MdReplay,
+} from "react-icons/md";
 
 const Analytics = () => {
-      const cards = [
-    { title: "Total Revenue", value: "$127,500", change: "+12.5%", color: "#16A34A" },
-    { title: "Total Orders", value: "3,420", change: "+8.2%", color: "#3B82F6" },
-    { title: "New Users", value: "1,120", change: "+5.7%", color: "#10B981" },
-    { title: "Bounce Rate", value: "23%", change: "-3.2%", color: "#EF4444" },
-   
-  ];
+
+  const dashboardStats = [
+  {
+    title: "Total Customers",
+    value: "12,847",
+  },
+  {
+    title: "Total Sellers",
+    value: "2,341",
+  },
+];
+
 
   const topProducts = [
   { name: 'Sofa', percentage: 72 },
@@ -21,6 +35,44 @@ const Analytics = () => {
   { name: 'Chair', percentage: 98 },
   { name: 'Cabinet', percentage: 69 },
 ];
+
+
+const cards = [
+  {
+    title: "Total Revenue",
+    value: "$127,500",
+    change: "+12.5%",
+    color: "#16A34A",
+    icon: <MdOutlineAttachMoney className="text-[#CBA135]" size={26} />,
+    footerText: "Increase in sales revenue",
+  },
+  {
+    title: "Total Orders",
+    value: "3,420",
+    change: "+8.2%",
+    color: "#3B82F6",
+    icon: <MdOutlineShoppingCart className="text-[#3B82F6]" size={26} />,
+    footerText: "More orders received",
+  },
+  {
+    title: "Active Sellers",
+    value: "1,120",
+    change: "+5.7%",
+    color: "#10B981",
+    icon: <MdPeopleAlt className="text-[#10B981]" size={26} />,
+    footerText: "Growth in customer base",
+  },
+  {
+    title: "Low Stock",
+    value: "15",
+    // change: "-3.2%",
+    color: "#EF4444",
+    icon: <IoIosWarning className="text-[#EF4444]" size={26} />,
+    footerText: "Product",
+  },
+
+];
+
     return (
         <div>
 
@@ -44,7 +96,9 @@ const Analytics = () => {
         ]}
       />
     </div>
-                  <div className="grid grid-cols-1 mt-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-10">
+
+{/* 
+                      <div className="grid grid-cols-1 mt-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-10">
                     {cards.map((card, index) => (
                       <div
                         key={index}
@@ -60,7 +114,28 @@ const Analytics = () => {
                         </p>
                       </div>
                     ))}
-                  </div>
+                  </div> */}
+
+<div className="grid grid-cols-1 mt-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-10">
+  {cards.map((card, index) => (
+    <div
+      key={index}
+      className="bg-white p-9 rounded-xl shadow-md hover:shadow-lg transition duration-300 space-y-3  w-full"
+    >
+      <div className="flex items-center justify-between">
+        <p className="text-sm font-medium text-gray-700">{card.title}</p>
+        {card.icon}
+      </div>
+      <h3 className="text-3xl font-extrabold popbold text-gray-800">{card.value}</h3>
+      <p className="text-sm font-medium" style={{ color: card.color }}>
+        {card.change}  {card.footerText}
+      </p>
+    </div>
+  ))}
+</div>
+
+
+
 
                   {/*.....................................  */}
 
@@ -84,7 +159,7 @@ const Analytics = () => {
         </div>
 
         {/* Table Head */}
-        <div className="grid grid-cols-4 text-gray-600 text-[14px] popreg border-b pb-2">
+        <div className="grid grid-cols-4 text-gray-600 bg-[#E5E7EB] py-3 text-[14px] popreg border-b pb-2">
           <p className="text-center">Vendor</p>
           <p className="text-center">Products Sold</p>
           <p className="text-center">Revenue</p>
@@ -105,8 +180,8 @@ const Analytics = () => {
       {/* Customer Insights Card */}
       <div className="bg-white p-6 rounded-md shadow w-full lg:w-1/3">
         <p className="text-[18px] font-semibold popbold mb-5 text-gray-800">Customer Insights</p>
-        <div className="grid grid-cols-2 gap-4">
-          {[1, 2, 3].map((_, i) => (
+        <div className="grid grid-cols-1 gap-4">
+          {dashboardStats.map((_, i) => (
             <div key={i} className="p-5 bg-[#EAE7E1] rounded-md">
               <p className="text-[14px] text-gray-600 popreg">Total Customers</p>
               <p className="text-[24px] text-gray-900 popbold">12,847</p>
@@ -114,17 +189,30 @@ const Analytics = () => {
           ))}
         </div>
       </div>
+
     </div>
     {/* charts */}
-<div className="flex items-center gap-6  py-4">
 
-  <div className="w-[50%] bg-white p-5 shadow-md h-[400px]">
-    <LineCharts />
-  </div>
-  <div className="w-[50%] bg-white p-5 shadow-md h-[400px]">
-    <BarCharts />
+<div className="py-4">
+  <div className="flex items-center gap-6">
+    {/* Line Chart */}
+    <div className="w-[50%] bg-white p-5 shadow-md h-[400px] flex flex-col">
+      <p className="popbold text-[20px] mb-4">Furniture Sales Comparison</p>
+      <div className="flex-1">
+        <LineCharts />
+      </div>
+    </div>
+
+    {/* Bar Chart */}
+    <div className="w-[50%] bg-white p-5 shadow-md h-[400px] flex flex-col">
+      <p className="popbold text-[20px] mb-4">Top Product Categories</p>
+      <div className="flex-1">
+        <BarCharts />
+      </div>
+    </div>
   </div>
 </div>
+
 
     <div>
 

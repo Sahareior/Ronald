@@ -62,21 +62,32 @@ const ProductsTable = () => {
   };
 
   const columns = [
-    {
-      title: 'Product Name',
-      dataIndex: 'productName',
-      key: 'productName',
-      render: (text) => <span className="text-[#CBA135] font-medium">{text}</span>,
-    },
+
     {
       title: 'ID',
       dataIndex: 'productId',
       key: 'productId',
+       render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
+    },
+        {
+      title: 'Product Name',
+      dataIndex: 'productName',
+      key: 'productName',
+      render: (text) => <span className="popmed flex items-center gap-3 text-[16px]"><img className='w-7 rounded-full h-7' src="https://plus.unsplash.com/premium_photo-1661964014750-963a28aeddea?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /> {text}</span>,
     },
     {
       title: 'Category',
       dataIndex: 'category',
       key: 'category',
+       render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
     },
     {
       title: 'Price',
@@ -88,6 +99,11 @@ const ProductsTable = () => {
       title: 'Stock',
       dataIndex: 'stock',
       key: 'stock',
+       render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
     },
 
 
@@ -117,7 +133,7 @@ const ProductsTable = () => {
           bordered={false}
           dropdownMatchSelectWidth={false}
           className="w-full"
-          suffixIcon={<RiArrowDropDownLine className="text-lg text-gray-600" />}
+          suffixIcon={<RiArrowDropDownLine className="text-[16px] popmed text-gray-600" />}
         >
           <Option value="Active">Active</Option>
           <Option value="Pending">Pending</Option>

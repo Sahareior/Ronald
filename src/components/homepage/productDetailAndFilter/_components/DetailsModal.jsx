@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Modal, Rate, Upload, message } from 'antd';
+import { Button, Modal, Rate, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import './exta.css'
 
 const DetailsModal = ({ isModalOpen, setIsModalOpen }) => {
   const [rating, setRating] = useState(0);
@@ -9,14 +8,21 @@ const DetailsModal = ({ isModalOpen, setIsModalOpen }) => {
   const [fileName, setFileName] = useState('');
 
   const handleOk = () => {
-    // Here you can handle submit
     if (!review.trim()) {
       message.error('Please write a review before submitting.');
       return;
     }
 
-    console.log('Submitting:', { review, rating, fileName });
+    console.log('Submitted Review:', {
+      review,
+      rating,
+      fileName,
+    });
+
     setIsModalOpen(false);
+    setReview('');
+    setRating(0);
+    setFileName('');
   };
 
   const handleCancel = () => {
@@ -24,7 +30,7 @@ const DetailsModal = ({ isModalOpen, setIsModalOpen }) => {
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
     if (file) {
       setFileName(file.name);
     }
@@ -32,63 +38,71 @@ const DetailsModal = ({ isModalOpen, setIsModalOpen }) => {
 
   return (
     <>
-      <Button type="primary" onClick={() => setIsModalOpen(true)}>
-        Write a Review
-      </Button>
+    
 
       <Modal
-        title={<p className="text-xl p-6 bg-[#FAF8F2] font-semibold">Write a Review</p>}
+        title={<p className="text-xl font-semibold px-6 py-4 bg-[#FAF8F2]">Write a Review</p>}
         open={isModalOpen}
-        onOk={handleOk}
         onCancel={handleCancel}
         footer={null}
+        centered
+        width={600}
       >
-        <div className="p-9 space-y-5">
+        <div className="p-6 space-y-6">
           {/* Review Textarea */}
           <div>
-            <label className="block mb-2 text-sm font-medium">Your Review</label>
+            <label className="block text-sm font-medium mb-1">Your Review</label>
             <textarea
+              className="w-full border border-gray-300 rounded-md px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400"
               rows={4}
-              className="w-full border border-gray-300 rounded-md p-2"
               placeholder="Write your thoughts about the product..."
               value={review}
               onChange={(e) => setReview(e.target.value)}
             />
           </div>
 
-          {/* Product Image Upload */}
+          {/* Image Upload */}
           <div>
-            <label className="block mb-2 text-sm font-medium">Upload Product Image (Optional)</label>
-            <div className="flex items-center gap-1">
+            <label className="block text-sm font-medium mb-1">Upload Product Image (Optional)</label>
+            <div className="flex items-center gap-2">
+              <label htmlFor="uploadFile">
+                <Button icon={<UploadOutlined />} className="bg-[#676767] text-white">
+                  Choose File
+                </Button>
+              </label>
               <input
                 id="uploadFile"
                 type="file"
                 className="hidden"
                 onChange={handleFileChange}
               />
-              <label htmlFor="uploadFile">
-                <Button className='bg-[#676767] text-white' icon={<UploadOutlined />}>Choose File</Button>
-              </label>
               <input
                 disabled
-                className="border px-3 py-1 rounded-md text-sm text-gray-600 bg-white w-full"
                 value={fileName || 'No file selected'}
+                className="flex-1 border px-3 py-1 rounded-md text-sm text-gray-600 bg-white"
               />
             </div>
           </div>
 
-          {/* Rating Input */}
-<div>
-  <label className="block mb-2 text-xl  font-medium text-black">Your Rating</label>
-  <Rate
-    onChange={(value) => setRating(value)}
-    value={rating}
-    className="text-[#CBA135]  " // Optional, may not override directly
-  />
-</div>
+          {/* Rating */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Your Rating</label>
+            <Rate
+              onChange={setRating}
+              value={rating}
+              className="text-[#CBA135] text-xl"
+            />
+          </div>
 
-          <div className='flex justify-center'>
-            <Button className='bg-[#CBA135] text-white px-11'>Submit</Button>
+          {/* Submit Button */}
+          <div className="text-center mt-6">
+            <Button
+              onClick={handleOk}
+              className="bg-[#CBA135] text-white px-10"
+              disabled={!review.trim()}
+            >
+              Submit
+            </Button>
           </div>
         </div>
       </Modal>

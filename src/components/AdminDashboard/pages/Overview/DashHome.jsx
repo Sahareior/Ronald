@@ -1,38 +1,91 @@
 import { MdOutlineAttachMoney } from "react-icons/md";
 import SalesOverview from "./_subComponents/SalesOverview";
 import DashTable from "./_subComponents/DashTable";
+import {
+ 
+  MdOutlineShoppingCart,
+  MdPeopleAlt,
+  MdStore,
+  MdInventory,
+  MdReplay,
+} from "react-icons/md";
 import { FaCheck, FaPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const DashHome = () => {
-  const cards = [
-    { title: "Total Revenue", value: "$127,500", change: "+12.5%", color: "#16A34A" },
-    { title: "Total Orders", value: "3,420", change: "+8.2%", color: "#3B82F6" },
-    { title: "New Users", value: "1,120", change: "+5.7%", color: "#10B981" },
-    { title: "Bounce Rate", value: "23%", change: "-3.2%", color: "#EF4444" },
-    { title: "Total Visits", value: "15,300", change: "+9.1%", color: "#8B5CF6" },
-    { title: "Subscriptions", value: "980", change: "+4.6%", color: "#F59E0B" },
-  ];
+  
+const cards = [
+  {
+    title: "Total Revenue",
+    value: "$127,500",
+    change: "+12.5%",
+    color: "#16A34A",
+    icon: <MdOutlineAttachMoney className="text-[#CBA135]" size={26} />,
+    footerText: "Increase in sales revenue",
+  },
+  {
+    title: "Total Orders",
+    value: "3,420",
+    change: "+8.2%",
+    color: "#3B82F6",
+    icon: <MdOutlineShoppingCart className="text-[#3B82F6]" size={26} />,
+    footerText: "More orders received",
+  },
+  {
+    title: "New Customers",
+    value: "1,120",
+    change: "+5.7%",
+    color: "#10B981",
+    icon: <MdPeopleAlt className="text-[#10B981]" size={26} />,
+    footerText: "Growth in customer base",
+  },
+  {
+    title: "Active Sellers",
+    value: "23%",
+    change: "-3.2%",
+    color: "#EF4444",
+    icon: <MdStore className="text-[#EF4444]" size={26} />,
+    footerText: "Drop in active sellers",
+  },
+  {
+    title: "Low Stock",
+    value: "15,300",
+    change: "+9.1%",
+    color: "#8B5CF6",
+    icon: <MdInventory className="text-[#8B5CF6]" size={26} />,
+    footerText: "Items running low",
+  },
+  {
+    title: "Pending Returns",
+    value: "980",
+    change: "+4.6%",
+    color: "#F59E0B",
+    icon: <MdReplay className="text-red-400" size={26} />,
+    footerText: "Returns awaiting action",
+  },
+];
 
   return (
     <div className="bg-[#FAF8F2] min-h-screen p-6">
-      {/* === Top Cards === */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-5 mb-10">
-        {cards.map((card, index) => (
-          <div
-            key={index}
-            className="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition duration-300 space-y-3 py-11 w-full"
-          >
-            <div className="flex items-center justify-between">
-              <p className="text-sm font-medium text-gray-700">{card.title}</p>
-              <MdOutlineAttachMoney className="text-[#CBA135]" size={26} />
-            </div>
-            <h3 className="text-3xl font-extrabold popbold text-gray-800">{card.value}</h3>
-            <p className="text-sm font-medium" style={{ color: card.color }}>
-              {card.change} from last month
-            </p>
-          </div>
-        ))}
+      {/* === Top Cards === */}                  
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-5 mb-10">
+  {cards.map((card, index) => (
+    <div
+      key={index}
+      className="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition duration-300 space-y-3 py-11 w-full"
+    >
+      <div className="flex items-center justify-between">
+        <p className="text-sm font-medium text-gray-700">{card.title}</p>
+        {card.icon}
       </div>
+      <h3 className="text-3xl font-extrabold popbold text-gray-800">{card.value}</h3>
+      <p className="text-sm font-medium" style={{ color: card.color }}>
+        {card.change} – {card.footerText}
+      </p>
+    </div>
+  ))}
+</div>
+
 
       {/* === Bottom Section === */}
       <div className="flex flex-col lg:flex-row gap-6 min-h-[600px]">
@@ -57,9 +110,11 @@ const DashHome = () => {
           <div className="bg-white rounded-xl shadow-md p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h3>
             <div className="space-y-3">
+  <Link to='addproducts'>
               <button className="bg-[#CBA135] text-white py-3 px-4 rounded-xl w-full flex items-center gap-2 hover:opacity-90">
                 <FaPlus /> Add New Product
               </button>
+  </Link>
               <button className="bg-[#EAE7E1] text-gray-800 py-3 px-4 rounded-xl w-full flex items-center gap-2 hover:opacity-90">
                 <FaCheck /> Approve Sellers
               </button>

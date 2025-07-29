@@ -51,19 +51,20 @@ const ProductFilter = () => {
         </div>
 <div className="my-4">
   <p className="popmed mb-2">Category</p>
-  <div className="h-20 popreg text-[#666666] overflow-y-scroll space-y-1">
+  <div className="h-34 popreg text-[#666666] overflow-y-scroll space-y-1 bg-white rounded-md px-2">
     {categories.map((item, index) => (
-      <label key={index} className="flex items-center space-x-2">
+      <label key={index} className="flex items-center space-x-2 py-1 cursor-pointer">
         <input
           type="checkbox"
           value={item}
-          className="accent-[#CBA135]"
+          className="w-4 h-4 border border-[#333] rounded-sm accent-[#CBA135] bg-white"
         />
         <span>{item}</span>
       </label>
     ))}
   </div>
 </div>
+
 
 
         <div className="my-4">
@@ -82,23 +83,22 @@ const ProductFilter = () => {
           </div>
         </div>
 
-        <div className="my-4">
-          <p className="font-medium popmed mb-2">Brand</p>
-<div className='h-40 text-[#666666] overflow-y-scroll'>
-           {
-        brands.map(items=>(
-            <label key={items} className="flex popreg items-center space-x-2">
+<div className="my-4">
+  <p className="font-medium popmed mb-2">Brand</p>
+  <div className="h-40 text-[#666666] overflow-y-scroll bg-white rounded-md px-2">
+    {brands.map((items) => (
+      <label key={items} className="flex items-center space-x-2 py-1 cursor-pointer popreg">
         <input
           type="checkbox"
           value={items}
-          className="accent-[#CBA135]"
+          className="w-4 h-4 border border-[#333] rounded-sm accent-[#CBA135] bg-white"
         />
-        <span >{items}</span>
+        <span>{items}</span>
       </label>
-        ))
-       }
+    ))}
+  </div>
 </div>
-        </div>
+
 
         <div className="my-4">
           <p className="popmed mb-2">Customer Rating</p>
@@ -124,9 +124,9 @@ const ProductFilter = () => {
           <Checkbox className='text-[#666666] popreg' onChange={(e) => setAvailability(e.target.checked)}>In Stock Only</Checkbox>
         </div>
 
-        <Button type="primary" block className="bg-yellow-600 hover:bg-yellow-700">
+        <button  block className="bg-yellow-600 px-4 py-1 rounded-md text-white hover:bg-yellow-700">
           Apply Filters
-        </Button>
+        </button>
       </div>
 </div>
 
@@ -168,9 +168,9 @@ const ProductFilter = () => {
               </div>
                 <div className='flex justify-between items-center gap-10'>
                                   <p className="text-[20px] popbold mb-3">${product.price}</p>
-              <Button type="primary" block className="bg-yellow-600 rounded-xl popreg max-w-[10rem] py-5 hover:bg-yellow-700">
+              <button type="primary" block className="bg-yellow-600 rounded-xl popreg max-w-[10rem] text-white  py-2 px-4 hover:bg-yellow-700">
                 Add to Cart
-              </Button>
+              </button>
                 </div>
              </div>
               {/* Wishlist icon (top right) */}

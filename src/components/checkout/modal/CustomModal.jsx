@@ -46,19 +46,21 @@ const CustomModal = ({ isModalOpen, setIsModalOpen }) => {
             <label htmlFor='order-id' className='block text-sm font-medium text-gray-700 mb-2'>
               Enter your Order ID
             </label>
-            <Input
-              id='order-id'
-              placeholder='#Wriko240001'
-              value={orderId}
-              onChange={(e) => setOrderId(e.target.value)}
-              className='rounded-md'
-            />
+           <input
+  id="order-id"
+  type="text"
+  placeholder="#Wriko240001"
+  value={orderId}
+  onChange={(e) => setOrderId(e.target.value)}
+  className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-0 focus:border-gray-400 custom-input"
+/>
+
           </div>
 
     <Link to='/order-track'>
-              <Button
+              <button
             type='primary'
-            className='bg-[#CBA135] w-full mt-4'
+            className='bg-[#CBA135] w-full py-2 text-white rounded-md mt-4'
             size='large'
             onClick={() => {
               // Add tracking logic here
@@ -67,7 +69,7 @@ const CustomModal = ({ isModalOpen, setIsModalOpen }) => {
             }}
           >
             Track My Order
-          </Button>
+          </button>
     </Link>
         </div>
       </Modal>

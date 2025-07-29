@@ -1,22 +1,52 @@
 import { MdDone, MdOutlineAttachMoney } from "react-icons/md";
-
-import { FaAngleDown, FaCheck, FaDownload, FaFilePdf, FaPlus, FaShieldAlt } from "react-icons/fa";
+import { FaBox, FaCheck, FaPlus, FaShieldAlt, FaWallet } from "react-icons/fa";
+import { FaAngleDown, FaDownload, FaFilePdf } from "react-icons/fa";
 import SalesOverview from "../../../AdminDashboard/pages/Overview/_subComponents/SalesOverview";
 import { FaCartShopping } from "react-icons/fa6";
 import DashTable from "../../../AdminDashboard/pages/Overview/_subComponents/DashTable";
 import { Button } from "antd";
 import PaymentGraph from "./PaymentGraph";
+import { IoIosTime } from "react-icons/io";
+import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
+import VendorTable from "./VendorTable";
 
 
 const VendorPayment = () => {
-  const cards = [
-    { title: "Total Revenue", value: "$127,500", change: "+12.5%", color: "#16A34A" },
-    { title: "Total Orders", value: "3,420", change: "+8.2%", color: "#3B82F6" },
-    { title: "New Users", value: "1,120", change: "+5.7%", color: "#10B981" },
-    { title: "Bounce Rate", value: "23%", change: "-3.2%", color: "#EF4444" },
+const cards = [
+  {
+    title: "Total Sales",
+    value: "$1127,500",
+    change: "+12.5%",
+    color: "#16A34A",
+    icon: <FaBox className="text-[#CBA135]" size={26} />,
+    footerText: "+12.5% from last month",
+  },
+  {
+    title: "Paid Out",
+    value: "3,420",
+    change: "+8.2%",
+    color: "#16A34A",
+    icon: <IoCheckmarkDoneCircleSharp className="text-[#2563EB]" size={26} />,
+    footerText: "+8.2% this week",
+  },
+  {
+    title: "Pending Payout",
+    value: "1,120",
+    change: "+5.7%",
+    color: "#EA580C",
+    icon: <IoIosTime className="text-[#EA580C]" size={26} />,
+    footerText: "Needs attention",
+  },
+  {
+    title: "Total Orders",
+    value: "23%",
+    change: "-3.2%",
+    color: "#3B82F6",
+    icon: <FaCartShopping className="text-[#3B82F6]" size={26} />,
+    footerText: "Ready for payout",
+  },
 
-
-  ];
+];
 
   return (
 <div className="bg-[#FAF8F2] min-h-screen p-4">
@@ -25,23 +55,23 @@ const VendorPayment = () => {
   </p>
 
   {/* === Top Cards === */}
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-8 mb-10">
-    {cards.map((card, index) => (
-      <div
-        key={index}
-        className="bg-white px-5 py-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 space-y-3 w-full"
-      >
-        <div className="flex items-center justify-between">
-          <p className="text-sm font-medium text-gray-700">{card.title}</p>
-          <MdOutlineAttachMoney className="text-[#CBA135]" size={26} />
-        </div>
-        <h3 className="text-3xl font-extrabold popbold text-gray-800">{card.value}</h3>
-        <p className="text-sm font-medium" style={{ color: card.color }}>
-          {card.change} from last month
-        </p>
+<div className="grid grid-cols-1 sm:grid-cols-2 mt-5 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-10">
+  {cards.map((card, index) => (
+    <div
+      key={index}
+      className="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition duration-300 space-y-3 py-11 w-full"
+    >
+      <div className="flex items-center justify-between">
+        <p className="text-sm font-medium text-gray-700">{card.title}</p>
+        {card.icon}
       </div>
-    ))}
-  </div>
+      <h3 className="text-3xl font-extrabold popbold text-gray-800">{card.value}</h3>
+      <p className="text-sm font-medium" style={{ color: card.color }}>
+        {card.change} – {card.footerText}
+      </p>
+    </div>
+  ))}
+</div>
 
 
   {/* === Bottom Section === */}
@@ -81,7 +111,7 @@ const VendorPayment = () => {
           </Button>
         </div>
       </div>
-      <DashTable />
+      <VendorTable />
     </div>
     </div>
 

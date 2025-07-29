@@ -47,9 +47,9 @@ const Cart = () => {
     </div>
 
     <div className="w-full">
-      <Button className="h-[48px] w-full bg-[#CBA135] text-white font-semibold hover:bg-yellow-600">
+      <button className="h-[48px] w-full bg-[#CBA135] text-white font-semibold hover:bg-yellow-600">
         Add New Address
-      </Button>
+      </button>
     </div>
   </div>
 </div>
@@ -93,8 +93,8 @@ const Cart = () => {
               <h4 className="text-base font-medium text-gray-800 mb-2">
                 Delivery Instructions <span className="text-sm text-gray-500">(optional)</span>
               </h4>
-              <TextArea
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              <textarea
+                className="w-full border border-[#CBA135] rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#CBA135] resize-none"
                 rows={4}
                 placeholder="Add any specific delivery notes here..."
               />
@@ -127,8 +127,8 @@ const Cart = () => {
             {/* Promo Code */}
             <div className="mt-5">
               <div className="flex gap-2">
-                <Input className="flex-1 h-[50px]" placeholder="Promo code" />
-                <Button className="h-[50px] bg-gray-100 hover:bg-gray-200">Apply</Button>
+                <input placeholder="Promo code" className="w-full border border-[#D1D5DB] rounded-md px-4 h-[40px] placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
+                <Button className="h-[40px] text-white bg-[#2B2B2B] hover:bg-gray-200">Apply</Button>
               </div>
             </div>
 
@@ -140,22 +140,22 @@ const Cart = () => {
             {/* Checkout Buttons */}
             <div className="mt-6 flex flex-col gap-3">
 <Link to='checkout1' className='w-full block'>
-  <Button className="h-[56px] w-full bg-[#CBA135] text-white font-semibold hover:bg-yellow-600">
+  <button className="h-[56px] rounded-md w-full bg-[#CBA135] text-white font-semibold hover:bg-yellow-600">
     Proceed to Checkout
-  </Button>
+  </button>
 </Link>
 
-              <Button className="h-[56px] border-gray-300">Save for Later</Button>
+              <button className="h-[56px] hover:bg-slate-100 border rounded-md border-gray-300">Save for Later</button>
             </div>
           </div>
- <div className="bg-white p-4 py-8 rounded-lg shadow-sm space-y-3">
-      <h3 className="text-lg font-semibold text-gray-800">Delivery Type</h3>
-      <Radio.Group className="flex flex-col  gap-4">
-        <Radio value="standard">Standard</Radio>
-        <Radio value="express">Express</Radio>
-        <Radio value="pickup">Pickup</Radio>
-      </Radio.Group>
-    </div>
+<div className="bg-white p-4 py-8 rounded-lg shadow-sm space-y-3">
+  <h3 className="text-lg font-semibold text-gray-800">Delivery Type</h3>
+  <Radio.Group className="flex flex-col gap-4 custom-radio">
+    <Radio value="standard">Standard</Radio>
+    <Radio value="express">Express</Radio>
+    <Radio value="pickup">Pickup</Radio>
+  </Radio.Group>
+</div>
 </div>
         </div>
 <div className='py-9'>

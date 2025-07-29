@@ -60,6 +60,7 @@ const data = [
 const LineCharts = () => {
     return (
         <div className='w-full h-full'>
+          
           {/* <h2 className="text-lg popbold ">Top Product Categories</h2> */}
                   <ResponsiveContainer width="100%" height="100%">
         <LineChart

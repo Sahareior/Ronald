@@ -1,8 +1,9 @@
-import { Button, Input, Select, Steps } from 'antd';
+import { Button, DatePicker, Input, Select, Steps } from 'antd';
 import React from 'react';
 import { CgProfile } from 'react-icons/cg';
 import { FaCar, FaCloudUploadAlt } from 'react-icons/fa';
 import { FaHandshakeSimple } from 'react-icons/fa6';
+import { FiChevronDown } from 'react-icons/fi';
 
 const { Option } = Select;
 
@@ -63,27 +64,31 @@ const SellerReg = () => {
 
                   <div className='mt-2'>
             <label className="block mb-1 popbold text-[14px] text-gray-700">Last Name *</label>
-            <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
+            <input placeholder="Enter Last Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
 
-          <div>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">Job Title *</label>
-            <Select placeholder="Select Your Role" className="w-full h-[44px]">
-              <Option value="owner">Owner</Option>
-              <Option value="manager">Manager</Option>
-              <Option value="designer">Designer</Option>
-            </Select>
-          </div>
+<div>
+      <label className="block mb-1 popbold text-[14px] text-gray-700">Job Title *</label>
+      <Select
+        placeholder="Select Your Role"
+        className="w-full h-[44px]"
+        suffixIcon={<FiChevronDown className="text-gray-500" />}
+      >
+        <Option value="owner">Owner</Option>
+        <Option value="manager">Manager</Option>
+        <Option value="designer">Designer</Option>
+      </Select>
+    </div>
 
                   <div className='mt-2'>
             <label className="block mb-1 popbold text-[14px] text-gray-700">Email Address *</label>
-            <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
+            <input placeholder="Enter Email Address" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
           
         </div>
                   <div className='mt-2'>
             <label className="block mb-1 popbold text-[14px] text-gray-700">Phone Number *</label>
-            <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
+            <input placeholder="Enter Phone Number" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
       </div>
       {/* Business */}
@@ -101,22 +106,22 @@ const SellerReg = () => {
 
                   <div className='mt-2'>
             <label className="block mb-1 popbold text-[14px] text-gray-700">Legal Business Name *</label>
-            <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
+            <input placeholder="Enter Business Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
 
                             <div className='mt-2'>
             <label className="block mb-1 popbold text-[14px] text-gray-700">Business Address *</label>
-                 <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
+                 <input placeholder="Enter Business Address" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
         
         <div className="grid md:grid-cols-2 mt-3 gap-4">
           <div>
             <label className="block mb-1 popbold text-[14px] text-gray-700">Country *</label>
-                <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
+                <input placeholder="Enter Country Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
           <div>
             <label className="block mb-1 popbold text-[14px] text-gray-700">City/Town *</label>
-                 <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
+                 <input placeholder="Enter City/Town Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
           <div>
             <label className="block mb-1 popbold text-[14px] text-gray-700">State/Province *</label>
@@ -128,22 +133,27 @@ const SellerReg = () => {
           </div>
           <div>
             <label className="block mb-1 popbold text-[14px] text-gray-700">Postal Code *</label>
-                 <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
+                 <input placeholder="Enter Postal Code" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
           
         </div>
         <div className="grid md:grid-cols-2 mt-3 gap-4">
-          <div>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">Date*</label>
-                <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
-          </div>
+<div>
+  <label className="block mb-1 popbold text-[14px] text-gray-700">Date*</label>
+  <DatePicker
+    className="w-full h-[44px] border border-[#D1D5DB] rounded-md px-4 py-2 text-gray-700"
+    placeholder="Enter Date"
+    style={{ width: '100%' }}
+    popupClassName="custom-datepicker-popup"
+  />
+</div>
           <div>
             <label className="block mb-1 popbold text-[14px] text-gray-700">Business Type *</label>
-                 <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
+                 <input placeholder="Enter Business Type" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
           <div>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">Taxpayer Number*</label>
-            <Select placeholder="Select Your Role" className="w-full h-[44px]">
+            <label className="block mb-1 popbold text-[14px] text-gray-700">Tax payer Number*</label>
+            <Select placeholder="Select Your Role" className="w-full h-[44px]" suffixIcon={<FiChevronDown className="text-gray-500" />}>
               <Option value="owner">Owner</Option>
               <Option value="manager">Manager</Option>
               <Option value="designer">Designer</Option>
@@ -151,7 +161,7 @@ const SellerReg = () => {
           </div>
           <div>
             <label className="block mb-1 popbold text-[14px] text-gray-700">Trade register number*</label>
-                 <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
+                 <input placeholder="Enter register number" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
           </div>
           
         </div>
@@ -228,7 +238,7 @@ const SellerReg = () => {
      Home localization plan *
     </label>
     <input
-      placeholder="Enter First Name"
+      placeholder="Enter Home localization plan"
       className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]"
     />
   </div>
@@ -238,7 +248,7 @@ const SellerReg = () => {
       Business Localization plan *
     </label>
     <input
-      placeholder="Enter Last Name"
+      placeholder="Enter Business Localization plan "
       className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]"
     />
   </div>
@@ -246,38 +256,60 @@ const SellerReg = () => {
 
 
 <div className="flex flex-col sm:flex-row mt-6 gap-4">
-  {/* First Name Section */}
+  {/* File Picker 1 */}
   <div className="flex-1">
     <label className="block mb-1 popbold text-[14px] text-gray-700">
-      Taxpayer number*
+      Taxpayer Number *
     </label>
     <div className="flex gap-2">
-      <Button className="bg-[#676767] text-white px-4 py-5 whitespace-nowrap">
+      <label
+        htmlFor="file-tax"
+        className="bg-[#676767] text-white px-4 py-2 rounded-md cursor-pointer flex items-center justify-center whitespace-nowrap"
+      >
         Choose File
-      </Button>
+      </label>
       <input
-        placeholder="Enter First Name"
+        type="file"
+        id="file-tax"
+        className="hidden"
+        onChange={(e) => console.log(e.target.files[0])}
+      />
+      <input
+        placeholder="No file chosen"
+        readOnly
         className="flex-1 border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]"
       />
     </div>
   </div>
 
-  {/* Last Name Section */}
+  {/* File Picker 2 */}
   <div className="flex-1">
     <label className="block mb-1 popbold text-[14px] text-gray-700">
-      Trade register number *
+      Trade Register Number *
     </label>
     <div className="flex gap-2">
-      <Button className="bg-[#676767] text-white px-4 py-5 whitespace-nowrap">
+      <label
+        htmlFor="file-trade"
+        className="bg-[#676767] text-white px-4 py-2 rounded-md cursor-pointer flex items-center justify-center whitespace-nowrap"
+      >
         Choose File
-      </Button>
+      </label>
       <input
-        placeholder="Enter Last Name"
+        type="file"
+        id="file-trade"
+        className="hidden"
+        onChange={(e) => console.log(e.target.files[0])}
+      />
+      <input
+        placeholder="No file chosen"
+        readOnly
         className="flex-1 border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]"
       />
     </div>
   </div>
 </div>
+
+
 
 
   <p className='text-center py-5 pt-7 popreg'>Upload a high-quality image </p>

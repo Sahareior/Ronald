@@ -71,14 +71,29 @@ return (
 
           <div className="mb-4">
             <label className="block mb-1 text-sm font-medium">Landmark Description</label>
-            <Input className="h-[46px]" placeholder="Near Central Mosque, opposite University" />
+          <input
+  type="text"
+  placeholder="Near Central Mosque, opposite University"
+  className="h-[46px] w-full border border-gray-300 rounded-md px-3 focus:outline-none focus:ring-0 focus:border-gray-400"
+/>
+
           </div>
 
           <div className="mb-4">
             <label className="block mb-1 text-sm font-medium">GPS Pinning</label>
             <div className="flex gap-2">
-              <Input className="h-[46px]" placeholder="Latitude" />
-              <Input className="h-[46px]" placeholder="Longitude" />
+             <input
+  type="text"
+  placeholder="Longitude"
+  className="h-[46px] w-full border border-gray-300 rounded-md px-3 focus:outline-none focus:ring-0 focus:border-gray-400"
+/>
+
+            <input
+  type="text"
+   placeholder="Latitude"
+  className="h-[46px] w-full border border-gray-300 rounded-md px-3 focus:outline-none focus:ring-0 focus:border-gray-400"
+/>
+
               <button className="w-24 h-[46px] bg-[#CBA135] rounded-[12px] flex justify-center items-center text-white">
                 <FaLocationDot size={18} />
               </button>
@@ -87,7 +102,12 @@ return (
 
           <div className="mb-6">
             <label className="block mb-1 text-sm font-medium">Note to Driver</label>
-            <TextArea rows={4} placeholder="Call when you arrive. House has a blue gate." />
+           <textarea
+  rows={4}
+  placeholder="Call when you arrive. House has a blue gate."
+  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-0 focus:border-gray-400 resize-none"
+/>
+
           </div>
 
           <Button

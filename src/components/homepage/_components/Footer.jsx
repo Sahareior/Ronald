@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import CustomModal from '../../checkout/modal/CustomModal';
 
 const Footer = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   return (
     <footer className="bg-black text-white px-6 py-12">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 text-center justify-items-center md:text-left">
@@ -27,7 +29,8 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-semibold mb-4">Support</h3>
           <ul className="space-y-2 text-gray-300">
-            <li><a href="#" className="hover:text-white transition">Track Order</a></li>
+            <li onClick={()=> setIsModalOpen(true)}><a  className="hover:text-white transition">Track Order</a></li>
+            
             <li><Link to='/active' className="hover:text-white transition">Help Center/Live chat</Link></li>
             <li><Link to="/return" className="hover:text-white transition">Return Request</Link></li>
             <li><Link to="/return-policy" className="hover:text-white transition">Return Policy</Link></li>
@@ -44,6 +47,7 @@ const Footer = () => {
         <p>Privacy Policy</p>
         </Link>
       </div>
+      <CustomModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </footer>
   );
 };

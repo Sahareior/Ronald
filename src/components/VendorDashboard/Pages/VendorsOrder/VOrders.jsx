@@ -5,6 +5,7 @@ import { IoSearch } from 'react-icons/io5';
 import { FaDownload } from 'react-icons/fa';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import VOrdersTable from './VOrdersTable';
+import { FiSearch } from 'react-icons/fi';
 // import { Input } from 'antd';
 const { TextArea } = Input;
 
@@ -27,13 +28,16 @@ const VOrders = () => {
       <div className="flex rounded-xl bg-white p-5 flex-col sm:flex-row mt-6 justify-between items-start sm:items-center gap-4">
 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full px-4 sm:px-10">
   {/* Search Orders */}
-  <div className="w-full">
-    <p className="text-sm font-medium text-gray-700 mb-1">Search Orders</p>
+<div className="w-full">
+  <p className="text-sm font-medium text-gray-700 mb-1">Search Orders</p>
+  <div className="relative">
     <input
       placeholder="Enter First Name"
-      className="w-full border popreg border-[#D1D5DB] rounded-md px-4 h-[45px] placeholder:text-sm focus:outline-none focus:ring-0 focus:border-[#CBA135]"
+      className="w-full border popreg border-[#D1D5DB] rounded-md px-4 pl-10 h-[45px] placeholder:text-sm focus:outline-none focus:ring-0 focus:border-[#CBA135]"
     />
+    <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
   </div>
+</div>
 
   {/* Order Status Select */}
   <div className="w-full">

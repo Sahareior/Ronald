@@ -15,11 +15,13 @@ const VOrdersTable = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [target,setTarget] = useState("")
+  
   const [dataSource, setDataSource] = useState(
     Array.from({ length: 247 }, (_, i) => ({
       key: i + 1,
       orderId: `Wrioko24${i + 1}`,
       customer: ['Fatiha Jahan', 'John Doe', 'Jane Smith'][i % 3],
+      seller : 'Home decor',
       date: 'July 15, 2025',
       total: 3290 + (i % 10) * 100,
       payment: ['Mobile banking', 'Cash', 'Card'][i % 3],
@@ -32,35 +34,75 @@ const VOrdersTable = () => {
       title: 'Order ID',
       dataIndex: 'orderId',
       key: 'orderId',
-      render: text => <a className="text-[#CBA135]">{text}</a>,
+      render: text => (
+        <div>
+          <a className="text-[#CBA135]">{text}</a>
+        </div>
+      ),
     },
     {
       title: 'Customer',
       dataIndex: 'customer',
       key: 'customer',
+       render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
     },
+    {
+      title: 'Seller',
+      dataIndex: 'seller',
+      key: 'customer',
+      render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
+    },
+  
     {
       title: 'Date',
       dataIndex: 'date',
       key: 'date',
+      render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
     },
     {
       title: 'Total',
       dataIndex: 'total',
       key: 'total',
-      render: total => `$${total.toLocaleString()}`,
+      render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
     },
     {
       title: 'Payment',
       dataIndex: 'payment',
       key: 'payment',
+      render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
       render: status => (
-        <span className={`px-2 py-1 rounded text-xs font-medium ${status === 'Paid' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'}`}>
+        <span
+          className={`px-2 py-1 popmed rounded text-[16px] font-medium ${
+            status === 'Paid'
+              ? 'bg-green-100 text-green-600'
+              : 'bg-yellow-100 text-yellow-600'
+          }`}
+        >
           {status}
         </span>
       ),
@@ -69,22 +111,14 @@ const VOrdersTable = () => {
       title: 'Action',
       key: 'action',
       render: (_, record) => (
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3">
         
-          <IoEyeOutline
-  onClick={() => {
-    setIsModalOpen(true);
-    setTarget('eye');
-  }}
-  className="text-gray-400 cursor-pointer"
-  size={20}
-/>
-
-          <MdDelete
-            className="text-red-400 cursor-pointer"
-            size={20}
-            onClick={() => handleDelete([record.key])}
-          />
+          <IoEyeOutline onClick={()=> setIsModalOpen(true)} className="text-gray-400 cursor-pointer" size={20} />
+            <MdDelete
+                     className="text-red-400 cursor-pointer"
+                     size={20}
+                     onClick={() => handleDelete([record.key])}
+                   />
         </div>
       ),
     },

@@ -79,6 +79,10 @@ const router = createBrowserRouter([
           { path: "whitelist", element: <WhiteList /> },
           { path: "cart", element: <Cart /> },
           { path: "checkout", element: <Checkout /> },
+           {
+          path: "details", // now `/filter/details` will work
+          element: <Details />,
+        },
           { path: "cart/checkout1", element: <Checkout1 /> },
           { path: "confirm-order", element: <ConfirmOrder /> },
           { path: "order-track", element: <OrderTracking /> },
@@ -96,6 +100,10 @@ const router = createBrowserRouter([
       { path: "login", element: <Login /> },
       { path: "signup", element: <Signup /> },
       { path: "verify", element: <VerifyCode /> },
+        {
+          path: "/details", // now `/filter/details` will work
+          element: <Details />,
+        },
       { path: "forget", element: <ForgetPass /> },
       { path: "reset", element: <ResetPass /> },
       { path: "congratulations", element: <Congratulations /> },
@@ -130,7 +138,11 @@ const router = createBrowserRouter([
         element: <ProductsList />
       },
       {
-        path: 'addproducts',
+        path: 'admin-overview/addproducts',
+        element: <AddnewProducts />
+      },
+      {
+        path: 'productslist/admin-overview/addproducts',
         element: <AddnewProducts />
       },
       {

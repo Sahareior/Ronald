@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   value: 0,
-  route: []
+  route: [],
+  location: null
 }
 
 export const customerSlice = createSlice({
@@ -25,11 +26,17 @@ export const customerSlice = createSlice({
 
     addToRoute: (state,action) =>{
       state.route.push(action.payload)
+    },
+    
+    selectedLocation : (state,action) =>{
+
+      console.log(action)
+      state.location = action.payload
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = customerSlice.actions
+export const { increment, decrement, incrementByAmount,selectedLocation } = customerSlice.actions
 
 export default customerSlice.reducer

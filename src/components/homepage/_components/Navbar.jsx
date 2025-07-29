@@ -11,15 +11,14 @@ const Navbar = () => {
       <div className="flex justify-between w-2/6 items-center gap-6">
         <img src="/image/logo.png" alt="Logo" className="h-[32px] w-auto object-contain" />
         <div className="flex items-center gap-1 cursor-pointer hover:text-blue-600 transition">
-          <h4 className="font-medium text-sm">Category</h4>
-          <IoMdArrowDropdown size={16} />
+         
         </div>
       </div>
 
       {/* Right Section: Search + Actions */}
       <div className="flex items-center justify-between  w-3/6 gap-9">
         <Input
-          placeholder="Search products..."
+         
           className="w-full rounded-md"
         />
 
@@ -32,18 +31,6 @@ const Navbar = () => {
           <h4 className="cursor-pointer bg-[#CBA135] px-4 py-1 rounded-[8px] text-white hover:text-blue-600 transition">Register</h4>
           </Link>
 
-     <Link to='whitelist'>
-          <MdFavorite
-            size={22}
-            className="cursor-pointer hover:text-red-500 transition"
-          />
-     </Link>
-          <Link to='cart'>
-          <FaCartShopping
-            size={20}
-            className="cursor-pointer hover:text-green-600 transition"
-          />
-          </Link>
         </div>
       </div>
     </div>

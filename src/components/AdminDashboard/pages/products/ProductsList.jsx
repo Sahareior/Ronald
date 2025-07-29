@@ -1,6 +1,7 @@
 import React from 'react';
 import ProductsTable from './ProductsTable';
 import { Button, Select } from 'antd';
+import { Link } from 'react-router-dom';
 
 const { Option } = Select;
 
@@ -10,7 +11,9 @@ const ProductsList = () => {
 
 <div className='flex justify-between items-center pt-4'>
   <p className='text-[34px] popbold'>Products List</p>
+      <Link to='admin-overview/addproducts'>
        <Button className='bg-[#CBA135] flex justify-end py-5 text-end text-white'>Add New Products</Button>
+      </Link>
 
 </div>
            {/* Form Filters */}

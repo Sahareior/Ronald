@@ -12,6 +12,7 @@ import CustomersNavbar from '../customersHomepage/CustomersNavbar';
 
 const CustomerLayout = () => {
   const location = useLocation();
+  
 
   // ✅ Only show homepage sections on "/"
   const isHomePage = location.pathname === '/';

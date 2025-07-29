@@ -34,9 +34,9 @@ const ShopCategory = () => {
               </h2>
 
 <Link to='/filter'>
-              <Button className="bg-[#CBA135] popreg text-white border-none px-6 py-1.5 rounded">
+              <button className="bg-[#CBA135] popreg text-white border-none px-6 py-1.5 rounded">
                 Explore
-              </Button>
+              </button>
 </Link>
             </div>
           </div>

@@ -31,27 +31,53 @@ const columns = [
     title: 'ID',
     dataIndex: 'orderId',
     key: 'orderId',
-    render: text => <a className="text-[#CBA135]">{text}</a>,
+    render: text => <a className=" popmed text-[16px]">{text}</a>,
   },
   {
     title: 'Customer',
     dataIndex: 'customer',
     key: 'customer',
+     render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
   },
   {
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
+     render: status => (
+        <span
+          className={`px-3 py-1 popmed rounded-xl text-[16px] font-medium ${
+            status === 'Paid'
+              ? 'bg-green-100 text-green-600'
+              : 'bg-yellow-100 text-yellow-600'
+          }`}
+        >
+          {status}
+        </span>
+      ),
   },
   {
     title: 'Signup Date',
     dataIndex: 'signupDate',
     key: 'signupDate',
+     render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
   },
   {
     title: 'Last Activity',
     dataIndex: 'lastActivity',
     key: 'lastActivity',
+     render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
   },
   {
     title: 'Action',

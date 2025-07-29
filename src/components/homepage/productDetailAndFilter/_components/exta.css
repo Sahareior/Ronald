@@ -1,3 +1,9 @@
 .anticon {
     color: rgb(237, 233, 240);
 }
+
+/* Make inactive stars more visible */
+.ant-rate-star-zero svg {
+  fill: #a0a0a0 !important; /* Brighter gray for better visibility */
+  opacity: 1 !important;
+}

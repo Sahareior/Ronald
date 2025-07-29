@@ -7,6 +7,7 @@ import Customers from '../_components/Customers';
 import Coupon from '../_components/Coupon';
 import Footer from '../_components/Footer';
 import { useLocation } from 'react-router-dom';
+import GuestFeaturedProduct from '../../others/GuestFeaturedProduct';
 
 const GuestLayout = () => {
       const location = useLocation();
@@ -17,7 +18,7 @@ const GuestLayout = () => {
         <div>
              <Navbar />
             <Hero />
-            <FeaturedProducts />
+            <GuestFeaturedProduct />
             <WhyUs />
             <Customers />
             <Coupon />

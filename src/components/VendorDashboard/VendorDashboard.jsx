@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   UploadOutlined,
   UserOutlined,
@@ -9,14 +9,15 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, theme, Input, Badge, Avatar } from 'antd';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { GoGraph } from 'react-icons/go';
 import { FaCartShopping } from 'react-icons/fa6';
-import { FaBox, FaEdit, FaFantasyFlightGames } from 'react-icons/fa';
+import { FaBell, FaBox, FaEdit, FaFantasyFlightGames } from 'react-icons/fa';
 import { IoIosPeople } from 'react-icons/io';
-import { IoPricetagSharp } from 'react-icons/io5';
+import { IoExit, IoPricetagSharp } from 'react-icons/io5';
 import { LuMessageSquareText } from 'react-icons/lu';
 import { GrAnalytics } from 'react-icons/gr';
+import VendorOverViewModal from '../AdminDashboard/pages/Overview/_subComponents/VendorOverView';
 
 const { Header, Content, Sider } = Layout;
 
@@ -55,8 +56,12 @@ const items = [
 ];
 
 const VendorDashboard = () => {
+const [isModalOpen, setIsModalOpen] = useState(false)
+const location = useLocation();
 
-
+if (location.pathname === '/vendor-dashboard') {
+  return <Navigate to="/vendor-dashboard/vendor-overview" replace />;
+}
 
 
   const {
@@ -93,16 +98,15 @@ const VendorDashboard = () => {
        <div className='flex justify-between'>
         <h5 className='text-[20px] font-semibold'>Content</h5>
         <div className='flex justify-center items-center gap-3'>
-               <Input
-            placeholder="Search furniture..."
-            prefix={<SearchOutlined />}
-           className='h-[42px] rounded-[8px] w-[400px] '
-          />
+
          
-            <BellOutlined style={{ fontSize: 16, cursor: 'pointer', Color:'black' }} />
+            <FaBell onClick={()=> setIsModalOpen(true)} style={{ fontSize: 15, cursor: 'pointer', Color:'black' }} />
         
          <Link to='/vendor-dashboard/vendor-profile'>
           <Avatar className='w-[24px] h-[24px]' src="https://i.pravatar.cc/40" />
+         </Link>
+         <Link to='/login'>
+         <IoExit size={23} />
          </Link>
         </div>
        </div>
@@ -112,6 +116,7 @@ const VendorDashboard = () => {
           <Outlet />
         </Content>
       </Layout>
+      <VendorOverViewModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} location={'a'} />
     </Layout>
   );
 };

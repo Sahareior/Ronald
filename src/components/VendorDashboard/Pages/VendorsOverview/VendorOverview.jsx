@@ -1,19 +1,58 @@
 import { MdDone, MdOutlineAttachMoney } from "react-icons/md";
 
-import { FaCheck, FaPlus, FaShieldAlt } from "react-icons/fa";
+import { FaBox, FaCheck, FaPlus, FaShieldAlt, FaWallet } from "react-icons/fa";
 import SalesOverview from "../../../AdminDashboard/pages/Overview/_subComponents/SalesOverview";
 import { FaCartShopping } from "react-icons/fa6";
+import {
+ 
+  MdOutlineShoppingCart,
+  MdPeopleAlt,
+  MdStore,
+  MdInventory,
+  MdReplay,
+} from "react-icons/md";
+import { IoIosTime } from "react-icons/io";
+import VendorOverViewModal from "../../../AdminDashboard/pages/Overview/_subComponents/VendorOverView";
+import { useState } from "react";
 
 
 const VendorOverview = () => {
-  const cards = [
-    { title: "Total Revenue", value: "$127,500", change: "+12.5%", color: "#16A34A" },
-    { title: "Total Orders", value: "3,420", change: "+8.2%", color: "#3B82F6" },
-    { title: "New Users", value: "1,120", change: "+5.7%", color: "#10B981" },
-    { title: "Bounce Rate", value: "23%", change: "-3.2%", color: "#EF4444" },
+  const [isModalOpen, setIsModalOpen] = useState(false)
+const cards = [
+  {
+    title: "Total Products",
+    value: "$1127,500",
+    change: "+12.5%",
+    color: "#16A34A",
+    icon: <FaBox className="text-[#CBA135]" size={26} />,
+    footerText: "+12.5% from last month",
+  },
+  {
+    title: "Sales This Month",
+    value: "3,420",
+    change: "+8.2%",
+    color: "#16A34A",
+    icon: <FaCartShopping className="text-[#2563EB]" size={26} />,
+    footerText: "+8.2% this week",
+  },
+  {
+    title: "Pending Orders",
+    value: "1,120",
+    change: "+5.7%",
+    color: "#EA580C",
+    icon: <IoIosTime className="text-[#EA580C]" size={26} />,
+    footerText: "Needs attention",
+  },
+  {
+    title: "Earnings This Month",
+    value: "23%",
+    change: "-3.2%",
+    color: "#3B82F6",
+    icon: <FaWallet className="text-[#3B82F6]" size={26} />,
+    footerText: "Ready for payout",
+  },
 
-
-  ];
+];
 
   return (
 <div className="bg-[#FAF8F2] min-h-screen p-4">
@@ -22,23 +61,23 @@ const VendorOverview = () => {
   </p>
 
   {/* === Top Cards === */}
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-8 mb-10">
-    {cards.map((card, index) => (
-      <div
-        key={index}
-        className="bg-white px-5 py-8 rounded-xl shadow-md hover:shadow-lg transition duration-300 space-y-3 w-full"
-      >
-        <div className="flex items-center justify-between">
-          <p className="text-sm font-medium text-gray-700">{card.title}</p>
-          <MdOutlineAttachMoney className="text-[#CBA135]" size={26} />
-        </div>
-        <h3 className="text-3xl font-extrabold popbold text-gray-800">{card.value}</h3>
-        <p className="text-sm font-medium" style={{ color: card.color }}>
-          {card.change} from last month
-        </p>
+<div className="grid grid-cols-1 sm:grid-cols-2 mt-5 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-10">
+  {cards.map((card, index) => (
+    <div
+      key={index}
+      className="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition duration-300 space-y-3 py-11 w-full"
+    >
+      <div className="flex items-center justify-between">
+        <p className="text-sm font-medium text-gray-700">{card.title}</p>
+        {card.icon}
       </div>
-    ))}
-  </div>
+      <h3 className="text-3xl font-extrabold popbold text-gray-800">{card.value}</h3>
+      <p className="text-sm font-medium" style={{ color: card.color }}>
+        {card.change} – {card.footerText}
+      </p>
+    </div>
+  ))}
+</div>
 
   {/* === Quick Actions === */}
   <div className="w-full pb-6">
@@ -48,7 +87,7 @@ const VendorOverview = () => {
         <button className="bg-[#CBA135] text-white py-3 w-full sm:w-72 rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition">
           <FaPlus /> Add New Product
         </button>
-        <button className="bg-[#F3F4F6] text-gray-800 py-3 w-full sm:w-72 rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition">
+        <button onClick={()=> setIsModalOpen(true)} className="bg-[#F3F4F6] text-gray-800 py-3 w-full sm:w-72 hover:bg-slate-400 rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition">
           <FaCheck /> Request Payout
         </button>
       </div>
@@ -141,6 +180,7 @@ const VendorOverview = () => {
       </div>
     </div>
   </div>
+  <VendorOverViewModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
 </div>
 
   );

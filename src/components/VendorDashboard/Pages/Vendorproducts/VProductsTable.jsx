@@ -14,14 +14,15 @@ const VProductsTable = () => {
   const [pageSize, setPageSize] = useState(10);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [dataSource, setDataSource] = useState(
-    Array.from({ length: 247 }, (_, i) => ({
+    Array.from({ length: 100 }, (_, i) => ({
       key: i + 1,
-      orderId: `Wrioko24${i + 1}`,
-      customer: ['Fatiha Jahan', 'John Doe', 'Jane Smith'][i % 3],
-      date: 'July 15, 2025',
-      total: 3290 + (i % 10) * 100,
-      payment: ['Mobile banking', 'Cash', 'Card'][i % 3],
-      status: ['Paid', 'Processing', 'Pending'][i % 3],
+      productName: ['Nike Air Max', 'Apple iPhone 14', 'Sony Headphones'][i % 3],
+      productId: `PROD-${1000 + i}`,
+      category: ['Shoes', 'Electronics', 'Accessories'][i % 3],
+      price: 49 + (i % 10) * 5,
+      stock: ['In Stock', 'Low Stock', 'Out of Stock'][i % 3],
+      status: ['Active', 'Pending', 'Draft'][i % 3],
+
     }))
   );
 
@@ -66,50 +67,94 @@ const handleDelete = (keys) => {
   };
 
   const columns = [
+
     {
-      title: 'Order ID',
-      dataIndex: 'orderId',
-      key: 'orderId',
-      render: text => <a className="text-[#CBA135]">{text}</a>,
-    },
-    {
-      title: 'Customer',
-      dataIndex: 'customer',
-      key: 'customer',
-    },
-    {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
-    },
-    {
-      title: 'Total',
-      dataIndex: 'total',
-      key: 'total',
-      render: total => `$${total.toLocaleString()}`,
-    },
-    {
-      title: 'Payment',
-      dataIndex: 'payment',
-      key: 'payment',
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-      render: status => (
-        <span className={`px-2 py-1 rounded text-xs font-medium ${status === 'Paid' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'}`}>
-          {status}
-        </span>
+      title: 'ID',
+      dataIndex: 'productId',
+      key: 'productId',
+       render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
       ),
     },
+        {
+      title: 'Product Name',
+      dataIndex: 'productName',
+      key: 'productName',
+      render: (text) => <span className="popmed flex items-center gap-3 text-[16px]"><img className='w-7 rounded-full h-7' src="https://plus.unsplash.com/premium_photo-1661964014750-963a28aeddea?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /> {text}</span>,
+    },
+    {
+      title: 'Category',
+      dataIndex: 'category',
+      key: 'category',
+       render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
+    },
+    {
+      title: 'Price',
+      dataIndex: 'price',
+      key: 'price',
+      render: (price) => `$${price.toFixed(2)}`,
+    },
+    {
+      title: 'Stock',
+      dataIndex: 'stock',
+      key: 'stock',
+       render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
+    },
+
+
+{
+  title: 'Status',
+  dataIndex: 'status',
+  key: 'status',
+  render: (status, record) => {
+    const statusColor = {
+      Active: 'bg-green-100 text-green-600',
+      Pending: 'bg-yellow-100 text-yellow-600',
+      Draft: 'bg-red-100 text-red-600',
+    };
+
+    return (
+      <div className={`rounded px-2 py-1 text-xs font-medium w-[110px] ${statusColor[status]}`}>
+        <Select
+          value={status}
+          size="small"
+          onChange={(value) => {
+            const newData = dataSource.map(item =>
+              item.key === record.key ? { ...item, status: value } : item
+            );
+            setDataSource(newData);
+            message.success(`Status changed to ${value}`);
+          }}
+          bordered={false}
+          dropdownMatchSelectWidth={false}
+          className="w-full"
+          suffixIcon={<RiArrowDropDownLine className="text-[16px] popmed text-gray-600" />}
+        >
+          <Option value="Active">Active</Option>
+          <Option value="Pending">Pending</Option>
+          <Option value="Draft">Draft</Option>
+        </Select>
+      </div>
+    );
+  },
+},
+
     {
       title: 'Action',
       key: 'action',
       render: (_, record) => (
         <div className="flex items-center gap-6">
-      
-          <IoEyeOutline onClick={()=> setIsModalOpen(true)} className="text-gray-400 cursor-pointer" size={20} />
+          <IoEyeOutline onClick={() => setIsModalOpen(true)} className="text-gray-400 cursor-pointer" size={20} />
           <MdDelete
             className="text-red-400 cursor-pointer"
             size={20}

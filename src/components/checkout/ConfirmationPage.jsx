@@ -5,6 +5,7 @@ import { Button } from 'antd';
 import { BiCopy } from "react-icons/bi";
 import { FaArrowDownLong } from 'react-icons/fa6';
 import CustomModal from './modal/CustomModal';
+import { Link } from 'react-router-dom';
 
 const ConfirmationPage = () => {
      const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,8 +38,10 @@ const ConfirmationPage = () => {
   return (
 <div className='bg-[#FAF8F2] '>
         <div className='mx-40  pb-10'>
-        <Breadcrumb />
-      <div className='max-w-8xl bg-white mx-auto px-4'>
+       <div className=''>
+         <Breadcrumb />
+       </div>
+      <div className='max-w-6xl bg-white mx-auto px-4'>
 
         <div className=' max-w-3xl mx-auto rounded-2xl p-8 mt-6'>
           <div className='flex flex-col items-center justify-center gap-3 mb-6'>
@@ -108,12 +111,14 @@ const ConfirmationPage = () => {
 
           <div className='mt-14 flex flex-col justify-center items-center   gap-4'>
             <p className='flex justify-center text-[#CBA135] text-[16px] items-center gap-1'>  <FaArrowDownLong  /> Download </p>
-            <Button onClick={()=> setIsModalOpen(true)} type='primary' className='bg-[#CBA135] w-60 h-[46px] text-white px-12 py-2'>
+            <button onClick={()=> setIsModalOpen(true)} type='primary' className='bg-[#CBA135] rounded-md hover:bg-yellow-600 w-60 h-[46px] text-white px-12 py-2'>
               Track My Order
-            </Button>
+            </button>
+  <Link to='/'>
             <Button type='default' className=' w-60 h-[46px] px-20 py-2'>
               Continue Shopping
             </Button>
+  </Link>
             <p className='text-[16px]'>“A confirmation has been sent to your email and WhatsApp.”</p>
           </div>
         </div>

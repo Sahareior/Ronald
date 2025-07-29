@@ -3,17 +3,20 @@ import { Outlet } from 'react-router-dom';
 import CustomerLayout from './layouts/CustomerLayout';
 import GuestLayout from './layouts/GuestLayout';
 import SellersLayout from './layouts/SellersLayout';
+import { useSelector } from 'react-redux';
 
 const Homepage = () => {
   const userType = 'customer'; // hardcoded for now
 
-  if (userType === 'customer') {
+  const data = useSelector(state => state.customer.location)
+
+  if (data === 'customer') {
     return (
       <CustomerLayout>
         <Outlet />
       </CustomerLayout>
     );
-  } else if (userType === 'seller') {
+  } else if (data === 'seller') {
     return (
       <SellersLayout>
         <Outlet />

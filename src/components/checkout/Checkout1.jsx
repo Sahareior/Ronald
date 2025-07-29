@@ -34,9 +34,9 @@ const Checkout1 = () => {
 
     <div className="w-full">
 <Link to='/checkout'>
-      <Button className="h-[48px] w-full bg-[#CBA135] text-white font-semibold hover:bg-yellow-600">
+      <button className="h-[48px] w-full rounded-md bg-[#CBA135] text-white font-semibold hover:bg-yellow-600">
         Add New Address
-      </Button>
+      </button>
 </Link>
     </div>
   </div>

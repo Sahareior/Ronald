@@ -7,6 +7,7 @@ import Similier from './_components/Similier';
 import PreviouslyBought from './_components/PreviouslyBought';
 import Breadcrumb from '../../others/Breadcrumb';
 import DetailsModal from './_components/DetailsModal';
+import { Link } from 'react-router-dom';
 
 const Details = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -84,12 +85,12 @@ const Details = () => {
 
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-4 mt-6">
-            <Button type="primary" className="bg-yellow-600 px-20 popbold rounded-xl h-[56px] hover:bg-yellow-700">
+            <button type="primary" className="bg-yellow-600 text-white px-20 popbold rounded-xl h-[56px] ">
               Add to Cart
-            </Button>
-            <Button className="border-yellow-600 px-20 h-[56px] popbold rounded-xl text-white bg-[#2B2B2B]">
+            </button>
+            <button className="border-yellow-600 px-20 h-[56px] popbold rounded-xl text-white bg-[#2B2B2B]">
               Buy Now
-            </Button>
+            </button>
           </div>
         </div>
       </div>
@@ -187,7 +188,9 @@ const Details = () => {
                        <div className=''>
          <div className='flex justify-between'>
             <p className='border-b-2 text-[#CBA135] popmed border-[#CBA135] w-36'>You also bought</p>
+            <Link to='/filter'>
             <p className='text-[#CBA135] popbold w-24'>View all</p>
+            </Link>
          </div>
          <div className='w-full -mt-1 shadow-md h-1' />
        </div>
@@ -197,7 +200,9 @@ const Details = () => {
                        <div className=''>
          <div className='flex justify-between'>
             <p className='border-b-2 text-[#CBA135] popmed border-[#CBA135] w-36'>Compare Similar</p>
-            <p className=' w-24 text-[#CBA135] font-semibold'>View all</p>
+                        <Link to='/filter'>
+            <p className='text-[#CBA135] popbold w-24'>View all</p>
+            </Link>
          </div>
          <div className='w-full -mt-1 shadow-md h-1' />
        </div>

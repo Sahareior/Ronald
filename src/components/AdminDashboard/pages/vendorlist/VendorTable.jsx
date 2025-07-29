@@ -43,34 +43,60 @@ const columns = [
       title: 'ID',
       dataIndex: 'id',
       key: 'id',
-      render: text => <a className="text-[#CBA135]">{text}</a>,
+      render: text => <a className=" text-[16px] popmed">{text}</a>,
     },
     {
       title: 'Vendor',
       dataIndex: 'vendor',
       key: 'vendor',
+       render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
+            render: status => (
+        <span
+          className={`px-3 py-1 popmed rounded-xl text-[16px] font-medium ${
+            status === 'Paid'
+              ? 'bg-green-100 text-green-600'
+              : 'bg-yellow-100 text-yellow-600'
+          }`}
+        >
+          {status}
+        </span>
+      ),
     },
     {
       title: 'Products',
       dataIndex: 'products',
       key: 'products',
+       render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
     },
     {
       title: 'Orders',
       dataIndex: 'orders',
       key: 'orders',
+       render: text => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
     },
     {
       title: 'Rating',
       dataIndex: 'rating',
       key: 'rating',
       render: rating => (
-        <div className="flex items-center"><span className='px-2'>4</span>
+        <div className="flex items-center"><span className='px-2 text-[16px] popmed'>4</span>
           {Array.from({ length: 1 }, (_, i) => (
             <FaStar
               key={i}
