@@ -1,3 +1,4 @@
+      import { FiSearch } from "react-icons/fi";
 import React from 'react';
 import { Input, Select, Avatar, Button } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
@@ -43,11 +44,14 @@ const VendorMessages = () => {
 
   <div className='bg-white p-6 mt-6'> 
    <div className="flex items-center gap-2">
-          <input className='w-[20%] border border-gray-300 rounded-md px-4 py-1 focus:outline-none' placeholder="Search messages..." />
-          <Select defaultValue="Role" className="w-[120px] ">
-            <Option value="admin">Admin</Option>
-            <Option value="support">Support</Option>
-          </Select>
+
+<div className="relative w-[30%]">
+  <input
+    className="w-full border border-gray-300 rounded-md pl-4 pr-10 py-1 focus:outline-none"
+    placeholder="Search messages..."
+  />
+  <FiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+</div>
         </div>
 
 </div>

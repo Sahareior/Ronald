@@ -37,8 +37,11 @@ const policyPoints = [
 
 const ReturnPolicyOverview = () => {
   return (
-    <div className="max-w-3xl mx-auto bg-[#EAE7E1] p-6 rounded-xl my-32 shadow-md">
-      <Breadcrumb />
+<div className=''>
+      <div className='px-6 py-3'>
+        <Breadcrumb />
+      </div>
+      <div className="max-w-3xl bg-[#EAE7E1] mx-auto  p-6 rounded-xl my-24 shadow-md">
       <h2 className="text-center text-xl font-semibold text-gray-800 mb-6">
         Return Policy Overview
       </h2>
@@ -57,12 +60,8 @@ const ReturnPolicyOverview = () => {
         ))}
       </div>
 
-      <div className="text-center mt-6">
-        <button className="text-sm font-medium text-gray-700 underline hover:text-yellow-600 transition">
-          Read Full Return Policy
-        </button>
-      </div>
     </div>
+</div>
   );
 };
 

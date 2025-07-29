@@ -54,6 +54,8 @@ import { store } from './redux/store.js';
 import VendorProfile from './components/VendorDashboard/Pages/Profile/VendorProfile.jsx';
 
 import VProductsList from './components/VendorDashboard/Pages/Vendorproducts/VProductsList.jsx';
+import TermsAndConditions from './components/homepage/customersHomepage/TermsAndConditions.jsx';
+import PrivacyPolicy from './components/homepage/customersHomepage/PrivacyPolicy.jsx';
 
 const router = createBrowserRouter([
   {
@@ -85,7 +87,9 @@ const router = createBrowserRouter([
           { path: "profile", element: <Profile /> },
           { path: "regester-seller", element: <SellerReg /> }, 
           {path: "return",  element: <ReturnExchangeForm />},
-          {path: 'return-policy', element: <ReturnPolicyOverview />}
+          {path: 'return-policy', element: <ReturnPolicyOverview />},
+          {path: "terms&conditions", element: <TermsAndConditions />},
+          {path: "privacy", element: <PrivacyPolicy />}
         ],
       },
       // ✅ These are outside Homepage layout

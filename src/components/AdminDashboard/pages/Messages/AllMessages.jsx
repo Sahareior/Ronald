@@ -41,12 +41,12 @@ const AllMessages = () => {
   return (
 <div>
 
-  <div className='bg-white p-6 mt-6'> 
+  <div className='bg-white p-6 mt-2'> 
    <div className="flex items-center gap-2">
-          <input className='w-[20%] border border-gray-300 rounded-md px-4 py-1 focus:outline-none' placeholder="Search messages..." />
+          <input className='w-[30%] border border-gray-300 rounded-md px-4 py-1 focus:outline-none' placeholder="Search messages..." />
           <Select defaultValue="Role" className="w-[120px] ">
-            <Option value="admin">Admin</Option>
-            <Option value="support">Support</Option>
+            <Option value="Customer">Customer</Option>
+            <Option value="Seller">Seller</Option>
           </Select>
         </div>
 

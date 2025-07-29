@@ -4,9 +4,12 @@ import Breadcrumb from '../../others/Breadcrumb';
 
 const ReturnExchangeForm = () => {
   return (
-    <div className="min-h-screen bg-[#FAF8F2] flex items-center justify-center p-12  px-4">
-      <Breadcrumb />
-<div className='bg-[#EAE7E1] w-6/12 py-12 p-6'>
+<div className='bg-[#FAF8F2] min-h-screen '>
+     <div className='px-6'>
+       <Breadcrumb />
+     </div>
+      <div className=" flex items-center justify-center   px-4">
+<div className='bg-[#EAE7E1] w-full py-12 p-6'>
         <h2 className="text-center popbold  text-xl md:text-2xl font-semibold text-gray-800 mb-6">
           Return / Exchange Request
         </h2>
@@ -73,6 +76,7 @@ const ReturnExchangeForm = () => {
       </div>
 </div>
     </div>
+</div>
   );
 };
 

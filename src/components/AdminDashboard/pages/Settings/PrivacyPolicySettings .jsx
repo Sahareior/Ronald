@@ -1,104 +1,92 @@
-import { Switch } from 'antd';
-import React from 'react';
-import { FaLock } from 'react-icons/fa';
-import { FiEdit } from 'react-icons/fi';
+import React, { useEffect, useRef, useState } from 'react';
+import Quill from 'quill';
+// import Editor from './editor/Editor';
+// 
+import { useLocation, useNavigate } from 'react-router-dom';
+import Editor from './editor/Editor';
+
+const Delta = Quill.import('delta');
 
 const PrivacyPolicySettings = () => {
-    const onChange = checked => {
-  console.log(`switch to ${checked}`);
-};
+  const [range, setRange] = useState();
+  const [lastChange, setLastChange] = useState();
+  const [readOnly, setReadOnly] = useState(false);
+  const location = useLocation()
+  const [previewHTML, setPreviewHTML] = useState(''); // ✅ Displayed HTML
+  const navigate = useNavigate()
+
+  console.log(location)
+
+useEffect(()=>{
+      if(location.pathname === '/settings'){
+      navigate('/settings/privacy')
+
+  }
+},[location.pathname])
+
+
+  const quillRef = useRef(null);
+
+  const text = `1. Acceptance of Terms
+By downloading, installing, or using the [Your Hunting App Name] (the “App”), you agree to be bound by these Terms and Conditions and our Privacy Policy. If you do not agree, do not use the App.By downloading, installing, or using the [Your Hunting App Name] (the “App”), you agree to be bound by these Terms and Conditions and our Privacy Policy. If you do not agree, do not use the App.
+2. Eligibility
+You must be at least 18 years old (or the age of majority in your jurisdiction) to use the App. By using the App, you confirm that you meet this requirement.By downloading, installing, or using the [Your Hunting App Name] (the “App”), you agree to be bound by these Terms and Conditions and our Privacy Policy. If you do not agree, do not use the App.By downloading, installing, or using the [Your Hunting App Name] (the “App”), you agree to be bound by these Terms and Conditions and our Privacy Policy. If you do not agree, do not use the App.
+3. Use of the App
+You agree to use the App only for lawful purposes related to hunting, wildlife tracking, outdoor navigation, and other supported features. You must comply with all local, state, and federal hunting laws and regulations.
+4. Licenses and Permits
+You are solely responsible for obtaining all necessary hunting licenses, tags, permits, and approvals from appropriate wildlife authorities.By downloading, installing, or using the [Your Hunting App Name] (the “App”), you agree to be bound by these Terms and Conditions and our Privacy Policy. If you do not agree, do not use the App.
+5. Prohibited Conduct
+You may not:
+Use the App to engage in illegal or unethical hunting practices.
+Upload false or misleading information (e.g., about game locations).
+Attempt to hack, reverse-engineer, or interfere with the App.
+Share another user’s personal information without consent.
+6. GPS and Mapping Accuracy
+The App may use GPS and mapping data for tracking and navigation. We do not guarantee the accuracy of such data, and you assume all risk for its use.By downloading, installing, or using the [Your Hunting App Name] (the “App”), you agree to be bound by these Terms and Conditions and our Privacy Policy. If you do not agree, do not use the App.By downloading, installing, or using the [Your Hunting App Name] (the “App”), you agree to be bound by these Terms and Conditions and our Privacy Policy. If you do not agree, don’t use the App.`;
+
+  const handleLogContent = () => {
+    if (quillRef.current) {
+      const html = quillRef.current.root.innerHTML;
+      const delta = quillRef.current.getContents();
+      const text = quillRef.current.getText();
+
+      console.log('🟡 Delta:', delta);
+      console.log('🟡 HTML:', html);
+      console.log('🟡 Plain Text:', text);
+
+      setPreviewHTML(html); // ✅ Set content for display
+    }
+  };
+
   return (
-    <div className="bg-[#FAF8F2] shadow rounded-lg p-6 space-y-6">
-      {/* Header */}
-      <div className="flex bg-white p-5 shadow-sm items-center justify-between">
-        <div className="flex items-center gap-2 text-lg font-semibold">
-          <FaLock className="text-yellow-500" />
-          Privacy Policy Settings
-        </div>
-        <button className="flex items-center gap-1 px-4 py-2 text-sm font-medium bg-yellow-500 text-white rounded hover:bg-yellow-600 transition">
-          <FiEdit />
-          Edit Policy
+    <div className="settings-container">
+
+      <Editor
+        ref={quillRef}
+        readOnly={readOnly}
+        defaultValue={new Delta().insert(text)}
+        onSelectionChange={setRange}
+        onTextChange={setLastChange}
+      />
+
+      <div className="settings-controls">
+        <button
+          className="get-length-btn text-white mt-7 popbold w-[153px] h-[40px] bg-[#2765A1]"
+          onClick={handleLogContent}
+        >
+          Update
         </button>
       </div>
 
-      {/* Toggle List */}
-      <div className="space-y-4 bg-white p-5 shadow-sm">
-        <div className="flex justify-between items-center border-b pb-2">
-          <div>
-            <p className="font-medium">Registration Page</p>
-            <p className="text-sm text-gray-500">Show privacy policy link on user registration</p>
-          </div>
-          <Switch defaultChecked onChange={onChange} />
+      {previewHTML && (
+        <div className="preview-container mt-10">
+          <h3 className="preview-title">📄 Preview:</h3>
+          <div
+            className="preview-content"
+            dangerouslySetInnerHTML={{ __html: previewHTML }}
+          />
         </div>
-
-        <div className="flex justify-between items-center border-b pb-2">
-          <div>
-            <p className="font-medium">Checkout Page</p>
-            <p className="text-sm text-gray-500">Display privacy policy during checkout process</p>
-          </div>
-          <Switch defaultChecked onChange={onChange} />
-        </div>
-
-        <div className="flex justify-between items-center border-b pb-2">
-          <div>
-            <p className="font-medium">Vendor Signup Form</p>
-            <p className="text-sm text-gray-500">Include privacy policy in vendor registration</p>
-          </div>
-          <Switch defaultChecked onChange={onChange} />
-        </div>
-
-        <div className="flex justify-between items-center">
-          <div>
-            <p className="font-medium">Require Acceptance</p>
-            <p className="text-sm text-gray-500">Users must accept privacy policy before account creation</p>
-          </div>
-          <Switch defaultChecked onChange={onChange} />
-        </div>
-      </div>
-
-      {/* Policy Content */}
-      <div className="bg-[#F9FAFB] border rounded p-4">
-        <div className="flex justify-between items-center mb-3">
-          <p className="font-medium">Privacy Policy Content</p>
-          <p className="text-sm text-gray-500">Last updated: July 15, 2025</p>
-        </div>
-        <div className='h-[0.7px] bg-black w-full my-3' />
-        <div className="space-y-4 text-sm text-gray-700">
-          <div>
-            <p className="font-semibold">1. Introduction</p>
-            <p>
-              Welcome to WIROKO. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our marketplace platform.
-            </p>
-          </div>
-
-          <div>
-            <p className="font-semibold">2. What Information We Collect</p>
-
-            <div className="pl-4">
-              <p className="font-medium">Personal Information</p>
-              <ul className="list-disc list-inside">
-                <li>Name, email address, phone number</li>
-                <li>Billing and shipping addresses</li>
-                <li>Profile information and preferences</li>
-              </ul>
-
-              <p className="font-medium mt-2">Order & Payment Data</p>
-              <ul className="list-disc list-inside">
-                <li>Purchase history and transaction details</li>
-                <li>Payment method information (encrypted)</li>
-                <li>Order preferences and delivery instructions</li>
-              </ul>
-
-              <p className="font-medium mt-2">Location & Device Info</p>
-              <ul className="list-disc list-inside">
-                <li>GPS location for delivery services</li>
-                <li>Device type, OS, browser info</li>
-                <li>IP address and usage analytics</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 };

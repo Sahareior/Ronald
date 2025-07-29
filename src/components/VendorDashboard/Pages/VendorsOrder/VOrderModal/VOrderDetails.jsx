@@ -38,7 +38,7 @@ const VOrderDetails = () => {
       </div>
       <div className='bg-white p-6 shadow-sm'>
         <h3 className="text-lg font-semibold text-black mb-4">Order Summary</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <p className="text-gray-500 mb-1">Customer Name</p>
             <div className="flex items-center gap-2 font-medium">
@@ -49,10 +49,7 @@ const VOrderDetails = () => {
               Fatiha Jahan
             </div>
           </div>
-          <div>
-            <p className="text-gray-500 mb-1">Email</p>
-            <p className="font-medium">xyz@gmail.com</p>
-          </div>
+  
           <div>
             <p className="text-gray-500 mb-1">Order Date</p>
             <p className="font-medium">July 15, 2025</p>
@@ -61,10 +58,7 @@ const VOrderDetails = () => {
             <p className="text-gray-500 mb-1">Order Status</p>
             <p className="font-medium">Processing</p>
           </div>
-          <div>
-            <p className="text-gray-500 mb-1">Payment Method</p>
-            <p className="font-medium">Mobile banking</p>
-          </div>
+
           <div>
             <p className="text-gray-500 mb-1">Payment Status</p>
             <p className="font-medium">Paid</p>
@@ -102,23 +96,7 @@ const VOrderDetails = () => {
       </div>
 
       {/* Shipping Info */}
-      <div className='bg-white p-5 shadow-sm'>
-        <h3 className="text-lg font-semibold text-black mb-4">Shipping Information</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <p className="text-gray-500 mb-1">Delivery Address</p>
-            <p className="font-medium">xyz xyz xyz</p>
-          </div>
-          <div>
-            <p className="text-gray-500 mb-1">Delivery Option</p>
-            <p className="font-medium">Home Delivery</p>
-          </div>
-          <div>
-            <p className="text-gray-500 mb-1">Expected Delivery</p>
-            <p className="font-medium">July 20, 2025</p>
-          </div>
-        </div>
-      </div>
+
       
     </div>
   );

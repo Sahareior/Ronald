@@ -36,8 +36,13 @@ const Footer = () => {
       </div>
 
       {/* Footer bottom */}
-      <div className="border-t border-gray-700 mt-10 pt-6 text-sm text-center text-gray-500">
-        © {new Date().getFullYear()} WIROKO. All rights reserved.
+      <div className="border-t flex justify-between border-gray-700 mt-10 pt-6 text-sm text-center text-gray-500">
+        <div>
+          © {new Date().getFullYear()} WIROKO. All rights reserved.
+        </div>
+        <Link to='privacy'>
+        <p>Privacy Policy</p>
+        </Link>
       </div>
     </footer>
   );

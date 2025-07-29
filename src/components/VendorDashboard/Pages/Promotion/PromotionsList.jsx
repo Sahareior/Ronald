@@ -1,5 +1,6 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const promotions = [
   {
@@ -44,9 +45,11 @@ const PromotionsList = () => {
         <h2 className="text-lg popreg text-gray-700">
           Manage your promotional campaigns and boost sales
         </h2>
+        <Link to='/vendor-dashboard/create-promotion'>
         <button className="bg-yellow-600 popmed text-[16px] text-white font-medium px-4 py-2 rounded-md hover:bg-yellow-700">
           + Create New Promotion
         </button>
+        </Link>
       </div>
 
       <div className="mb-6 flex flex-wrap bg-white p-5 py-6 rounded-sm shadow-sm items-center justify-between gap-4">

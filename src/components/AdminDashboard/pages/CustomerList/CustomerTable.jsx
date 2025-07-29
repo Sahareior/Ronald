@@ -14,84 +14,61 @@ const CustomerTable = () => {
   const [pageSize, setPageSize] = useState(10);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
      const [isModalOpen, setIsModalOpen] = useState(false);
-  const [dataSource, setDataSource] = useState(
-    Array.from({ length: 247 }, (_, i) => ({
-      key: i + 1,
-      orderId: `Wrioko24${i + 1}`,
-      customer: ['Fatiha Jahan', 'John Doe', 'Jane Smith'][i % 3],
-      date: 'July 15, 2025',
-      total: 3290 + (i % 10) * 100,
-      payment: ['Mobile banking', 'Cash', 'Card'][i % 3],
-      status: ['Paid', 'Processing', 'Pending'][i % 3],
-    }))
-  );
+const [dataSource, setDataSource] = useState(
+  Array.from({ length: 247 }, (_, i) => ({
+    key: i + 1,
+    orderId: `Wrioko24${i + 1}`,
+    customer: ['Fatiha Jahan', 'John Doe', 'Jane Smith'][i % 3],
+    status: ['Paid', 'Processing', 'Pending'][i % 3],
+    signupDate: `July ${10 + (i % 20)}, 2025`,
+    lastActivity: ['Mobile banking', 'Cash', 'Card'][i % 3],
+  }))
+);
 
 
+const columns = [
+  {
+    title: 'ID',
+    dataIndex: 'orderId',
+    key: 'orderId',
+    render: text => <a className="text-[#CBA135]">{text}</a>,
+  },
+  {
+    title: 'Customer',
+    dataIndex: 'customer',
+    key: 'customer',
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+  },
+  {
+    title: 'Signup Date',
+    dataIndex: 'signupDate',
+    key: 'signupDate',
+  },
+  {
+    title: 'Last Activity',
+    dataIndex: 'lastActivity',
+    key: 'lastActivity',
+  },
+  {
+    title: 'Action',
+    key: 'action',
+    render: (_, record) => (
+      <div className="flex items-center gap-3">
+        <IoEyeOutline onClick={() => setIsModalOpen(true)} className="text-gray-400 cursor-pointer" size={20} />
+        <MdDelete
+          className="text-red-400 cursor-pointer"
+          size={20}
+          onClick={() => handleDelete([record.key])}
+        />
+      </div>
+    ),
+  },
+];
 
-  const columns = [
-    {
-      title: 'Order ID',
-      dataIndex: 'orderId',
-      key: 'orderId',
-      render: text => (
-        <div>
-          <a className="text-[#CBA135]">{text}</a>
-        </div>
-      ),
-    },
-    {
-      title: 'Customer',
-      dataIndex: 'customer',
-      key: 'customer',
-    },
-    {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
-    },
-    {
-      title: 'Total',
-      dataIndex: 'total',
-      key: 'total',
-      render: total => `$${total.toLocaleString()}`,
-    },
-    {
-      title: 'Payment',
-      dataIndex: 'payment',
-      key: 'payment',
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-      render: status => (
-        <span
-          className={`px-2 py-1 rounded text-xs font-medium ${
-            status === 'Paid'
-              ? 'bg-green-100 text-green-600'
-              : 'bg-yellow-100 text-yellow-600'
-          }`}
-        >
-          {status}
-        </span>
-      ),
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (_, record) => (
-        <div className="flex items-center gap-3">
-        
-          <IoEyeOutline onClick={()=> setIsModalOpen(true)} className="text-gray-400 cursor-pointer" size={20} />
-            <MdDelete
-                     className="text-red-400 cursor-pointer"
-                     size={20}
-                     onClick={() => handleDelete([record.key])}
-                   />
-        </div>
-      ),
-    },
-  ];
 
   const handleBulkAction = (action) => {
     if (selectedRowKeys.length === 0) {

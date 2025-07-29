@@ -23,11 +23,13 @@ const OrderModal = ({ isModalOpen, setIsModalOpen,target }) => {
       </Button>
       <Modal
         title={
-          <div className="py-6 px-4  bg-[#FAF8F2]">
+     target === 'eye' && (
+           <div className="py-6 px-4  bg-[#FAF8F2]">
             <h2 className="text-[22px] font-semibold text-gray-800">
               Order Details – <span className="text-[#CBA135]">#Wrioko240001</span>
             </h2>
           </div>
+     )
         }
         closable={{ 'aria-label': 'Custom Close Button' }}
         open={isModalOpen}
@@ -35,10 +37,11 @@ const OrderModal = ({ isModalOpen, setIsModalOpen,target }) => {
         onCancel={handleCancel}
         footer= {null}
         width={900}
+        style={{top: '30px'}}
       >
       <div className='h-[70vh] px-4 pb-8 overflow-y-scroll'>
         {
-            target === 'eye'? <OrderDetails /> : <EditOrder />
+            target === 'eye'? <OrderDetails /> : <div className='px-5 py-8'><EditOrder /></div>
         }
           {/* <OrderDetails /> */}
           {/* <EditOrder /> */}

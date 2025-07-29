@@ -70,10 +70,7 @@ const VOrdersTable = () => {
       key: 'action',
       render: (_, record) => (
         <div className="flex items-center gap-6">
-          <FaEdit onClick={()=>{
-            setIsModalOpen(true);
-            setTarget('edit')
-          }} className="text-[#CBA135] cursor-pointer" size={20} />
+        
           <IoEyeOutline
   onClick={() => {
     setIsModalOpen(true);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Table, Select, Checkbox, Button, message, Popover } from 'antd';
-import { FaEdit } from 'react-icons/fa';
+import { FaEdit, FaStar } from 'react-icons/fa';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 import { RiArrowDropDownLine } from 'react-icons/ri';
@@ -17,15 +17,15 @@ const VendorTable = () => {
          const [openPopoverKey, setOpenPopoverKey] = useState(null);
 
      
-  const [dataSource, setDataSource] = useState(
+   const [dataSource, setDataSource] = useState(
     Array.from({ length: 247 }, (_, i) => ({
       key: i + 1,
-      orderId: `Wrioko24${i + 1}`,
-      customer: ['Fatiha Jahan', 'John Doe', 'Jane Smith'][i % 3],
-      date: 'July 15, 2025',
-      total: 3290 + (i % 10) * 100,
-      payment: ['Mobile banking', 'Cash', 'Card'][i % 3],
+      id: `Wrioko24${i + 1}`,
+      vendor: ['Fatiha Jahan', 'John Doe', 'Jane Smith'][i % 3],
       status: ['Paid', 'Processing', 'Pending'][i % 3],
+      products: `${3 + (i % 5)} items`,
+      orders: 10 + (i % 20),
+      rating: (Math.floor(Math.random() * 5) + 1), // Random rating between 1-5
     }))
   );
 
@@ -38,52 +38,47 @@ const VendorTable = () => {
        };
 
 
-  const columns = [
+const columns = [
     {
-      title: 'Order ID',
-      dataIndex: 'orderId',
-      key: 'orderId',
-      render: text => (
-        <div>
-          <a className="text-[#CBA135]">{text}</a>
-        </div>
-      ),
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      render: text => <a className="text-[#CBA135]">{text}</a>,
     },
     {
-      title: 'Customer',
-      dataIndex: 'customer',
-      key: 'customer',
-    },
-    {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
-    },
-    {
-      title: 'Total',
-      dataIndex: 'total',
-      key: 'total',
-      render: total => `$${total.toLocaleString()}`,
-    },
-    {
-      title: 'Payment',
-      dataIndex: 'payment',
-      key: 'payment',
+      title: 'Vendor',
+      dataIndex: 'vendor',
+      key: 'vendor',
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: status => (
-        <span
-          className={`px-2 py-1 rounded text-xs font-medium ${
-            status === 'Paid'
-              ? 'bg-green-100 text-green-600'
-              : 'bg-yellow-100 text-yellow-600'
-          }`}
-        >
-          {status}
-        </span>
+    },
+    {
+      title: 'Products',
+      dataIndex: 'products',
+      key: 'products',
+    },
+    {
+      title: 'Orders',
+      dataIndex: 'orders',
+      key: 'orders',
+    },
+    {
+      title: 'Rating',
+      dataIndex: 'rating',
+      key: 'rating',
+      render: rating => (
+        <div className="flex items-center"><span className='px-2'>4</span>
+          {Array.from({ length: 1 }, (_, i) => (
+            <FaStar
+              key={i}
+              className={i < rating ? 'text-yellow-400' : 'text-gray-300'}
+              size={14}
+            />
+          ))}
+        </div>
       ),
     },
     {
@@ -91,38 +86,12 @@ const VendorTable = () => {
       key: 'action',
       render: (_, record) => (
         <div className="flex items-center gap-3">
-        
-          <IoEyeOutline onClick={()=> setIsModalOpen(true)} className="text-gray-400 cursor-pointer" size={20} />
-
-<Popover
-  content={
-    <div className="space-y-2 py-3 px-4 flex flex-col gap-4 items-center text-center">
-      <p className="text-gray-700">Do you want to delete this order?</p>
-      <Button
-        className="bg-[#CBA135] text-white hover:bg-yellow-600"
-        onClick={() => {
-          handleDelete([record.key]);
-          setOpenPopoverKey(null); // Close after deletion
-        }}
-      >
-        Delete
-      </Button>
-    </div>
-  }
-  title={<h3 className="text-red-500 text-center font-semibold">Are you sure!!</h3>}
-  trigger="click"
-  open={openPopoverKey === record.key}
-  onOpenChange={(newOpen) => {
-    setOpenPopoverKey(newOpen ? record.key : null);
-  }}
->
-  <MdDelete
-    className="text-red-400 cursor-pointer"
-    size={20}
-  />
-</Popover>
-
-
+          <IoEyeOutline onClick={() => setIsModalOpen(true)} className="text-gray-400 cursor-pointer" size={20} />
+          <MdDelete
+            className="text-red-400 cursor-pointer"
+            size={20}
+            onClick={() => handleDelete([record.key])}
+          />
         </div>
       ),
     },
@@ -160,7 +129,10 @@ const VendorTable = () => {
             onChange={handleBulkAction}
             suffixIcon={<RiArrowDropDownLine />}
           >
-            <Option value="delete">Delete Selected</Option>
+            <Option value="delete">All</Option>
+            <Option value="delete">None</Option>
+            <Option value="delete">Paid</Option>
+            <Option value="delete">Unpaid</Option>
 
           </Select>
           <span className="text-sm text-gray-500">

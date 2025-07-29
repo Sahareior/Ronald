@@ -35,7 +35,7 @@ const VOrderModal = ({ isModalOpen, setIsModalOpen,target }) => {
         onOk={handleOk}
         onCancel={handleCancel}
         footer= {null}
-        width={900}
+        width={700}
       >
       <div className='h-[70vh] px-4 pb-8 overflow-y-scroll'>
         {
