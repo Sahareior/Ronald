@@ -4,6 +4,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addToCart, addToWishList } from '../../../redux/slices/customerSlice';
 import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 const featuredProducts = [
   {
@@ -41,13 +44,24 @@ const FeaturedProducts = () => {
 
     const handleCart =(data)=>{
       dispatch(addToCart(data))
-      Swal.fire({
-    position: "top-end",
-    icon: "success",
-    title: "Item has added to the cart!",
-    showConfirmButton: false,
-    timer: 1500
-  });
+    MySwal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: '<span style="font-family: Poppins, sans-serif;">Item added to cart!</span>',
+  background: '#FFFFFF',
+  customClass: {
+    popup: 'rounded-xl shadow-lg',
+    title: 'text-lg text-gray-800',
+    icon: 'text-green-500'
+  },
+  showConfirmButton: false,
+  timer: 1800,
+  toast: true,
+  didOpen: (toast) => {
+    toast.style.border = '1px solid #e0e0e0';
+    toast.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.05)';
+  }
+});
     }
 
   return (
@@ -75,12 +89,23 @@ const FeaturedProducts = () => {
               {/* Wishlist Icon */}
               <div onClick={()=> {
                       dispatch(addToWishList(item));
-      Swal.fire({
-  position: "top-end",
-  icon: "success",
-  title: "Item has added to the wishlist!",
+        MySwal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: '<span style="font-family: Poppins, sans-serif;">Item added to Wishlist!</span>',
+  background: '#FFFFFF',
+  customClass: {
+    popup: 'rounded-xl shadow-lg',
+    title: 'text-lg text-gray-800',
+    icon: 'text-green-500'
+  },
   showConfirmButton: false,
-  timer: 1500
+  timer: 1800,
+  toast: true,
+  didOpen: (toast) => {
+    toast.style.border = '1px solid #e0e0e0';
+    toast.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.05)';
+  }
 });
               }} className="absolute top-3 right-3 rounded-full p-2 shadow-sm cursor-pointer transition text-white bg-white/10 backdrop-blur-md hover:text-red-400">
                 <AiFillHeart size={18} />

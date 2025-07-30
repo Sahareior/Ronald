@@ -1,23 +1,39 @@
 import { Button, Rate } from 'antd';
 import React from 'react';
 import Breadcrumb from '../others/Breadcrumb';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import withReactContent from 'sweetalert2-react-content';
+import { addToCart } from '../../redux/slices/customerSlice';
+import Swal from 'sweetalert2';
+
+const MySwal = withReactContent(Swal);
 
 const WhiteList = () => {
-    const categories = ['Sofas', 'Sectionals', 'Loveseats','others'];
-const brands = ['Home Decor Masters', 'Modern Living Co.', 'Vintage Comfort', 'Elite Furniture', 'Elegant Furniture Co.', 'other' , 'hudai', 'bata'];
 
+const dispatch = useDispatch()
 const wishList = useSelector(state => state.customer.wishlist)
 
-console.log(wishList)
-    const products = Array.from({ length: 9 }).map((_, index) => ({
-  id: index + 1,
-  title: `Sofa ${index + 1}`,
-  brand: brands[index % brands.length],
-  price: 1200 + index * 200,
-  rating: (3 + (index % 3)),
-  img: 'https://images.unsplash.com/photo-1577977404260-4bf12328b122?q=80&w=1169&auto=format&fit=crop'
-}));
+  const handleCart =(data)=>{
+    dispatch(addToCart(data))
+        MySwal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: '<span style="font-family: Poppins, sans-serif;">Item added to cart!</span>',
+  background: '#FFFFFF',
+  customClass: {
+    popup: 'rounded-xl shadow-lg',
+    title: 'text-lg text-gray-800',
+    icon: 'text-green-500'
+  },
+  showConfirmButton: false,
+  timer: 1800,
+  toast: true,
+  didOpen: (toast) => {
+    toast.style.border = '1px solid #e0e0e0';
+    toast.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.05)';
+  }
+});
+  }
     return (
         <div className='mx-40 pb-9'>
             <Breadcrumb />
@@ -40,7 +56,7 @@ console.log(wishList)
               </div>
                 <div className='flex justify-between items-center gap-10'>
                                   <p className="text-lg font-bold ">${product.price}</p>
-              <button type="primary" block className="bg-yellow-600 text-white px-5 py-1 rounded-lg hover:bg-yellow-700">
+              <button onClick={()=> handleCart(product)} type="primary" block className="bg-yellow-600 text-white px-5 py-1 rounded-lg hover:bg-yellow-700">
                 Add to Cart
               </button>
                 </div>

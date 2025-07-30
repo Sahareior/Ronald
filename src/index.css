@@ -14,6 +14,18 @@
     color: black;
 }
 
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+
 /* For custom radio color #CBA135 */
 .custom-radio-brown .ant-radio-checked .ant-radio-inner {
   border-color: #CBA135 !important;
