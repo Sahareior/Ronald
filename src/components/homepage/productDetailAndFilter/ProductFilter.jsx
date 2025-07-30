@@ -8,6 +8,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import { addToCart, addToWishList } from '../../../redux/slices/customerSlice';
+import Swal from 'sweetalert2';
 
 const categories = ['Sofas', 'Sectionals', 'Loveseats','others'];
 const brands = ['Home Decor Masters', 'Modern Living Co.', 'Vintage Comfort', 'Elite Furniture', 'Elegant Furniture Co.', 'other' , 'hudai', 'bata'];
@@ -103,6 +104,13 @@ const ProductFilter = () => {
 
   const handleCart =(data)=>{
     dispatch(addToCart(data))
+    Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: "Item has added to the cart!",
+  showConfirmButton: false,
+  timer: 1500
+});
   }
 
   return (
@@ -246,6 +254,13 @@ const ProductFilter = () => {
     onClick={(e) => {
       e.stopPropagation(); // prevent bubbling just in case
       dispatch(addToWishList(product));
+      Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: "Item has added to the wishlist!",
+  showConfirmButton: false,
+  timer: 1500
+});
     }}
     className="absolute top-2 right-2 text-black w-8 h-8 flex items-center justify-center hover:text-red-500 bg-slate-100 rounded-full cursor-pointer text-xl"
     style={{

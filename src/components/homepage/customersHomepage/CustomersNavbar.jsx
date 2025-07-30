@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
 import { IoExitOutline } from 'react-icons/io5';
+import { RxExit } from 'react-icons/rx';
 
 const CustomersNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -114,7 +115,9 @@ const CustomersNavbar = () => {
               alt="User Avatar"
             />
           </Link>
-
+          <Link to='/login'>
+          <RxExit size={22} />
+          </Link>
         </div>
       </div>
     </div>

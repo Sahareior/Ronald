@@ -6,17 +6,17 @@ import SellersLayout from './layouts/SellersLayout';
 import { useSelector } from 'react-redux';
 
 const Homepage = () => {
-  const userType = 'seller'; // hardcoded for now
+  const userType = 'customer'; // hardcoded for now
 
   const data = useSelector(state => state.customer.location)
 
-  if (userType === 'customer') {
+  if (data === 'customer') {
     return (
       <CustomerLayout>
         <Outlet />
       </CustomerLayout>
     );
-  } else if (userType === 'seller') {
+  } else if (data === 'seller') {
     return (
       <SellersLayout>
         <Outlet />

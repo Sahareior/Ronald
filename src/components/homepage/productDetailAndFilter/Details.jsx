@@ -1,5 +1,5 @@
 import { Button, Rate, Tag } from 'antd';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { FaLongArrowAltDown } from "react-icons/fa";
 import Customers from '../_components/Customers';
 import { LiaStarSolid } from 'react-icons/lia';
@@ -8,10 +8,11 @@ import PreviouslyBought from './_components/PreviouslyBought';
 import Breadcrumb from '../../others/Breadcrumb';
 import DetailsModal from './_components/DetailsModal';
 import { Link } from 'react-router-dom';
+import ZoomSection from './_components/ZoomSection';
 
 const Details = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const zoomPaneRef = useRef(null);
     const productSpecs = [
   { label: 'Dimensions (W×H×D)', value: '88" × 35" × 38"' },
   { label: 'Assembly Required', value: 'Minimal (Legs only)' },
@@ -23,24 +24,27 @@ const Details = () => {
   { label: 'Country of Origin', value: 'Italy' },
 ];
 
+const image = '/image/featured/img1.png'
+
   return (
 <div className='bg-[#FAF8F2] '>
           <div className='px-40'>
 
           </div>
-        <div className="p-6 w-full px-40 mx-auto rounded-lg">
+        <div className="p-6 w-full relative px-40 mx-auto rounded-lg">
       <div className="flex flex-col md:flex-row  gap-9">
         {/* Product Image */}
-        <div className="flex-1">
-          <img
-            className="w-full  mx-auto h-[550px] object-cover md:mx-0 rounded-lg"
-            src="/image/featured/img1.png"
-            alt="Luxury Velvet Sectional Sofa"
-          />
-        </div>
+ <div className="flex-1">
+      <ZoomSection img={image} zoomPaneRef={zoomPaneRef} />
+    </div>
 
         {/* Product Info */}
-        <div className="flex-1 space-y-9">
+       <div className="flex-1 space-y-9">
+        <div
+          ref={zoomPaneRef}
+          className="absolute top-0 right-0 w-[320px] h-[350px] z-50"
+        ></div>
+
           <div>
             <h2 className="text-3xl popbold text-gray-800">Luxury Velvet Sectional Sofa</h2>
             <h3 className="text-lg popreg text-gray-500 mb-1">by Elegant Furniture Co.</h3>
@@ -147,44 +151,11 @@ const Details = () => {
          <div className='w-full -mt-1 shadow-md h-1' />
        </div>
        {/* reviews */}
-<div className='grid grid-cols-3 gap-7 mt-10 justify-items-center'>
-                    {[1,2,3].map((item, idx) => (
-                        <div
-                            key={idx}
-                            className=" w-full  p-6  bg-[#FFFFFF]  transition-all duration-300"
-                        >
-                            <div className="flex items-center gap-4 mb-4">
-                                <img
-                                    className="w-12 h-12 object-cover rounded-full"
-                                    src="https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?w=500&auto=format&fit=crop&q=60"
-                                    alt="Customer profile"
-                                />
-                                <div>
-                                    <h4 className="popreg text-[16px] text-gray-800">Sahareior Sijan</h4>
-                                    <div className="flex gap-1 text-[14px] popreg text-[#CBA135]">
-                                        <LiaStarSolid />
-                                        <LiaStarSolid />
-                                        <LiaStarSolid />
-                                        <LiaStarSolid />
-                                        <LiaStarSolid />
-                                    </div>
-                                </div>
-                            </div>
-                            <p className="text-[#4B5563] popreg  mb-4">
-                                “Absolutely love my new sofa! The quality is exceptional and it fits perfectly in my living room.”
-                            </p>
-                            <img
-                                className="w-16 h-16 object-cover rounded-lg "
-                                src="https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?w=500&auto=format&fit=crop&q=60"
-                                alt="Product"
-                            />
-                        </div>
-                    ))}
-</div>
+<Customers details={true} />
 </div>
     </div>
    <div>
-    <div className=' px-40 mt-24'>
+    <div className=' px-20 mt-24'>
                        <div className=''>
          <div className='flex justify-between'>
             <p className='border-b-2 text-[#CBA135] popmed border-[#CBA135] w-36'>You also bought</p>
@@ -196,7 +167,7 @@ const Details = () => {
        </div>
         <Similier />
     </div>
-    <div className=' px-40 mt-24'>
+    <div className=' px-20 mt-24'>
                        <div className=''>
          <div className='flex justify-between'>
             <p className='border-b-2 text-[#CBA135] popmed border-[#CBA135] w-36'>Compare Similar</p>
