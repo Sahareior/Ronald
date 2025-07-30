@@ -7,11 +7,13 @@ const VendorProfile = () => {
 
   return (
     <div className="bg-[#F9F6EF] min-h-screen py-10">
-      <div className="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-md">
-        <h2 className="text-2xl font-bold mb-2">My Profile</h2>
+      <div className='px-10'>
+             <h2 className="text-2xl font-bold mb-2">My Profile</h2>
         <p className="text-sm text-gray-600 mb-6">
           Manage your personal information and account settings
         </p>
+      </div>
+      <div className="max-w-5xl  mx-auto bg-white p-8 rounded-xl shadow-md">
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>

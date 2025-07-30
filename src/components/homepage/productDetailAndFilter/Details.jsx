@@ -26,6 +26,9 @@ const Details = () => {
 
 const image = '/image/featured/img1.png'
 
+
+
+
   return (
 <div className='bg-[#FAF8F2] '>
           <div className='px-40'>

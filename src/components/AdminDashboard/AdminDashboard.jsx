@@ -101,8 +101,11 @@ const AdminDashboard = () => {
         width={250}
         collapsedWidth="0"
       >
+               <div className='p-4 flex flex-col gap-14 justify-center items-center'>
+         <img className='w-[80%]' src="/image/footer.png" alt="" />
+       </div>
         <div className="flex flex-col h-screen justify-between">
-          <div className="flex-1 overflow-auto mt-14">
+          <div className="flex-1 overflow-auto mt-10">
             <Menu
               theme="light"
               mode="inline"

@@ -51,7 +51,7 @@ const Footer = () => {
         <div>
           <h3 className="text-xl popbold text-[#FAF8F2] font-semibold mb-4">Categories</h3>
          <ul className="space-y-2 text-[#FAF8F2] popreg text-lg">
-            <li><Link to="/about" className="hover:text-white">About Us</Link></li>
+            <li><Link to="/" className="hover:text-white">About Us</Link></li>
          
           </ul>
         </div>

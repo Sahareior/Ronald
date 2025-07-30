@@ -27,33 +27,45 @@ const items = [
     key: '1',
     icon: <GoGraph size={16} />,
     label: <Link to="vendor-overview">Home</Link>,
+    path: 'vendor-overview',
   },
   {
     key: '2',
-    icon: <FaCartShopping size={16}/>,
+    icon: <FaCartShopping size={16} />,
     label: <Link to="vendor-order">Orders</Link>,
+    path: 'vendor-order',
   },
   {
     key: '3',
-    icon: <IoIosPeople size={16}/>,
+    icon: <IoIosPeople size={16} />,
     label: <Link to="vendor-payment">Payment</Link>,
+    path: 'vendor-payment',
   },
   {
     key: '4',
-    icon: <IoPricetagSharp size={16}/>,
+    icon: <IoPricetagSharp size={16} />,
     label: <Link to="promotion">Promotions</Link>,
+    path: 'promotion',
   },
   {
     key: '5',
-    icon: <FaBox  size={16}/>,
+    icon: <FaBox size={16} />,
     label: <Link to="vendor-products">Products</Link>,
+    path: 'vendor-products',
   },
   {
     key: '6',
-    icon: <LuMessageSquareText size={16}/>,
-    label: <Link className='flex w-full items-center gap-2' to="vendor-message">Message <p className='w-4 h-4 gap-5 flex justify-center items-center rounded-full bg-[#CBA135] text-white'>7</p></Link>,
+    icon: <LuMessageSquareText size={16} />,
+    label: (
+      <Link className="flex w-full items-center gap-7" to="vendor-message">
+        Message{' '}
+        <p className="w-4 h-4 gap-5 p-3 flex justify-center text-xs items-center rounded-full bg-[#CBA135] text-white">
+          7
+        </p>
+      </Link>
+    ),
+    path: 'vendor-message',
   },
- 
 ];
 
 const VendorDashboard = () => {
@@ -61,6 +73,11 @@ const [isModalOpen, setIsModalOpen] = useState(false)
   const navigate = useNavigate();
   const location = useLocation();
 const currentKey = location.pathname.split('/')[1];
+
+const currentPath = location.pathname.split('/')[2]; // vendor-dashboard/**vendor-products**
+const activeItem = items.find(item => item.path === currentPath);
+const selectedKey = activeItem ? [activeItem.key] : [];
+
 
 
 
@@ -82,14 +99,25 @@ const currentKey = location.pathname.split('/')[1];
           console.log(collapsed, type);
         }}
       >
+       <div className='p-4 flex flex-col gap-10 justify-center items-center'>
+         <img className='w-[80%]' src="/image/footer.png" alt="" />
+
+<div className='flex justify-center items-center gap-3 flex-col'>
+           <img className='h-[60px] w-[60px] rounded-full' src="/image/decor.png" alt="" />
+
+         <p className='popmed text-lg text-[#666666]'>Home Decor Masters</p>
+</div>
+       </div>
+       <hr className='pb-3' />
      <div className='flex flex-col h-screen justify-around'>
     <div className="flex-1 justify-between  h-screen overflow-auto">
     <Menu
       theme="light"
       mode="inline"
-       selectedKeys={[currentKey]}
+      
+      selectedKeys={selectedKey}
       items={items}
-      className="mt-16"
+      className="popreg text-lg space-y-1"
       
     />
   </div>
