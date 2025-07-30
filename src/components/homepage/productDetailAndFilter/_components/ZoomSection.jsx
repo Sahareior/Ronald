@@ -26,7 +26,7 @@ const ZoomSection = ({ img, zoomPaneRef }) => {
         src={img}
         data-zoom={img}
         alt="Zoomed Product"
-        className="w-full h-[550px] object-cover rounded-lg shadow-md"
+        className="w-full h-[550px] object-cover rounded-md shadow-md"
       />
     </div>
   );

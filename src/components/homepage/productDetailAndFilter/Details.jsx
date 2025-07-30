@@ -31,7 +31,7 @@ const image = '/image/featured/img1.png'
           <div className='px-40'>
 
           </div>
-        <div className="p-6 w-full relative px-40 mx-auto rounded-lg">
+        <div className="p-6 w-full  px-40 mx-auto rounded-lg">
       <div className="flex flex-col md:flex-row  gap-9">
         {/* Product Image */}
  <div className="flex-1">
@@ -39,10 +39,10 @@ const image = '/image/featured/img1.png'
     </div>
 
         {/* Product Info */}
-       <div className="flex-1 space-y-9">
+       <div className="flex-1  space-y-9">
         <div
           ref={zoomPaneRef}
-          className="absolute top-0 right-0 w-[320px] h-[350px] z-50"
+          className="absolute top-30 rounded-md w-[520px] h-[550px] z-50"
         ></div>
 
           <div>
