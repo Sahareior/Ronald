@@ -39,7 +39,7 @@ const FloatingChat = () => {
           ))}
         </div>
 
-        <div className="chat-footer">
+        <div className="chat-footer flex gap-10 items-center">
           <input
             type="text"
             value={message}
@@ -48,8 +48,8 @@ const FloatingChat = () => {
             placeholder="Type your message..."
             className="chat-input"
           />
-          <button onClick={handleSend} className="send-button">
-            <FaPaperPlane size={16} />
+          <button onClick={handleSend} className=" send-button">
+            <FaPaperPlane size={12} />
           </button>
         </div>
       </div>

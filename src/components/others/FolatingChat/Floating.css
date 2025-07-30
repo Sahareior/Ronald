@@ -99,6 +99,8 @@
   border-top: 1px solid rgba(0, 255, 255, 0.2);
   background-color: rgba(10, 20, 30, 0.8);
   display: flex;
+  justify-items: center;
+  align-items: center;
   gap: 10px;
 }
 
@@ -120,7 +122,7 @@
   width: 40px;
   height: 40px;
   display: flex;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   align-items: center;
   justify-content: center;
   cursor: pointer;
