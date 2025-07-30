@@ -19,12 +19,9 @@ const VOrderModal = ({ isModalOpen, setIsModalOpen,target }) => {
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
-        Open Modal
-      </Button>
       <Modal
         title={
-          <div className="py-6 px-4  bg-[#FAF8F2]">
+          <div className="py-3 px-4  bg-[#FAF8F2]">
             <h2 className="text-[22px] font-semibold text-gray-800">
               Order Details – <span className="text-[#CBA135]">#Wrioko240001</span>
             </h2>
@@ -38,11 +35,7 @@ const VOrderModal = ({ isModalOpen, setIsModalOpen,target }) => {
         width={700}
       >
       <div className='h-[70vh] px-4 pb-8 overflow-y-scroll'>
-        {
-            target === 'eye'? <VOrderDetails /> : <VEditOrder />
-        }
-          {/* <OrderDetails /> */}
-          {/* <EditOrder /> */}
+<VOrderDetails />
       </div>
       </Modal>
     </>

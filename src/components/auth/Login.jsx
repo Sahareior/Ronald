@@ -37,7 +37,7 @@ console.log(email)
       <img className="top-12 shadow-md object-contain right-16 absolute z-10" src="/image/footer.png" alt="" />
 
 <div
-  className="absolute top-1/2 left-1/2 z-20 transform -translate-x-1/2 -translate-y-1/2 p-12 py-24 rounded-xl w-[90%] max-w-xl text-white space-y-5"
+  className="absolute top-1/2 left-1/2 z-20 transform -translate-x-1/2 -translate-y-1/2 p-12 py-12 rounded-xl w-[90%] max-w-2xl text-white space-y-5"
   style={{
     background: 'linear-gradient(109.52deg, rgba(205, 205, 205, 0.37) 0%, rgba(25, 22, 15, 0.37) 100%)',
  
@@ -54,7 +54,7 @@ console.log(email)
           <Link to='/signup' className="text-[#CBA135] cursor-pointer font-medium">Sign Up</Link>
         </p>
 
-        <form onSubmit={handleLogin} className='space-y-7'>
+        <form onSubmit={handleLogin} className='space-y-7 px-11'>
           {/* Email Input */}
           <div>
             <label className="text-sm block py-1">Email</label>
@@ -82,11 +82,15 @@ console.log(email)
           </div>
 
           {/* Login Button */}
-          <Button htmlType="submit" className="w-full bg-[#CBA135] text-white font-medium py-5" type="primary">
+          <button htmlType="submit" className="w-full bg-[#CBA135] text-white popbold hover:bg-yellow-600 font-medium py-4 rounded-md" type="primary">
             Login
-          </Button>
+          </button>
 
           <Link to='/forget' className='block text-right'>Forget Password?</Link>
+          
+          <p className='text-center'>
+            ____________________OR__________________
+          </p>
 
           {/* Social Buttons */}
           <div className="flex justify-center gap-4 pt-6">

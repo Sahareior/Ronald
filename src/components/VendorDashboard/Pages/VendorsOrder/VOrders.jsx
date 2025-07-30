@@ -41,18 +41,17 @@ const VOrders = () => {
 
   {/* Order Status Select */}
   <div className="w-full">
-    <p className="text-sm font-medium text-gray-700 mb-1">Search Orders</p>
+    <p className="text-sm font-medium text-gray-700 mb-1"> Order Status</p>
     <Select
-      defaultValue="lucy"
+      defaultValue="select"
       className="w-full popreg h-[45px]"
       suffixIcon={<RiArrowDropDownLine size={22} />}
     >
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-      <Option value="Yiminghe">Yiminghe</Option>
-      <Option value="disabled" disabled>
-        Disabled
-      </Option>
+      <Option value="jack">All</Option>
+      <Option value="lucy">None</Option>
+      <Option value="Yiminghe">Paid</Option>
+      <Option value="Yiminghe">Unpaid</Option>
+
     </Select>
   </div>
 

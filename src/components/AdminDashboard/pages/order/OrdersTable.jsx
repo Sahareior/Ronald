@@ -13,7 +13,7 @@ const OrdersTable = () => {
   const [pageSize, setPageSize] = useState(10);
     const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [target,setTarget] = useState("")
+  const [target,setTarget] = useState(true)
   const [dataSource, setDataSource] = useState(
     Array.from({ length: 247 }, (_, i) => ({
       key: i + 1,
@@ -110,8 +110,16 @@ const OrdersTable = () => {
       key: 'action',
       render: (_, record) => (
         <div className="flex items-center gap-3">
-        
-          <IoEyeOutline onClick={()=> setIsModalOpen(true)} className="text-gray-400 cursor-pointer" size={20} />
+<FaEdit
+size={20}
+onClick={
+  ()=> {
+    setIsModalOpen(true);
+    setTarget(true)
+  }
+}
+/>
+          <IoEyeOutline onClick={()=> { setTarget(false); setIsModalOpen(true)}} className="text-gray-400 cursor-pointer" size={20} />
             <MdDelete
                      className="text-red-400 cursor-pointer"
                      size={20}

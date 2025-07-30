@@ -53,14 +53,11 @@ const VProductsList = () => {
             size="large"
              defaultValue="All"
           >
-            <Option value="All">All</Option>
-            <Option value="None">None</Option>
-            <Option value="In Stock">In Stock</Option>
-            <Option value="Out of stock">Out of stock</Option>
-            <Option value="Low stock">Low stock</Option>
-            <Option value="Approve">Approve</Option>
-            <Option value="Reject">Reject</Option>
-            <Option value="Pending">Pending</Option>
+            <Option value="All">All Status</Option>
+            <Option value="None">Active</Option>
+            <Option value="In Stock">Pending</Option>
+            <Option value="Out of stock">Rejected</Option>
+           
           </Select>
         </div>
       </div>

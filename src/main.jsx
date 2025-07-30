@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
   createBrowserRouter,
+  Navigate,
   RouterProvider,
 } from "react-router-dom";
 import { Provider } from 'react-redux'
@@ -76,7 +77,7 @@ const router = createBrowserRouter([
         },
       ],
     },
-          { path: "whitelist", element: <WhiteList /> },
+          { path: "wishlist", element: <WhiteList /> },
           { path: "cart", element: <Cart /> },
           { path: "checkout", element: <Checkout /> },
            {
@@ -167,49 +168,53 @@ const router = createBrowserRouter([
       }
     ]
   },
-  {
-    path: "vendor-dashboard",
-    element: <VendorDashboard />,
-    children: [
-      {
-        path: 'vendor-overview',
-        element: <VendorOverview />
-      },
-      {
-        path: "vendor-order",
-        element: <VOrders />
-      },
-      {
-        path: 'vendor-payment',
-        element: <VendorPayment />
-      },
-      {
-        path: 'addproducts',
-        element: <AddnewProducts />
-      },
-      {
-        path: 'vendor-products',
-        element: <VProductsList />
-      },
-      {
-        path: 'promotion',
-        element: <PromotionsList />
-      },
-      {
-            path: 'create-promotion',
-            element: <CreatePromotion />
-      },
-      {
-            path: 'vendor-message',
-            element: <VendorMessages />
-      },
-      {
-        path: 'vendor-profile',
-        element: <VendorProfile />
-      }
-     
-    ]
-  }
+{
+  path: "vendor-dashboard",
+  element: <VendorDashboard />,
+  children: [
+    {
+      index: true, // Default route for /vendor-dashboard
+      element: <Navigate to="vendor-overview" replace />
+    },
+    {
+      path: 'vendor-overview',
+      element: <VendorOverview />
+    },
+    {
+      path: "vendor-order",
+      element: <VOrders />
+    },
+    {
+      path: 'vendor-payment',
+      element: <VendorPayment />
+    },
+    {
+      path: 'addproducts',
+      element: <AddnewProducts />
+    },
+    {
+      path: 'vendor-products',
+      element: <VProductsList />
+    },
+    {
+      path: 'promotion',
+      element: <PromotionsList />
+    },
+    {
+      path: 'create-promotion',
+      element: <CreatePromotion />
+    },
+    {
+      path: 'vendor-message',
+      element: <VendorMessages />
+    },
+    {
+      path: 'vendor-profile',
+      element: <VendorProfile />
+    }
+  ]
+}
+
 ]);
 
 

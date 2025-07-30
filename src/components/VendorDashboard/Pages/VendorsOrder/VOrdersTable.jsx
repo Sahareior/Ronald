@@ -207,7 +207,7 @@ const handleDelete = (keys) => {
         }}
         footer={() => (
           <div className="flex justify-between items-center px-2">
-            <div className="flex items-center relative gap-2 text-sm">
+            <div className="flex items-center  gap-2 text-sm">
               <span>Show</span>
               <Select
                 value={pageSize}

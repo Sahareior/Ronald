@@ -18,6 +18,7 @@ import { IoExit, IoPricetagSharp } from 'react-icons/io5';
 import { LuMessageSquareText } from 'react-icons/lu';
 import { GrAnalytics } from 'react-icons/gr';
 import VendorOverViewModal from '../AdminDashboard/pages/Overview/_subComponents/VendorOverView';
+import { MdLogout } from 'react-icons/md';
 
 const { Header, Content, Sider } = Layout;
 
@@ -57,11 +58,10 @@ const items = [
 
 const VendorDashboard = () => {
 const [isModalOpen, setIsModalOpen] = useState(false)
-const location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
+const currentKey = location.pathname.split('/')[1];
 
-if (location.pathname === '/vendor-dashboard') {
-  return <Navigate to="/vendor-dashboard/vendor-overview" replace />;
-}
 
 
   const {
@@ -82,14 +82,23 @@ if (location.pathname === '/vendor-dashboard') {
           console.log(collapsed, type);
         }}
       >
-        <div className="demo-logo-vertical bg-white" />
-        <Menu
-          className="mt-14 max-w-2xl"
-          theme="light"
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          items={items}
-        />
+     <div className='flex flex-col h-screen justify-around'>
+    <div className="flex-1 justify-between  h-screen overflow-auto">
+    <Menu
+      theme="light"
+      mode="inline"
+       selectedKeys={[currentKey]}
+      items={items}
+      className="mt-16"
+      
+    />
+  </div>
+  <Link to='/login'
+   className='text-red-600 mb-9 hover:text-green-400 flex justify-center items-center gap-2'>
+    <MdLogout className='-mt-1' size={16} />
+    <h3 className='popmed'>Logout</h3>
+  </Link>
+</div>
       </Sider>
       <Layout>
         <Header
@@ -100,14 +109,12 @@ if (location.pathname === '/vendor-dashboard') {
         <div className='flex justify-center items-center gap-3'>
 
          
-            <FaBell onClick={()=> setIsModalOpen(true)} style={{ fontSize: 15, cursor: 'pointer', Color:'black' }} />
+            <FaBell className='mt-1' size={19} onClick={()=> setIsModalOpen(true)} style={{  cursor: 'pointer', Color:'black' }} />
         
          <Link to='/vendor-dashboard/vendor-profile'>
-          <Avatar className='w-[24px] h-[24px]' src="https://i.pravatar.cc/40" />
+          <Avatar className='w-[34px] h-[34px]' src="https://i.pravatar.cc/40" />
          </Link>
-         <Link to='/login'>
-         <IoExit size={23} />
-         </Link>
+  
         </div>
        </div>
         </Header>

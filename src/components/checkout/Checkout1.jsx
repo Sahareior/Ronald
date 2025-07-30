@@ -83,6 +83,7 @@ const Checkout1 = () => {
   </div>
 <div className='h-[0.8px] mt-2 bg-black w-full' />
   {/* Total */}
+  <hr />
   <div className="flex justify-between items-center mt-4">
     <h4 className="text-base popbold font-semibold">Total</h4>
     <h4 className="text-xl font-bold text-[#CBA135]">$7030.00</h4>

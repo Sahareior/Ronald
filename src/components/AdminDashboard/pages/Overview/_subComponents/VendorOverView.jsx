@@ -60,20 +60,20 @@ const VendorOverViewModal = ({ isModalOpen, setIsModalOpen,location }) => {
           <p className="text-gray-600 mt-1">{notification.description}</p>
         </div>
       ))}
-    </div> :       <div className="max-w-md mx-auto  rounded-xl p-12 text-[#1E1E1E] font-medium">
-      <h2 className="text-xl font-semibold mb-1">Request Payout</h2>
-      <p className="text-sm text-gray-500 mb-4">Withdraw your earnings to your preferred account</p>
+    </div> :       <div className="w-full mx-auto  rounded-xl p-8 text-[#1E1E1E] font-medium">
+      <h2 className=" popbold text-xl font-semibold mb-1">Request Payout</h2>
+      <p className="text-sm popreg text-gray-500 mb-4">Withdraw your earnings to your preferred account</p>
 
       <div className="bg-white border border-[#EFE8D9] flex justify-between rounded-lg p-4 mb-4">
   <div>
-          <p className="text-sm text-gray-500">Available to Withdraw</p>
-        <p className="text-2xl font-bold text-[#C29D2A]">$12,500</p>
+          <p className="text-sm popreg text-gray-500">Available to Withdraw</p>
+        <p className="text-2xl popbold font-bold text-[#C29D2A]">$12,500</p>
   </div>
         <FaWallet className='text-[#C29D2A]' />
       </div>
 
       <div className="mb-4">
-        <label className="text-sm mb-1 block">Enter Amount</label>
+        <label className="text-sm popmed mb-1 block">Enter Amount</label>
         <input
           type="number"
           value={amount}
@@ -81,11 +81,11 @@ const VendorOverViewModal = ({ isModalOpen, setIsModalOpen,location }) => {
           placeholder="00000"
           className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500"
         />
-        <p className="text-xs text-gray-400 mt-1">Maximum: $12,500</p>
+        <p className="text-xs popreg text-gray-400 mt-1">Maximum: $12,500</p>
       </div>
 
       <div className="mb-4">
-        <label className="text-sm mb-1 block">Select Payout Method</label>
+        <label className="text-sm popmed mb-1 block">Select Payout Method</label>
         <select
           value={method}
           onChange={(e) => setMethod(e.target.value)}
@@ -98,7 +98,7 @@ const VendorOverViewModal = ({ isModalOpen, setIsModalOpen,location }) => {
       </div>
 
       <div className="mb-4">
-        <label className="text-sm mb-1 block">Note to Admin (Optional)</label>
+        <label className="text-sm popmed mb-1 block">Note to Admin (Optional)</label>
         <textarea
           value={note}
           onChange={(e) => setNote(e.target.value)}
@@ -107,7 +107,7 @@ const VendorOverViewModal = ({ isModalOpen, setIsModalOpen,location }) => {
         />
       </div>
 
-      <div className="text-sm text-gray-600 mb-4 space-y-1">
+      <div className="text-sm text-gray-600 popreg mb-4 space-y-1">
         <p>⚠️ Payouts are processed every Monday & Thursday</p>
         <p>🔒 Your account details are securely stored</p>
       </div>

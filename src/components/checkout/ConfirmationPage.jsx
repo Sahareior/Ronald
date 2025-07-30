@@ -49,32 +49,32 @@ const ConfirmationPage = () => {
               <MdOutlineDone />
             </span>
             <div>
-              <h3 className='text-2xl text-center font-bold'>Order Placed Successfully!</h3>
-              <p className='text-gray-600 text-center'>Thank you for your order.</p>
+              <h3 className='text-[32px] popbold text-[#333333] text-center font-bold'>Order Placed Successfully!</h3>
+              <p className='text-gray-600 text-[20px] popreg text-center'>Thank you for your order.</p>
             </div>
           </div>
 
           <div className='mb-6 w-6/12'>
-            <h4 className='text-lg py-5 font-semibold'>Order Details</h4>
+            <h4 className='text-lg py-5 popbold text-[20px] font-semibold'>Order Details</h4>
             <div className='flex justify-between text-sm text-gray-700 mb-2'>
-              <span>Order ID:</span>
+              <span className='text-[16px] text-[#666666] popreg'>Order ID:</span>
               <span className='font-medium flex justify-center items-center gap-2'>#Wriko240001 <BiCopy onClick={()=> handleCopy("#Wriko240001")} className='cursor-pointer' size={18} /></span>
             </div>
             <div className='flex justify-between text-sm text-gray-700 mb-2'>
-              <span>Estimated Delivery</span>
-              <span className='font-medium'>Jul 20-07, 2025</span>
+              <span className='popreg text-[16px] text-[#666666]'>Estimated Delivery</span>
+              <span className='font-medium text-[16px]'>Jul 20-07, 2025</span>
             </div>
           </div>
 
           <hr className='my-4' />
 
           <div className='space-y-4'>
-            <h4 className='text-lg font-semibold'>Product List</h4>
+            <h4 className='text-[20px] popbold font-semibold'>Product List</h4>
             {products.map((item, index) => (
               <div key={index} className='flex justify-between items-center  p-1 rounded-xl'>
                 <div>
-                  <p className='font-medium'>{item.name}</p>
-                  <p className='text-sm text-gray-600'>Qty: {item.qty}</p>
+                  <p className='popbold text-[16px] text-[#333333]'>{item.name}</p>
+                  <p className='text-[16px] popreg text-gray-600'>Qty: {item.qty}</p>
                 </div>
                 <p className='text-right font-semibold'>${item.price.toFixed(2)}</p>
               </div>
@@ -83,7 +83,7 @@ const ConfirmationPage = () => {
 
           <hr className='my-6' />
 
-          <div className='space-y-2 text-sm text-gray-800'>
+          <div className='space-y-2 text-[16px] popbold text-[#666666]'>
             <div className='flex justify-between'>
               <span>Subtotal (3 items)</span>
               <span>$9000.00</span>
@@ -110,7 +110,7 @@ const ConfirmationPage = () => {
           </div>
 
           <div className='mt-14 flex flex-col justify-center items-center   gap-4'>
-            <p className='flex justify-center text-[#CBA135] text-[16px] items-center gap-1'>  <FaArrowDownLong  /> Download </p>
+            <p className='flex justify-center cursor-pointer text-[#CBA135] text-[16px] items-center gap-1'>  <FaArrowDownLong  /> Download </p>
             <button onClick={()=> setIsModalOpen(true)} type='primary' className='bg-[#CBA135] rounded-md hover:bg-yellow-600 w-60 h-[46px] text-white px-12 py-2'>
               Track My Order
             </button>

@@ -41,7 +41,7 @@ const OrderModal = ({ isModalOpen, setIsModalOpen,target }) => {
       >
       <div className='h-[70vh] px-4 pb-8 overflow-y-scroll'>
         {
-            target === 'eye'? <OrderDetails /> : <div className='px-5 py-8'><EditOrder /></div>
+            !target? <OrderDetails /> : <div className='px-5 py-8'><EditOrder /></div>
         }
           {/* <OrderDetails /> */}
           {/* <EditOrder /> */}

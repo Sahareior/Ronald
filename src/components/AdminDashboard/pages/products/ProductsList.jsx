@@ -2,6 +2,7 @@ import React from 'react';
 import ProductsTable from './ProductsTable';
 import { Button, Select } from 'antd';
 import { Link } from 'react-router-dom';
+import { FaPlus } from 'react-icons/fa6';
 
 const { Option } = Select;
 
@@ -12,7 +13,7 @@ const ProductsList = () => {
 <div className='flex justify-between items-center pt-4'>
   <p className='text-[34px] popbold'>Products List</p>
       <Link to='admin-overview/addproducts'>
-       <Button className='bg-[#CBA135] flex justify-end py-5 text-end text-white'>Add New Products</Button>
+       <button className='bg-[#CBA135] popmed flex justify-end py-3 px-5 rounded-md text-end items-center gap-3 text-white'><FaPlus /> Add New Products</button>
       </Link>
 
 </div>

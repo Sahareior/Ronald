@@ -20,9 +20,7 @@ const CustomModal = ({ isModalOpen, setIsModalOpen }) => {
 
   return (
     <>
-      <Button type='primary' onClick={showModal}>
-        Open Modal
-      </Button>
+    
 
       <Modal
         open={isModalOpen}
@@ -43,7 +41,7 @@ const CustomModal = ({ isModalOpen, setIsModalOpen }) => {
     <div className='h-[2px] w-full bg-slate-400' />
 </div>
           <div className='mb-4'>
-            <label htmlFor='order-id' className='block text-sm font-medium text-gray-700 mb-2'>
+            <label htmlFor='order-id' className='block text-[16px] popmed text-[#666666] mb-2'>
               Enter your Order ID
             </label>
            <input
@@ -60,7 +58,7 @@ const CustomModal = ({ isModalOpen, setIsModalOpen }) => {
     <Link to='/order-track'>
               <button
             type='primary'
-            className='bg-[#CBA135] w-full py-2 text-white rounded-md mt-4'
+            className='bg-[#CBA135] w-full popbold text-[16px] py-3 text-white rounded-md mt-4'
             size='large'
             onClick={() => {
               // Add tracking logic here

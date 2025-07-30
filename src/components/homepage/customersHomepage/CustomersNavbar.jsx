@@ -1,6 +1,6 @@
 import { Avatar } from 'antd';
 import { IoMdArrowDropdown } from 'react-icons/io';
-import { FaCartShopping } from 'react-icons/fa6';
+import { FaCartShopping, FaRegHeart } from 'react-icons/fa6';
 import { Link, useNavigate } from 'react-router-dom';
 import { GoHeart } from 'react-icons/go';
 import { useEffect, useRef, useState } from 'react';
@@ -40,7 +40,7 @@ const CustomersNavbar = () => {
   }, []);
 
   return (
-    <div className="w-full px-28 py-3 shadow-md flex justify-between items-center bg-white">
+    <div className="w-full px-20 py-3 shadow-md flex justify-between items-center bg-white">
       {/* Left Section */}
       <div className="flex justify-between w-2/6 items-center gap-6">
         <Link to="/">
@@ -95,11 +95,11 @@ const CustomersNavbar = () => {
         </div>
 
         <div className="flex items-center gap-[1rem] text-sm font-medium">
-          <Link to="whitelist">
-            <FaHeart
-              size={22}
-              className="cursor-pointer hover:text-red-500 transition"
-            />
+          <Link to="wishlist">
+<FaRegHeart
+ size={22}
+              className="cursor-pointer  hover:text-red-500 transition"
+/>
           </Link>
           <Link to="cart">
             <FaCartShopping
@@ -114,9 +114,7 @@ const CustomersNavbar = () => {
               alt="User Avatar"
             />
           </Link>
-          <Link to='/login'>
-          <IoExitOutline size={23} />
-          </Link>
+
         </div>
       </div>
     </div>

@@ -173,11 +173,19 @@ const handleDelete = (keys) => {
           <Select
             placeholder="Bulk Actions"
             size="small"
-            className="min-w-[140px]"
+            className="min-w-[110px]"
             onChange={handleBulkAction}
             suffixIcon={<RiArrowDropDownLine />}
           >
-            <Option value="delete">Delete Selected</Option>
+            <Option value="delete">All</Option>
+            <Option value="delete">None</Option>
+            <Option value="delete">Stock</Option>
+            <Option value="delete">Out of Stock</Option>
+            <Option value="delete">Low Stock</Option>
+            
+            <Option value="delete">Approved</Option>
+            <Option value="delete">Reject</Option>
+            <Option value="delete">Pending</Option>
        
           </Select>
           <span className="text-sm text-gray-500">

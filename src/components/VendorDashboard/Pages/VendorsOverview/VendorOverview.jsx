@@ -14,6 +14,7 @@ import {
 import { IoIosTime } from "react-icons/io";
 import VendorOverViewModal from "../../../AdminDashboard/pages/Overview/_subComponents/VendorOverView";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 
 const VendorOverview = () => {
@@ -84,9 +85,11 @@ const cards = [
     <div className="bg-white rounded-xl shadow-md p-6">
       <h3 className="text-lg popbold text-gray-800 mb-6">Quick Actions</h3>
       <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-        <button className="bg-[#CBA135] text-white py-3 w-full sm:w-72 rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition">
+        <Link to='/vendor-dashboard/addproducts'>
+                <button className="bg-[#CBA135] text-white py-3 w-full sm:w-72 rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition">
           <FaPlus /> Add New Product
         </button>
+        </Link>
         <button onClick={()=> setIsModalOpen(true)} className="bg-[#F3F4F6] text-gray-800 py-3 w-full sm:w-72 hover:bg-slate-400 rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition">
           <FaCheck /> Request Payout
         </button>

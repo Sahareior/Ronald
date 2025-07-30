@@ -100,9 +100,9 @@ const ProductsModal = ({ isModalOpen, setIsModalOpen }) => {
                
                            <button
                   className="text-yellow-600 underline font-medium"
-                  onClick={() => setIsOrderHistoryOpen(true)}
+                  
                 >
-                  Order History
+                  Product details
                 </button>
               </div>
             </div>

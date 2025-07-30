@@ -16,32 +16,13 @@ const VOrderDetails = () => {
       
       {/* Customer Summary */}
       <div className='flex justify-end items-center gap-4'>
-        <p className='flex items-center bg-[#CBA135] text-sm gap-1 rounded-md text-white px-3 py-1'><FaEdit /> Edit</p>
-<Popover
-  content={
-    <div className="space-y-2 py-3 px-4 flex flex-col gap-4 items-center text-center">
-      <p className="text-gray-700">Do you want to delete this order?</p>
-      <Button className="bg-[#CBA135] text-white hover:bg-yellow-600">Delete</Button>
-    </div>
-  }
-  title={<h3 className="text-red-500 text-center font-semibold">Are you sure!!</h3>}
-  trigger="click"
-  open={open}
- 
-  onOpenChange={handleOpenChange}
->
-  <p className="flex items-center bg-red-400 hover:bg-red-500 transition text-sm gap-1 rounded-md text-white px-3 py-1 cursor-pointer">
-    <FaTrash /> Delete
-  </p>
-</Popover>
-
-      </div>
+         </div>
       <div className='bg-white p-6 shadow-sm'>
-        <h3 className="text-lg font-semibold text-black mb-4">Order Summary</h3>
+        <h3 className="text-lg popbold font-semibold text-black mb-4">Order Summary</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <p className="text-gray-500 mb-1">Customer Name</p>
-            <div className="flex items-center gap-2 font-medium">
+            <p className=" popmed text-[#666666] mb-1">Customer Name</p>
+            <div className="flex items-center gap-2 text-[16px] popreg font-medium">
               <Avatar
                 src="https://images.unsplash.com/profile-1451876131683-25cba7051674?w=150&dpr=1&crop=faces&bg=%23fff&h=150&auto=format&fit=crop&q=60"
                 className="w-6 h-6"
@@ -51,22 +32,22 @@ const VOrderDetails = () => {
           </div>
   
           <div>
-            <p className="text-gray-500 mb-1">Order Date</p>
-            <p className="font-medium">July 15, 2025</p>
+            <p className=" popmed text-[#666666] mb-1">Order Date</p>
+            <p className="font-medium text-[16px] popreg">July 15, 2025</p>
           </div>
           <div>
-            <p className="text-gray-500 mb-1">Order Status</p>
-            <p className="font-medium">Processing</p>
+            <p className=" popmed text-[#666666] mb-1">Order Status</p>
+            <p className="font-medium text-[16px] popreg">Processing</p>
           </div>
 
           <div>
-            <p className="text-gray-500 mb-1">Payment Status</p>
-            <p className="font-medium">Paid</p>
+            <p className="popmed text-[#666666] mb-1">Payment Status</p>
+            <p className="font-medium text-[16px] popreg">Paid</p>
           </div>
         </div>
 
         <div className="flex justify-between items-center mt-5 pt-3 border-t">
-          <h4 className="text-base font-semibold">Total</h4>
+          <h4 className="text-base popbold font-semibold">Total</h4>
           <h5 className="text-lg font-bold text-yellow-600">$3578</h5>
         </div>
       </div>
@@ -87,7 +68,7 @@ const VOrderDetails = () => {
               alt="product"
               className="w-12 h-12 rounded object-cover"
             />
-            <span className="font-medium">Luxury Velvet Sectional Sofa</span>
+            <span className="popbold text-[13px] text-[#333333]">Luxury Velvet Sectional Sofa</span>
           </div>
           <span className="text-center">1</span>
           <span className="text-center">$8,500</span>

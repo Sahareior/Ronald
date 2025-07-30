@@ -1,95 +1,152 @@
-import React from 'react';
-import Breadcrumb from '../others/Breadcrumb';
-import { AiOutlineMinus, AiOutlinePlus, AiOutlineClose, AiOutlineEdit } from 'react-icons/ai';
-import TextArea from 'antd/es/input/TextArea';
-import { Button, Input, Radio, Rate } from 'antd';
+import { Button, Radio } from 'antd';
+import React, { useState } from 'react';
+import { AiOutlineMinus, AiOutlinePlus, AiOutlineClose } from 'react-icons/ai';
 import { IoChatbubblesOutline } from 'react-icons/io5';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const Cart = () => {
-  const brands = ['Home Decor Masters', 'Modern Living Co.', 'Vintage Comfort', 'Elite Furniture', 'Elegant Furniture Co.', 'other' , 'hudai', 'bata'];
+const products = [
+  {
+    id: 1,
+    title: "Luxury Velvet Sectional Sofa",
+    brand: "Elegant Furniture Co.",
+    price: 3000,
+    img: "https://images.unsplash.com/photo-1577977404260-4bf12328b122?q=80&w=1169&auto=format&fit=crop"
+  },
+  {
+    id: 2,
+    title: "Modern Coffee Table",
+    brand: "Home Decor Masters",
+    price: 1200,
+    img: "https://plus.unsplash.com/premium_photo-1661962794319-776eebdba4f4?q=80&w=869&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    id: 3,
+    title: "Rustic Wooden Armchair",
+    brand: "Country Living",
+    price: 1600,
+    img: "https://plus.unsplash.com/premium_photo-1661883063724-b2e470ec0d60?q=80&w=860&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    id: 4,
+    title: "Scandinavian Bookshelf",
+    brand: "Nordic Designs",
+    price: 1800,
+    img: "https://plus.unsplash.com/premium_photo-1661962637032-f1e8df6d8c5f?q=80&w=804&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+ 
+];
 
-    const products = Array.from({ length: 4 }).map((_, index) => ({
-  id: index + 1,
-  title: `Sofa ${index + 1}`,
-  brand: brands[index % brands.length],
-  price: 1200 + index * 200,
-  rating: (3 + (index % 3)),
-  img: 'https://images.unsplash.com/photo-1577977404260-4bf12328b122?q=80&w=1169&auto=format&fit=crop'
-}));
 
-  const clicked = false
-  return (
-    <div className="bg-[#FAF8F2] min-h-screen py-10">
-      <div className="max-w-7xl mx-auto px-4">
-        <Breadcrumb />
+const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => (
+  <div className="bg-white rounded-xl mt-6 p-5 flex items-center gap-6 shadow-sm">
+    <img
+      src={item.img}
+      alt="Product"
+      className="h-32 w-32 object-cover rounded-lg"
+    />
 
-        <h2 className="text-3xl font-bold mt-4">My Cart</h2>
-        <p className="text-gray-600 mb-8">Review your selected items before checkout</p>
+    <div className="flex-1">
+      <h2 className="text-lg font-semibold">{item.title}</h2>
+      <p className="text-sm text-gray-500">by {item.brand}</p>
+      <p className="text-xl font-bold text-[#CBA135] mt-2">${item.price}</p>
+    </div>
 
-        <div className="flex flex-col lg:flex-row gap-10">
-          {/* Left: Cart Items */}
-{
-  clicked? (<div className="bg-gray-200 w-full sm:w-2/3 p-6 rounded-xl shadow-sm space-y-4">
-  <div className="max-w-md space-y-4">
-    <div className="flex items-center justify-between">
-      <h3 className="text-lg font-semibold text-gray-800">Sahareior Sijan</h3>
-      <button className="text-blue-600 hover:text-blue-800">
-        <AiOutlineEdit size={20} />
+    <div className="flex items-center gap-2">
+      <button onClick={() => onDecrease(item.id)} className="w-8 h-8 bg-white border rounded-full hover:bg-gray-100 flex justify-center items-center">
+        <AiOutlineMinus size={16} />
       </button>
-    </div>
-
-    <div>
-      <h4 className="text-md font-medium text-gray-700">Home: Abc Street, Badda</h4>
-      <p className="text-sm text-gray-600 mt-1">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veritatis ratione minus commodi.
-      </p>
-    </div>
-
-    <div className="w-full">
-      <button className="h-[48px] w-full bg-[#CBA135] text-white font-semibold hover:bg-yellow-600">
-        Add New Address
+      <span className="px-2 font-medium">{item.quantity}</span>
+      <button onClick={() => onIncrease(item.id)} className="w-8 h-8 bg-white border rounded-full hover:bg-gray-100 flex justify-center items-center">
+        <AiOutlinePlus size={16} />
+      </button>
+      <button onClick={() => onRemove(item.id)} className="ml-3 text-gray-400 hover:text-red-500">
+        <AiOutlineClose size={20} />
       </button>
     </div>
   </div>
-</div>
+);
 
-):          <div className="flex-1 p-5 bg-[#EAE7E1]">
-            {[1, 2, 3].map((item, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-xl mt-6 p-5 flex items-center gap-6 shadow-sm"
-              >
-                <img
-                  src="/image/featured/img1.png"
-                  alt="Product"
-                  className="h-32 w-32 object-cover rounded-lg"
-                />
+const Cart = () => {
+  // const [cartItems, setCartItems] = useState([
+  //   {
+  //     id: 1,
+  //     title: "Luxury Velvet Sectional Sofa",
+  //     brand: "Elegant Furniture Co.",
+  //     price: 3000,
+  //     img: "https://images.unsplash.com/photo-1577977404260-4bf12328b122?q=80&w=1169&auto=format&fit=crop",
+  //     quantity: 3,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Modern Coffee Table",
+  //     brand: "Home Decor Masters",
+  //     price: 1200,
+  //     img: "https://plus.unsplash.com/premium_photo-1661916464054-a39482dad13e?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     quantity: 3,
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Contemporary Lounge Chair",
+  //     brand: "Modern Living Co.",
+  //     price: 1800,
+  //     img: "https://plus.unsplash.com/premium_photo-1661962649777-055b23f7a5e8?q=80&w=804&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     quantity: 2,
+  //   },
+  // ]);
 
-                <div className="flex-1">
-                  <h2 className="text-lg font-semibold">Luxury Velvet Sectional Sofa</h2>
-                  <p className="text-sm text-gray-500">by Elegant Furniture Co.</p>
-                  <p className="text-xl font-bold text-[#CBA135] mt-2">$3000.00</p>
-                </div>
+const cart = useSelector(state => state.customer.cart)
+const [cartItems, setCartItems] = useState(
+  cart.map(item => ({
+    ...item,
+    quantity: 1 // Default to 1
+  }))
+);
 
-                {/* Quantity + Remove */}
-                <div className="flex items-center gap-2">
-                  <button className="w-8 h-8 flex items-center justify-center bg-white border rounded-full hover:bg-gray-100">
-                    <AiOutlineMinus size={16} />
-                  </button>
-                  <span className="px-2 font-medium">1</span>
-                  <button className="w-8 h-8 flex items-center justify-center bg-white border rounded-full hover:bg-gray-100">
-                    <AiOutlinePlus size={16} />
-                  </button>
-                  <button className="ml-3 text-gray-400 hover:text-red-500">
-                    <AiOutlineClose size={20} />
-                  </button>
-                </div>
-              </div>
+  const increaseQuantity = (id) => {
+    setCartItems(prev =>
+      prev.map(item => item.id === id ? { ...item, quantity: item.quantity + 1 } : item)
+    );
+  };
+
+  const decreaseQuantity = (id) => {
+    setCartItems(prev =>
+      prev.map(item =>
+        item.id === id && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    );
+  };
+
+  const removeItem = (id) => {
+    setCartItems(prev => prev.filter(item => item.id !== id));
+  };
+
+  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const deliveryFee = 50;
+  const tax = Math.round(subtotal * 0.05);
+  const total = subtotal + deliveryFee + tax;
+
+  return (
+    <div className="bg-[#FAF8F2] min-h-screen py-10">
+      <div className="max-w-7xl mx-auto px-4">
+        <h2 className="text-3xl font-bold mb-6">My Cart</h2>
+
+        <div className="flex flex-col lg:flex-row gap-10">
+          {/* Cart Items */}
+          <div className="flex-1 p-5 bg-[#EAE7E1]">
+            {cartItems.map(item => (
+              <CartItem
+                key={item.id}
+                item={item}
+                onIncrease={increaseQuantity}
+                onDecrease={decreaseQuantity}
+                onRemove={removeItem}
+              />
             ))}
 
-            {/* Delivery Instructions */}
-            <div className="bg-white rounded-2xl mt-6 p-6 shadow-sm">
+                     <div className="bg-white rounded-2xl mt-6 p-6 shadow-sm">
               <h4 className="text-base font-medium text-gray-800 mb-2">
                 Delivery Instructions <span className="text-sm text-gray-500">(optional)</span>
               </h4>
@@ -99,12 +156,9 @@ const Cart = () => {
                 placeholder="Add any specific delivery notes here..."
               />
             </div>
-
-           
           </div>
-}
 
-          {/* Right: Order Summary */}
+          {/* Order Summary */}
 <div className='flex flex-col gap-12'>
             <div className="w-full lg:w-[350px] bg-white p-6 rounded-xl shadow-sm h-fit">
             <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
@@ -158,7 +212,8 @@ const Cart = () => {
 </div>
 </div>
         </div>
-<div className='py-9'>
+
+        <div className='py-9'>
           <div className='flex py-9 justify-between '>
           <h4 className='popmed text-[30px]'>You may also need</h4>
           <h5 className='popbold text-[16px] text-[#CBA135]'>View All</h5>
@@ -188,12 +243,8 @@ const Cart = () => {
           ))}
         </div>
 </div>
-
-
       </div>
-
-
-<div className="flex flex-col md:flex-col lg:flex-row justify-between items-center gap-10 bg-[#E6E3DD] px-5 sm:px-10 md:px-10 lg:px-20 xl:px-60 py-12  w-full">
+      <div className="flex flex-col md:flex-col lg:flex-row justify-between items-center gap-10 bg-[#E6E3DD] px-5 sm:px-10 md:px-10 lg:px-20 xl:px-60 py-12  w-full">
   {/* Left Block */}
   <div className="flex flex-col gap-4 w-full lg:max-w-md text-center lg:text-left">
     <div className="flex items-center justify-center lg:justify-start gap-3">
