@@ -60,7 +60,7 @@ export default function Sweeper() {
     >
       {reviews.map((item, idx) => (
         <SwiperSlide className='pb-4' key={idx}>
-          <div className="flex justify-center px-4">
+          <div className="flex justify-center px-1">
             <div className="w-full sm:w-11/12 md:w-11/12 lg:w-full p-6 bg-white rounded-xl shadow-md transition-all duration-300">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-white font-bold">

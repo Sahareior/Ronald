@@ -16,13 +16,13 @@ const Signup = () => {
 
       {/* Sign Up Card */}
       <div
-        className="absolute top-1/2 left-1/2 z-20 transform -translate-x-1/2 -translate-y-1/2 p-12 py-16 rounded-xl w-[90%] max-w-xl text-white space-y-5"
+        className="absolute top-1/2 left-1/2 z-20 transform -translate-x-1/2 -translate-y-1/2 md:p-12 md:py-12 rounded-xl w-[80%] max-w-xl text-white "
   style={{
     background: 'linear-gradient(109.52deg, rgba(205, 205, 205, 0.37) 0%, rgba(25, 22, 15, 0.37) 100%)',
  
     borderImage: 'linear-gradient(109.49deg, rgba(59, 44, 19, 0.6) 0%, rgba(166, 135, 31, 0.6) 100%)',
   
-    backdropFilter: 'blur(9px)',
+    backdropFilter: 'blur(5px)',
     WebkitBackdropFilter: 'blur(40px)',
   }}
       >

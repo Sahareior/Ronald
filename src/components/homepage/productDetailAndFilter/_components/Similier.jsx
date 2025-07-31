@@ -29,7 +29,7 @@ const products = [
 
 const Similar = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-9 gap-6  p-5">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-9 gap-6  p">
       {products.map(({ id, title, price, image }) => (
         <div
           key={id}

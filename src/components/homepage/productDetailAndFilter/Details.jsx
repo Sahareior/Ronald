@@ -30,23 +30,27 @@ const image = '/image/featured/img1.png'
 
 
   return (
-<div className='bg-[#FAF8F2] '>
-          <div className='px-40'>
-
+<div className='bg-[#FAF8F2] px-20 pb-20'>
+          <div className=' pt-4'>
+<Breadcrumb />
           </div>
         <div className="p-6 w-full  px-40 mx-auto rounded-lg">
-      <div className="flex flex-col md:flex-row  gap-9">
+
+
+<div className=''>
+      <div className="flex flex-col md:flex-row items-center justify-center px-10 gap-9 ">
         {/* Product Image */}
- <div className="flex-1">
+ <div className="">
       <ZoomSection img={image} zoomPaneRef={zoomPaneRef} />
     </div>
 
         {/* Product Info */}
        <div className="flex-1  space-y-9">
-        <div
-          ref={zoomPaneRef}
-          className="absolute top-30 rounded-md w-[520px] h-[550px] z-50"
-        ></div>
+<div
+  ref={zoomPaneRef}
+  className="absolute top-[165px] rounded-md w-[520px] h-[560px] z-50 pointer-events-none"
+></div>
+
 
           <div>
             <h2 className="text-3xl popbold text-gray-800">Luxury Velvet Sectional Sofa</h2>
@@ -92,15 +96,17 @@ const image = '/image/featured/img1.png'
 
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-4 mt-6">
-            <button type="primary" className="bg-yellow-600 text-white px-20 popbold rounded-xl h-[56px] ">
+            <button  className="bg-yellow-600 hover:bg-yellow-700 text-white px-20 popbold rounded-xl h-[56px] ">
               Add to Cart
             </button>
             <button className="border-yellow-600 px-20 h-[56px] popbold rounded-xl text-white bg-[#2B2B2B]">
               Buy Now
             </button>
           </div>
+          
         </div>
       </div>
+</div>
 
        <div className='mt-24'>
         {/* description */}
@@ -158,7 +164,7 @@ const image = '/image/featured/img1.png'
 </div>
     </div>
    <div>
-    <div className=' px-20 mt-24'>
+    <div className=' px-40 mt-24'>
                        <div className=''>
          <div className='flex justify-between'>
             <p className='border-b-2 text-[#CBA135] popmed border-[#CBA135] w-36'>You also bought</p>
@@ -170,7 +176,7 @@ const image = '/image/featured/img1.png'
        </div>
         <Similier />
     </div>
-    <div className=' px-20 mt-24'>
+    <div className=' px-40 mt-24'>
                        <div className=''>
          <div className='flex justify-between'>
             <p className='border-b-2 text-[#CBA135] popmed border-[#CBA135] w-36'>Compare Similar</p>

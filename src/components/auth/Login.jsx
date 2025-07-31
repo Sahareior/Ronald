@@ -37,13 +37,13 @@ console.log(email)
       <img className="top-12 shadow-md object-contain right-16 absolute z-10" src="/image/footer.png" alt="" />
 
 <div
-  className="absolute top-1/2 left-1/2 z-20 transform -translate-x-1/2 -translate-y-1/2 p-12 py-12 rounded-xl w-[90%] max-w-2xl text-white space-y-5"
+  className="absolute top-1/2 left-1/2 z-20 transform -translate-x-1/2 -translate-y-1/2 p-2 py-12 rounded-xl w-[90%] max-w-xl text-white space-y-5"
   style={{
     background: 'linear-gradient(109.52deg, rgba(205, 205, 205, 0.37) 0%, rgba(25, 22, 15, 0.37) 100%)',
  
     borderImage: 'linear-gradient(109.49deg, rgba(59, 44, 19, 0.6) 0%, rgba(166, 135, 31, 0.6) 100%)',
   
-    backdropFilter: 'blur(9px)',
+    backdropFilter: 'blur(10px)',
     WebkitBackdropFilter: 'blur(40px)',
   }}
 >
@@ -59,7 +59,7 @@ console.log(email)
           <div>
             <label className="text-sm block py-1">Email</label>
             <Input
-              className='h-[48px]  bg-white text-black'
+              className='h-[48px] rounded-[16px] bg-white text-black'
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -71,7 +71,7 @@ console.log(email)
             <label className="text-sm block pb-2">Password</label>
             <div className="relative">
               <Input
-                className='h-[48px] bg-white'
+                className='h-[48px] rounded-[16px] bg-white'
                 placeholder="Enter your password"
                 type="password"
                 value={password}
