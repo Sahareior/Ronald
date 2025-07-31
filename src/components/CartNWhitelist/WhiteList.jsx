@@ -35,7 +35,7 @@ const wishList = useSelector(state => state.customer.wishlist)
 });
   }
     return (
-        <div className='mx-40 pb-9'>
+        <div className='mx-40 min-h-screen pb-9'>
             <Breadcrumb />
 
             <div className='py-4'>

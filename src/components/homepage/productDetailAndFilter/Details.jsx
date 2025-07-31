@@ -1,5 +1,5 @@
 import { Button, Rate, Tag } from 'antd';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FaLongArrowAltDown } from "react-icons/fa";
 import Customers from '../_components/Customers';
 import { LiaStarSolid } from 'react-icons/lia';
@@ -27,12 +27,14 @@ const Details = () => {
 const image = '/image/featured/img1.png'
 
 
-
+useEffect(() => {
+  window.scrollTo(0, 0);
+}, []);
 
   return (
 <div className='bg-[#FAF8F2] px-20 pb-20'>
           <div className=' pt-4'>
-<Breadcrumb />
+{/* <Breadcrumb /> */}
           </div>
         <div className="p-6 w-full  px-40 mx-auto rounded-lg">
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Checkbox, InputNumber, Select, Slider, Pagination, Rate } from 'antd';
 import { FaRegHeart } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
@@ -126,6 +126,10 @@ const ProductFilter = () => {
   }
 });
   }
+
+  useEffect(() => {
+  window.scrollTo(0, 0);
+}, []);
 
   return (
 <div className='bg-[#FAF8F2]'>

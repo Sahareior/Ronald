@@ -4,6 +4,7 @@ import { AiOutlineMinus, AiOutlinePlus, AiOutlineClose } from 'react-icons/ai';
 import { IoChatbubblesOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Breadcrumb from '../others/Breadcrumb';
 
 const products = [
   {
@@ -129,8 +130,12 @@ const [cartItems, setCartItems] = useState(
   const total = subtotal + deliveryFee + tax;
 
   return (
-    <div className="bg-[#FAF8F2] min-h-screen py-10">
-      <div className="max-w-7xl mx-auto px-4">
+    <div className="bg-[#FAF8F2] min-h-screen pb-10">
+      <div className='m'>
+       
+      </div>
+      <div className=" mx-auto px-40">
+         <Breadcrumb />
         <h2 className="text-3xl font-bold mb-6">My Cart</h2>
 
         <div className="flex flex-col lg:flex-row gap-10">
