@@ -50,7 +50,7 @@ useEffect(() => {
        <div className="flex-1  space-y-9">
 <div
   ref={zoomPaneRef}
-  className="absolute top-[165px] rounded-md w-[520px] h-[560px] z-50 pointer-events-none"
+  className="absolute  rounded-md w-[520px] h-[590px] z-50 pointer-events-none"
 ></div>
 
 
