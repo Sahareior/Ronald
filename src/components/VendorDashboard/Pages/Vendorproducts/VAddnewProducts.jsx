@@ -113,21 +113,22 @@ const VAddnewProducts = () => {
     });
   };
 
-  const handleSubmit = () => {
-    const submissionData = {
-      ...formData,
-      images: formData.images.map(img => img.file),
-      deliveryOptions: Object.entries(formData.deliveryOptions)
-        .filter(([_, value]) => value.checked)
-        .map(([key, value]) => ({
-          type: key,
-          price: value.price
-        }))
-    };
-
-    console.log('Submitted Product Data:', submissionData);
-    message.success('Product submitted successfully!');
+const handleSubmit = () => {
+  const submissionData = {
+    ...formData,
+    images: formData.images.map(img => img.file),
+    deliveryOptions: Object.entries(formData.deliveryOptions)
+      .filter(([_, value]) => value.checked)
+      .reduce((acc, [key, value]) => {
+        acc[key] = value.price;
+        return acc;
+      }, {})
   };
+
+  console.log('Submitted Product Data:', submissionData);
+  message.success('Product submitted successfully!');
+};
+
 
   return (
     <div>

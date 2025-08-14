@@ -4,6 +4,7 @@ import { CgProfile } from 'react-icons/cg';
 import { FaCar, FaCloudUploadAlt } from 'react-icons/fa';
 import { FaHandshakeSimple } from 'react-icons/fa6';
 import { FiChevronDown } from 'react-icons/fi';
+import { usePostSellerMutation } from '../../../../redux/slices/apiSlice';
 
 const { Option } = Select;
 
@@ -18,35 +19,43 @@ const SectionHeader = ({ icon, title, subtitle }) => (
   </div>
 );
 
-const FileUploader = ({ title, name, onChange, multiple = false }) => (
-  <div className="space-y-3 mt-7">
-    <h2 className="popbold text-[18px] text-gray-800">{title}</h2>
-    <div className="bg-[#EAE7E1] rounded-xl border border-dashed border-gray-400 p-6 flex flex-col items-center justify-center space-y-3 hover:shadow-md transition-all">
-      <FaCloudUploadAlt className="text-4xl text-[#CBA135]" />
-      <p className="popmed text-[16px] text-gray-700">Drag & drop images here</p>
-      <p className="popreg text-[14px] text-gray-600 text-center">
-        or click to browse (Min 1, Max 6 images)
-      </p>
-      <input
-        type="file"
-        id={name}
-        className="hidden"
-        accept="image/*"
-        multiple={multiple}
-        onChange={(e) => onChange(name, multiple ? e.target.files : e.target.files[0])}
-      />
-      <label
-        htmlFor={name}
-        className="bg-[#CBA135] hover:bg-[#b8962e] text-white px-6 py-2 rounded-md shadow-sm transition-all cursor-pointer"
-      >
-        Browse Files
-      </label>
+const FileUploader = ({ title, name, onChange, multiple = false }) => {
+  const handleFileChange = (e) => {
+    const files = multiple ? Array.from(e.target.files) : e.target.files[0];
+    onChange(name, files);
+  };
+
+  return (
+    <div className="space-y-3 mt-7">
+      <h2 className="popbold text-[18px] text-gray-800">{title}</h2>
+      <div className="bg-[#EAE7E1] rounded-xl border border-dashed border-gray-400 p-6 flex flex-col items-center justify-center space-y-3 hover:shadow-md transition-all">
+        <FaCloudUploadAlt className="text-4xl text-[#CBA135]" />
+        <p className="popmed text-[16px] text-gray-700">Drag & drop images here</p>
+        <p className="popreg text-[14px] text-gray-600 text-center">
+          or click to browse (Min 1, Max 6 images)
+        </p>
+        <input
+          type="file"
+          id={name}
+          className="hidden"
+          accept="image/*"
+          multiple={multiple}
+          onChange={handleFileChange}
+        />
+        <label
+          htmlFor={name}
+          className="bg-[#CBA135] hover:bg-[#b8962e] text-white px-6 py-2 rounded-md shadow-sm transition-all cursor-pointer"
+        >
+          Browse Files
+        </label>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const SellerReg = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [postSeller] = usePostSellerMutation()
   const [formData, setFormData] = useState({
     // Contact Information
     firstName: '',
@@ -73,8 +82,8 @@ const SellerReg = () => {
     businessOwner: [],
     homeLocalizationPlan: '',
     businessLocalizationPlan: '',
-    taxFile: null,
-    tradeFile: null,
+    taxFile: '',
+    tradeFile: '',
     
     // Verification
     captcha: ''
@@ -134,15 +143,73 @@ const SellerReg = () => {
     }
   };
 
-  const handleApply = () => {
-    if (validateStep(2)) {
-      console.log('Form Data:', formData);
-      message.success('Application submitted successfully!');
+const handleApply = async () => {
+  try {
+    const formPayload = new FormData();
+
+    // Append regular fields
+    formPayload.append("job_title", formData.jobTitle);
+    formPayload.append("phone_number", formData.phone);
+    formPayload.append("legal_business_name", formData.businessName);
+    formPayload.append("business_address", formData.businessAddress);
+    formPayload.append("country", formData.country);
+    formPayload.append("city_town", formData.city);
+    formPayload.append("state_province", formData.state);
+    formPayload.append("postal_code", formData.postalCode);
+    formPayload.append("established_date", formData.date);
+    formPayload.append("business_type", formData.businessType);
+    formPayload.append("taxpayer_number", formData.taxpayerNumber);
+    formPayload.append("trade_register_number", formData.tradeRegisterNumber);
+    formPayload.append("status", "pending");
+    formPayload.append("home_localization_plan", formData.homeLocalizationPlan);
+    formPayload.append("business_localization_plan", formData.businessLocalizationPlan);
+    formPayload.append("user", 9); // replace with logged-in user ID
+
+    // Append files
+    if (formData.frontId) {
+      if (Array.isArray(formData.frontId)) {
+        formData.frontId.forEach(file => formPayload.append("nid_front", file));
+      } else {
+        formPayload.append("nid_front", formData.frontId);
+      }
     }
-  };
+
+    if (formData.backId) {
+      if (Array.isArray(formData.backId)) {
+        formData.backId.forEach(file => formPayload.append("nid_back", file));
+      } else {
+        formPayload.append("nid_back", formData.backId);
+      }
+    }
+
+    if (formData.businessOwner) {
+      if (Array.isArray(formData.businessOwner)) {
+        formData.businessOwner.forEach(file => formPayload.append("business_owner", file));
+      } else {
+        formPayload.append("business_owner", formData.businessOwner);
+      }
+    }
+
+    if (formData.taxFile) {
+      formPayload.append("taxpayer_doc", formData.taxFile);
+    }
+
+    if (formData.tradeFile) {
+      formPayload.append("trade_register_doc", formData.tradeFile);
+    }
+
+    // Send via mutation
+    await postSeller(formPayload).unwrap();
+    message.success("Application submitted successfully!");
+  } catch (error) {
+    console.error(error);
+    message.error("Failed to submit application");
+  }
+};
+
 
   return (
-    <div className="bg-[#FAF8F2] px-6 md:px-20 py-10">
+    <div className="bg-[#FAF8F2] px-6 md:px-20 py-20 pb-28">
       {/* Header Section */}
       <div className="text-center max-w-3xl mx-auto mb-10">
         <div className="flex justify-center text-[#CBA135] mb-3">
@@ -241,8 +308,10 @@ const ContactInfoStep = ({ formData, setFormData }) => {
             className="w-full h-[44px]"
             suffixIcon={<FiChevronDown className="text-gray-500" />}
             onChange={(value) => handleSelect('jobTitle', value)}
+            defaultValue="Select Job Title"
             value={formData.jobTitle}
           >
+            
             <Option value="owner">Owner</Option>
             <Option value="manager">Manager</Option>
             <Option value="designer">Designer</Option>
@@ -432,21 +501,21 @@ const VerifyInfoStep = ({ formData, setFormData }) => {
         title="Front of National ID"
         name="frontId"
         onChange={handleFileChange}
-        multiple
+         multiple={false}
       />
 
       <FileUploader 
         title="Back of national ID"
         name="backId"
         onChange={handleFileChange}
-        multiple
+         multiple={false}
       />
 
       <FileUploader 
         title="Business owner"
         name="businessOwner"
         onChange={handleFileChange}
-        multiple
+         multiple={false}
       />
 
       <div className="flex flex-col sm:flex-row mt-6 gap-4">
@@ -483,23 +552,15 @@ const VerifyInfoStep = ({ formData, setFormData }) => {
             Taxpayer Number *
           </label>
           <div className="flex gap-2">
-            <label
-              htmlFor="file-tax"
-              className="bg-[#676767] text-white px-4 py-2 rounded-md cursor-pointer flex items-center justify-center whitespace-nowrap"
-            >
-              Choose File
-            </label>
-            <input
-              type="file"
-              id="file-tax"
-              className="hidden"
-              onChange={(e) => handleFileChange('taxFile', e.target.files[0])}
-            />
-            <input
-              placeholder={formData.taxFile ? formData.taxFile.name : "No file chosen"}
-              readOnly
-              className="flex-1 border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]"
-            />
+
+
+              <FileUploader 
+        title="Business owner"
+        name="taxFile"
+        onChange={handleFileChange}
+         multiple={false}
+      />
+
           </div>
         </div>
 
@@ -508,23 +569,15 @@ const VerifyInfoStep = ({ formData, setFormData }) => {
             Trade Register Number *
           </label>
           <div className="flex gap-2">
-            <label
-              htmlFor="file-trade"
-              className="bg-[#676767] text-white px-4 py-2 rounded-md cursor-pointer flex items-center justify-center whitespace-nowrap"
-            >
-              Choose File
-            </label>
-            <input
-              type="file"
-              id="file-trade"
-              className="hidden"
-              onChange={(e) => handleFileChange('tradeFile', e.target.files[0])}
-            />
-            <input
-              placeholder={formData.tradeFile ? formData.tradeFile.name : "No file chosen"}
-              readOnly
-              className="flex-1 border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]"
-            />
+
+
+              <FileUploader 
+        title="Business owner"
+        name="tradeFile"
+        onChange={handleFileChange}
+         multiple={false}
+      />
+
           </div>
         </div>
       </div>

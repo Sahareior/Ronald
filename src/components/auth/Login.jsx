@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { addCustomerId, selectedLocation } from '../../redux/slices/customerSlice';
 import { useCustomerLoginMutation } from '../../redux/slices/apiSlice';
+import Swal from 'sweetalert2';
 
 
 const Login = () => {
@@ -26,23 +27,46 @@ const data = useSelector(state => state.customer.location)
     //   console.log('Unknown user');
     // }
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
- const loginData = { email, password };
+const handleLogin = async (e) => {
+  e.preventDefault();
+  const loginData = { email, password };
 
-    const res = await customerLogin(loginData).unwrap()
-    console.log(res)
-    localStorage.setItem('token', res.token);
-localStorage.setItem('customerId', res.customer.id);
+  try {
+    const res = await customerLogin(loginData).unwrap();
+    console.log(res);
 
-    const token = localStorage.getItem('token')
+    // Save to localStorage
+    localStorage.setItem("access_token", res.access_token);
+    localStorage.setItem("customerId", res?.user?.id);
 
-    if(res.customer.id){
-      dispatch(selectedLocation('customer'))
-      dispatch(addCustomerId(res.customer.id))
-      navigate('/')
+    const token = localStorage.getItem("access_token");
+
+    if (token) {
+      // Show success alert
+      await Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        text: `Welcome back, ${res?.user?.first_name || "Customer"}!`,
+        confirmButtonColor: "#CBA135",
+      });
+
+      // Redux actions & navigation
+      dispatch(selectedLocation("seller"));
+      dispatch(addCustomerId(res?.user?.id));
+      navigate("/");
     }
-  };
+  } catch (error) {
+    console.error("Login failed:", error);
+
+    // Show error alert
+    Swal.fire({
+      icon: "error",
+      title: "Login Failed",
+      text: error?.data?.message || "Invalid email or password.",
+      confirmButtonColor: "#CBA135",
+    });
+  }
+};
 
 
   console.log(data)

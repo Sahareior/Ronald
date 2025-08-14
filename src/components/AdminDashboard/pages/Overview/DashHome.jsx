@@ -115,9 +115,11 @@ const cards = [
                 <FaPlus /> Add New Product
               </button>
   </Link>
+             <Link to= 'd'>
               <button className="bg-[#EAE7E1] text-gray-800 py-3 px-4 rounded-xl w-full flex items-center gap-2 hover:opacity-90">
                 <FaCheck /> Approve Sellers
               </button>
+             </Link>
             </div>
           </div>
 

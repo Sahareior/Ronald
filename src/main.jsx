@@ -58,6 +58,7 @@ import VProductsList from './components/VendorDashboard/Pages/Vendorproducts/VPr
 import TermsAndConditions from './components/homepage/customersHomepage/TermsAndConditions.jsx';
 import PrivacyPolicy from './components/homepage/customersHomepage/PrivacyPolicy.jsx';
 import VAddnewProducts from './components/VendorDashboard/Pages/Vendorproducts/VAddnewProducts.jsx';
+import ApproveSellers from './components/AdminDashboard/pages/Overview/_subComponents/ApproveSellers.jsx';
 
 const router = createBrowserRouter([
   {
@@ -119,6 +120,11 @@ const router = createBrowserRouter([
         path: 'admin-overview',
         element: <DashHome />
       },
+      {
+        path: 'admin-dashboard/admin-overview/seller-req',
+        element: <ApproveSellers />
+      },
+      // http://localhost:5173/admin-dashboard/admin-overview/seller-req
       {
         path: 'admin-orders',
         element: <Orders />
@@ -214,6 +220,10 @@ const router = createBrowserRouter([
       element: <VendorProfile />
     }
   ]
+},
+{
+  path: 'd',
+  element: <ApproveSellers />
 }
 
 ]);

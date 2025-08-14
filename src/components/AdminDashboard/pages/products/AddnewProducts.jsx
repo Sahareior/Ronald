@@ -150,7 +150,7 @@ const AddnewProducts = () => {
               <label key={index} className="flex items-center gap-2 text-gray-700">
                 <input type="checkbox" />
                 {label}
-                <input className=' border border-[#D1D5DB] bg-[#EAE7E1] rounded-md  w-12  focus:outline-none ' />
+                <input type='' className=' border border-[#D1D5DB] bg-[#EAE7E1] rounded-md  w-12  focus:outline-none ' />
               </label>
             ))}
             <div className="md:col-span-3 mt-5">

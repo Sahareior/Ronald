@@ -1,16 +1,20 @@
 import { useState } from "react";
 import { Button, Input } from "antd";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCustomerSignupMutation } from "../../redux/slices/apiSlice";
+import Swal from "sweetalert2";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    full_name: "",
     email: "",
     password: "",
+    agree_to_terms: true
   });
   const [agree, setAgree] = useState(false);
+
+  const navigate = useNavigate()
   // const [signupUser, { isLoading }] = useSignupUserMutation();
   const [customerSignup] = useCustomerSignupMutation(
 
@@ -21,16 +25,36 @@ const isLoading = false
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = async () => {
-    try {
-      const res = await customerSignup(formData).unwrap();
-      console.log("Signup successful:", res);
-      alert("Account created successfully!");
-    } catch (error) {
-      console.error("Signup failed:", error);
-      alert(error?.data?.message || "Signup failed");
-    }
-  };
+const handleSubmit = async () => {
+  try {
+    const res = await customerSignup(formData).unwrap();
+
+    // Save access token to localStorage
+    localStorage.setItem("access_token", res.access_token);
+
+    // Show success alert
+    await Swal.fire({
+      icon: "success",
+      title: "Account Created!",
+      text: "Your account has been created successfully.",
+      confirmButtonColor: "#CBA135",
+    });
+
+    console.log("Signup successful:", res);
+    navigate('/login')
+
+  } catch (error) {
+    console.error("Signup failed:", error);
+
+    // Show error alert
+    Swal.fire({
+      icon: "error",
+      title: "Signup Failed",
+      text: error?.data?.message || "Something went wrong. Please try again.",
+      confirmButtonColor: "#CBA135",
+    });
+  }
+};
 
   return (
     <div className="relative w-full h-screen">
@@ -59,8 +83,8 @@ const isLoading = false
             <Input
               className="h-[48px] rounded-[16px] placeholder-[#A7A1A1] bg-white"
               placeholder="Enter Your Full Name"
-              value={formData.name}
-              onChange={(e) => handleChange("name", e.target.value)}
+              value={formData.full_name}
+              onChange={(e) => handleChange("full_name", e.target.value)}
             />
           </div>
 

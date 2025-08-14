@@ -1,45 +1,76 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { data } from "react-router-dom";
 
-// Define a service using a base URL and expected endpoints
+// Get token from localStorage
+const token = localStorage.getItem("access_token");
+
 export const apiSlice = createApi({
   reducerPath: "apiSlice",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://10.10.13.16:15000/api/",
+    prepareHeaders: (headers) => {
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
   endpoints: (build) => ({
     getPokemonByName: build.query({
       query: (name) => `pokemon/${name}`,
     }),
     customerSignup: build.mutation({
-      query: (customerData) =>{
-        console.log(customerData)
-
-        return{
-          url: "/customer/signup",
-          method: "POST",
-          body: customerData
-        }
-      }
+      query: (customerData) => ({
+        url: "signup/customer/",
+        method: "POST",
+        body: customerData,
+      }),
     }),
-
     customerLogin: build.mutation({
-      query: (customerLogin) => {
-        console.log(customerLogin)
-        return {
-          url: "/customer/login",
-          method: "POST",
-          body: customerLogin
-        }
-      }
+      query: (customerLogin) => ({
+        url: "login/",
+        method: "POST",
+        body: customerLogin,
+      }),
+    }),
+    getCustomerProfile: build.query({
+      query: (id) => `customer/profile/${id}`, // token will be sent automatically
     }),
 
-    getCustomerProfile: build.query({
-      query: (id) => (`/customer/profile/${id}`)
-    })
+postSeller: build.mutation({
+  query: (data) => ({
+    url: "seller/apply/",
+    method: "POST",
+    body: data,           // this should be FormData
+    // Important: fetchBaseQuery sets headers automatically for FormData
+  })
+}),
 
-    // cus
+vendorApprove: build.query({
+  query: () => 'seller/applications/'
+}),
+
+sellerApprove: build.mutation({
+  query: (id) => {
+    return{
+      url: `seller/applications/${id}/approve/`,
+      method: "POST",
+      body: id
+    }
+  }
+})
+
+// seller/applications/2/approve/
 
   }),
 });
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
-export const { useGetPokemonByNameQuery, useCustomerSignupMutation,useCustomerLoginMutation, useGetCustomerProfileQuery } = apiSlice;
+export const {
+  useGetPokemonByNameQuery,
+  useCustomerSignupMutation,
+  useCustomerLoginMutation,
+  useGetCustomerProfileQuery,
+  usePostSellerMutation,
+  useVendorApproveQuery,
+  useSellerApproveMutation
+} = apiSlice;

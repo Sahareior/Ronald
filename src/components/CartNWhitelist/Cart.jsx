@@ -14,30 +14,8 @@ const products = [
     price: 3000,
     img: "https://images.unsplash.com/photo-1577977404260-4bf12328b122?q=80&w=1169&auto=format&fit=crop"
   },
-  {
-    id: 2,
-    title: "Modern Coffee Table",
-    brand: "Home Decor Masters",
-    price: 1200,
-    img: "https://plus.unsplash.com/premium_photo-1661962794319-776eebdba4f4?q=80&w=869&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  },
-  {
-    id: 3,
-    title: "Rustic Wooden Armchair",
-    brand: "Country Living",
-    price: 1600,
-    img: "https://plus.unsplash.com/premium_photo-1661883063724-b2e470ec0d60?q=80&w=860&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  },
-  {
-    id: 4,
-    title: "Scandinavian Bookshelf",
-    brand: "Nordic Designs",
-    price: 1800,
-    img: "https://plus.unsplash.com/premium_photo-1661962637032-f1e8df6d8c5f?q=80&w=804&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  },
- 
-];
 
+];
 
 const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => (
   <div className="bg-white rounded-xl mt-6 p-5 flex items-center gap-6 shadow-sm">
@@ -50,7 +28,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => (
     <div className="flex-1">
       <h2 className="text-lg font-semibold">{item.title}</h2>
       <p className="text-sm text-gray-500">by {item.brand}</p>
-      <p className="text-xl font-bold text-[#CBA135] mt-2">${item.price}</p>
+      <p className="text-xl font-bold text-[#CBA135] mt-2">{item.price}</p>
     </div>
 
     <div className="flex items-center gap-2">
@@ -69,14 +47,50 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => (
 );
 
 const Cart = () => {
-const [deliveryType, setDeliveryType] = useState("standard");
-const cart = useSelector(state => state.customer.cart)
-const [cartItems, setCartItems] = useState(
-  cart.map(item => ({
-    ...item,
-    quantity: 1 // Default to 1
-  }))
+  const [deliveryType, setDeliveryType] = useState("standard");
+  const [couponCode, setCouponCode] = useState("");
+  const [deliveryInstructions, setDeliveryInstructions] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const cart = useSelector(state => state.customer.cart);
+  
+  const [cartItems, setCartItems] = useState(
+    cart.map(item => ({
+      ...item,
+      quantity: item.quantity || 1 // Default to 1 if quantity doesn't exist
+    }))
+  );
+
+  // Helper function to extract numeric value from price string (e.g., "XAF 699" => 699)
+  const getPriceValue = (priceStr) => {
+    const numericValue = priceStr.replace(/[^0-9]/g, '');
+    return parseInt(numericValue, 10);
+  };
+
+  // Calculate dynamic values
+ // Calculate dynamic values
+const subtotal = cartItems.reduce(
+  (acc, item) => acc + (getPriceValue(item.price) * item.quantity),
+  0
 );
+
+const deliveryFee =
+  deliveryType === "express"
+    ? 100
+    : deliveryType === "pickup"
+    ? 0
+    : 50; // XAF values
+
+const tax = Math.round(subtotal * 0.05);
+const discount = appliedCoupon ? appliedCoupon.discount : 0;
+const total = subtotal + deliveryFee + tax - discount;
+
+  // Calculate total items count for display
+  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
+  // Format XAF currency
+  const formatXAF = (amount) => {
+    return `XAF ${amount.toLocaleString()}`;
+  };
 
   const increaseQuantity = (id) => {
     setCartItems(prev =>
@@ -98,18 +112,11 @@ const [cartItems, setCartItems] = useState(
     setCartItems(prev => prev.filter(item => item.id !== id));
   };
 
-  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const deliveryFee = 50;
-  const tax = Math.round(subtotal * 0.05);
-  const total = subtotal + deliveryFee + tax;
-
   return (
     <div className="bg-[#FAF8F2] min-h-screen pb-10">
-      <div className='m'>
-       
-      </div>
-      <div className=" mx-auto px-40">
-         <Breadcrumb />
+      <div className='m'></div>
+      <div className="mx-auto px-40">
+        <Breadcrumb />
         <h2 className="text-3xl font-bold mb-6">My Cart</h2>
 
         <div className="flex flex-col lg:flex-row gap-10">
@@ -125,148 +132,171 @@ const [cartItems, setCartItems] = useState(
               />
             ))}
 
-                     <div className="bg-white rounded-2xl mt-6 p-6 shadow-sm">
+            <div className="bg-white rounded-2xl mt-6 p-6 shadow-sm">
               <h4 className="text-base font-medium text-gray-800 mb-2">
                 Delivery Instructions <span className="text-sm text-gray-500">(optional)</span>
               </h4>
               <textarea
                 className="w-full border border-[#CBA135] rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#CBA135] resize-none"
                 rows={4}
+                value={deliveryInstructions}
+                onChange={(e) => setDeliveryInstructions(e.target.value)}
                 placeholder="Add any specific delivery notes here..."
               />
             </div>
           </div>
 
           {/* Order Summary */}
-<div className='flex flex-col gap-12'>
+          <div className='flex flex-col gap-12'>
             <div className="w-full lg:w-[350px] bg-white p-6 rounded-xl shadow-sm h-fit">
-            <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
+              <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
 
-            <div className="space-y-3 text-sm text-gray-700">
-              <div className="flex justify-between">
-                <span>Subtotal (3 items)</span>
-                <span>$9000</span>
+              <div className="space-y-3 text-sm text-gray-700">
+                <div className="flex justify-between">
+                  <span>Subtotal ({totalItems} {totalItems === 1 ? 'item' : 'items'})</span>
+                  <span>{formatXAF(subtotal)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Delivery Fee</span>
+                  <span>{formatXAF(deliveryFee)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Tax</span>
+                  <span>{formatXAF(tax)}</span>
+                </div>
+                {appliedCoupon && (
+                  <div className="flex justify-between text-green-600">
+                    <span>Discount ({appliedCoupon.code})</span>
+                    <span>-{formatXAF(discount)}</span>
+                  </div>
+                )}
               </div>
-              <div className="flex justify-between">
-                <span>Delivery Fee</span>
-                <span>$50</span>
+
+              {/* Promo Code */}
+              <div className="mt-5">
+                <div className="flex gap-2">
+                  <input 
+                    placeholder="Promo code" 
+                    className="w-full border border-[#D1D5DB] rounded-md px-4 h-[40px] placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" 
+                    value={couponCode}
+                    onChange={(e) => setCouponCode(e.target.value)}
+                  />
+                  <Button 
+                    className="h-[40px] text-white bg-[#2B2B2B] hover:bg-gray-200"
+                    onClick={() => {
+                      setAppliedCoupon({
+                        code: couponCode,
+                        discount: 1000, 
+                      });
+                    }}
+                  >
+                    Apply
+                  </Button>
+                </div>
               </div>
-              <div className="flex justify-between">
-                <span>Tax</span>
-                <span>$120</span>
+
+              <div className="flex justify-between text-lg font-semibold mt-6">
+                <h3>Total</h3>
+                <h3 className='text-[#CBA135]'>{formatXAF(total)}</h3>
+              </div>
+
+              {/* Checkout Buttons */}
+              <div className="mt-6 flex flex-col gap-3">
+                <Link 
+                  to='checkout1' 
+                  state={{
+                    cartItems,
+                    subtotal,
+                    deliveryFee,
+                    tax,
+                    total,
+                    deliveryType,
+                    deliveryInstructions,
+                    coupon: appliedCoupon,
+                  }} 
+                  className='w-full block'
+                >
+                  <button className="h-[56px] rounded-md w-full bg-[#CBA135] text-white font-semibold hover:bg-yellow-600">
+                    Proceed to Checkout
+                  </button>
+                </Link>
+                <button className="h-[56px] hover:bg-slate-100 border rounded-md border-gray-300">Save for Later</button>
               </div>
             </div>
-
-            {/* Promo Code */}
-            <div className="mt-5">
-              <div className="flex gap-2">
-                <input placeholder="Promo code" className="w-full border border-[#D1D5DB] rounded-md px-4 h-[40px] placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
-                <Button className="h-[40px] text-white bg-[#2B2B2B] hover:bg-gray-200">Apply</Button>
-              </div>
-            </div>
-
-            <div className="flex justify-between text-lg font-semibold mt-6">
-              <h3>Total</h3>
-              <h3 className='text-[#CBA135]'>$9170</h3>
-            </div>
-
-            {/* Checkout Buttons */}
-            <div className="mt-6 flex flex-col gap-3">
-<Link 
-  to='checkout1' 
-  state={{
-    cartItems,
-    subtotal,
-    deliveryFee,
-    tax,
-    total,
-    deliveryType: "standard" // You'll need to track this from the Radio.Group
-  }} 
-  className='w-full block'
->
-  <button className="h-[56px] rounded-md w-full bg-[#CBA135] text-white font-semibold hover:bg-yellow-600">
-    Proceed to Checkout
-  </button>
-</Link>
-
-              <button className="h-[56px] hover:bg-slate-100 border rounded-md border-gray-300">Save for Later</button>
+            
+            <div className="bg-white p-4 py-8 rounded-lg shadow-sm space-y-3">
+              <h3 className="text-lg font-semibold text-gray-800">Delivery Type</h3>
+              <Radio.Group 
+                className="flex flex-col gap-4 custom-radio"
+                value={deliveryType}
+                onChange={(e) => setDeliveryType(e.target.value)}
+              >
+                <Radio value="standard">Standard ({formatXAF(50)})</Radio>
+                <Radio value="express">Express ({formatXAF(100)})</Radio>
+                <Radio value="pickup">Pickup (Free)</Radio>
+              </Radio.Group>
             </div>
           </div>
-<div className="bg-white p-4 py-8 rounded-lg shadow-sm space-y-3">
-  <h3 className="text-lg font-semibold text-gray-800">Delivery Type</h3>
-<Radio.Group 
-  className="flex flex-col gap-4 custom-radio"
-  value={deliveryType}
-  onChange={(e) => setDeliveryType(e.target.value)}
->
-  <Radio value="standard">Standard</Radio>
-  <Radio value="express">Express</Radio>
-  <Radio value="pickup">Pickup</Radio>
-</Radio.Group>
-</div>
-</div>
         </div>
 
         <div className='py-9'>
           <div className='flex py-9 justify-between '>
-          <h4 className='popmed text-[30px]'>You may also need</h4>
-          <h5 className='popbold text-[16px] text-[#CBA135]'>View All</h5>
-        </div>
+            <h4 className='popmed text-[30px]'>You may also need</h4>
+            <h5 className='popbold text-[16px] text-[#CBA135]'>View All</h5>
+          </div>
 
-                  <div className="grid grid-cols-1   sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <div key={product.id} className="bg-white  rounded-2xl shadow-md relative">
-              <img src={product.img} alt={product.title} className="w-full rounded-t-2xl h-64 object-cover  mb-4" />
-             <div className='px-4 space-y-2 pb-5'>
-                 <h3 className="font-semibold text-lg">{product.title}</h3>
-              <p className="text-sm text-gray-500 mb-1">{product.brand}</p>
-  
-                <div className='flex justify-between items-center gap-10'>
-                                  <p className="text-lg text-[#CBA135] font-bold mb-3">${product.price}</p>
-              <Button type="primary" block className="bg-yellow-600 max-w-[10rem] py-4 hover:bg-yellow-700">
-                Add to Cart
-              </Button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {products.map((product) => (
+              <div key={product.id} className="bg-white rounded-2xl shadow-md relative">
+                <img src={product.img} alt={product.title} className="w-full rounded-t-2xl h-64 object-cover mb-4" />
+                <div className='px-4 space-y-2 pb-5'>
+                  <h3 className="font-semibold text-lg">{product.title}</h3>
+                  <p className="text-sm text-gray-500 mb-1">{product.brand}</p>
+                  <div className='flex justify-between items-center gap-10'>
+                    <p className="text-lg text-[#CBA135] font-bold mb-3">{product.price}</p>
+                    <Button type="primary" block className="bg-yellow-600 max-w-[10rem] py-4 hover:bg-yellow-700">
+                      Add to Cart
+                    </Button>
+                  </div>
                 </div>
-             </div>
-              {/* Wishlist icon (top right) */}
-            <div className="absolute top-2 right-2 text-red-600 w-6 h-6 flex items-center justify-center hover:text-red-500 bg-slate-200 rounded-full cursor-pointer text-lg">
-  ♡
-</div>
-
-            </div>
-          ))}
+                <div className="absolute top-2 right-2 text-red-600 w-6 h-6 flex items-center justify-center hover:text-red-500 bg-slate-200 rounded-full cursor-pointer text-lg">
+                  ♡
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-</div>
       </div>
-      <div className="flex flex-col md:flex-col lg:flex-row justify-between items-center gap-10 bg-[#E6E3DD] px-5 sm:px-10 md:px-10 lg:px-20 xl:px-60 py-12  w-full">
-  {/* Left Block */}
-  <div className="flex flex-col gap-4 w-full lg:max-w-md text-center lg:text-left">
-    <div className="flex items-center justify-center lg:justify-start gap-3">
-      <img src="/image/hand.png" alt="hand" className="w-10 h-10" />
-      <h2 className="text-[22px] sm:text-[24px] md:text-[26px] lg:text-[28px] popmed">Shopping Assistance</h2>
-    </div>
-    <p className="text-[14px] sm:text-[15px] md:text-[16px] popmed">
-      Have a question before you checkout? We’re here to help!
-    </p>
-    <button className="flex items-center justify-center lg:justify-start gap-2 text-[#CBA135] text-[15px] sm:text-[16px] hover:underline">
-      <IoChatbubblesOutline className="text-xl" /> Chat Now
-    </button>
-  </div>
+      
+      <div className="flex flex-col md:flex-col lg:flex-row justify-between items-center gap-10 bg-[#E6E3DD] px-5 sm:px-10 md:px-10 lg:px-20 xl:px-60 py-12 w-full">
+        {/* Left Block */}
+        <div className="flex flex-col gap-4 w-full lg:max-w-md text-center lg:text-left">
+          <div className="flex items-center justify-center lg:justify-start gap-3">
+            <img src="/image/hand.png" alt="hand" className="w-10 h-10" />
+            <h2 className="text-[22px] sm:text-[24px] md:text-[26px] lg:text-[28px] popmed">Shopping Assistance</h2>
+          </div>
+          <p className="text-[14px] sm:text-[15px] md:text-[16px] popmed">
+            Have a question before you checkout? We're here to help!
+          </p>
+          <button className="flex items-center justify-center lg:justify-start gap-2 text-[#CBA135] text-[15px] sm:text-[16px] hover:underline">
+            <IoChatbubblesOutline className="text-xl" /> Chat Now
+          </button>
+        </div>
 
-  {/* Right Block */}
-  <div className="flex flex-col gap-4 w-full lg:max-w-md text-center lg:text-right">
-    <div className="flex items-center justify-center lg:justify-end gap-3">
-      <img src="/image/hand.png" alt="hand" className="w-10 h-10" />
-      <h2 className="text-[22px] sm:text-[24px] md:text-[26px] lg:text-[28px] popmed">30- Day Returns</h2>
-    </div>
-    <p className="text-[14px] text-start sm:text-[15px] md:text-[16px] popmed">
-      Not lovinging it? We offer return for most item within 30 Days delivery for a refund or store credit.
-    </p>
-    <button className="flex items-center justify-center lg:justify-end gap-2 text-[#CBA135] text-[15px] sm:text-[16px] hover:underline">
-      Learn more
-    </button>
-  </div>
-</div>
+        {/* Right Block */}
+        <div className="flex flex-col gap-4 w-full lg:max-w-md text-center lg:text-right">
+          <div className="flex items-center justify-center lg:justify-end gap-3">
+            <img src="/image/hand.png" alt="hand" className="w-10 h-10" />
+            <h2 className="text-[22px] sm:text-[24px] md:text-[26px] lg:text-[28px] popmed">30- Day Returns</h2>
+          </div>
+          <p className="text-[14px] text-start sm:text-[15px] md:text-[16px] popmed">
+            Not loving it? We offer return for most item within 30 Days delivery for a refund or store credit.
+          </p>
+          <button className="flex items-center justify-center lg:justify-end gap-2 text-[#CBA135] text-[15px] sm:text-[16px] hover:underline">
+            Learn more
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
