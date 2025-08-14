@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Button, Switch, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { FaFileUpload, FaTimes } from 'react-icons/fa';
+import { useVendorProductCreateMutation } from '../../../../redux/slices/Apis/vendorsApi';
 
 // Color and size options
 const COLOR_OPTIONS = [
@@ -19,16 +20,30 @@ const SIZE_OPTIONS = [
   'Small', 'Medium', 'Large', 'Extra Large'
 ];
 
+const FURNITURE_CATEGORIES = [
+  'Sofa', 
+  'Chair', 
+  'Table', 
+  'Bed', 
+  'Cabinet', 
+  'Wardrobe', 
+  'Desk', 
+  'Bookshelf', 
+  'Dresser', 
+  'Nightstand'
+];
+
+
 const VAddnewProducts = () => {
   const [formData, setFormData] = useState({
-    productName: '',
-    category: '',
+    name: '',
+    category: [],
     shortDescription: '',
     fullDescription: '',
     images: [],
-    price: '',
-    discountPrice: '',
-    commissionPrice: '',
+    price1: '',
+    price2: '',
+    price3: '',
     sku: '',
     stockQuantity: '',
     colors: [],
@@ -42,11 +57,12 @@ const VAddnewProducts = () => {
     deliveryTime: '',
     seoTitle: '',
     metaDescription: '',
-    tags: ''
+    tags: []
   });
 
   const [showColorDropdown, setShowColorDropdown] = useState(false);
   const [showSizeDropdown, setShowSizeDropdown] = useState(false);
+  const [vendorProductCreate] = useVendorProductCreateMutation()
   const fileInputRef = useRef(null);
 
   const handleInputChange = (e) => {
@@ -113,19 +129,22 @@ const VAddnewProducts = () => {
     });
   };
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
+  let optionCount = 1;
+
   const submissionData = {
     ...formData,
     images: formData.images.map(img => img.file),
     deliveryOptions: Object.entries(formData.deliveryOptions)
       .filter(([_, value]) => value.checked)
-      .reduce((acc, [key, value]) => {
-        acc[key] = value.price;
+      .reduce((acc, [_, value]) => {
+        acc[`option${optionCount}`] = value.price;
+        optionCount++;
         return acc;
       }, {})
   };
-
-  console.log('Submitted Product Data:', submissionData);
+const res =  await vendorProductCreate(submissionData)
+  console.log('Submitted Product Data:', res);
   message.success('Product submitted successfully!');
 };
 
@@ -150,23 +169,35 @@ const handleSubmit = () => {
           <div>
             <label className="block mb-1 popbold text-[14px] text-gray-700">Product Name</label>
             <input
-              name="productName"
-              value={formData.productName}
+              name="name"
+              value={formData.name}
               onChange={handleInputChange}
               placeholder="Enter Product Name"
               className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none"
             />
           </div>
-          <div>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">Category</label>
-            <input
-              name="category"
-              value={formData.category}
-              onChange={handleInputChange}
-              placeholder="Enter Category"
-              className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none"
-            />
-          </div>
+            <div className="relative">
+              <label className="block mb-1 popbold text-[14px] text-gray-700">Category</label>
+              <div 
+                className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none cursor-pointer"
+                onClick={() => setShowSizeDropdown(!showSizeDropdown)}
+              >
+                {formData.sizes.length > 0 ? formData.sizes.join(', ') : 'Select Category'}
+              </div>
+              {showSizeDropdown && (
+                <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                  {FURNITURE_CATEGORIES.map(size => (
+                    <div 
+                      key={size}
+                      className={`px-4 py-2 hover:bg-gray-100 cursor-pointer ${formData.sizes.includes(size) ? 'bg-blue-50' : ''}`}
+                      onClick={() => toggleSize(size)}
+                    >
+                      {size}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
         </div>
 
         {/* Descriptions */}
@@ -246,8 +277,8 @@ const handleSubmit = () => {
             <div>
               <label className="block mb-1 popbold text-[14px] text-gray-700">Product Price</label>
               <input
-                name="price"
-                value={formData.price}
+                name="price1"
+                value={formData.price1}
                 onChange={handleInputChange}
                 placeholder="Enter Price"
                 className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none"
@@ -256,8 +287,8 @@ const handleSubmit = () => {
             <div>
               <label className="block mb-1 popbold text-[14px] text-gray-700">Discount Price</label>
               <input
-                name="discountPrice"
-                value={formData.discountPrice}
+                name="price2"
+                value={formData.price2}
                 onChange={handleInputChange}
                 placeholder="Enter Price"
                 className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none"
@@ -266,8 +297,8 @@ const handleSubmit = () => {
             <div>
               <label className="block mb-1 popbold text-[14px] text-gray-700">Commission Price</label>
               <input
-                name="commissionPrice"
-                value={formData.commissionPrice}
+                name="price3"
+                value={formData.price3}
                 onChange={handleInputChange}
                 placeholder="Enter Price"
                 className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none"
@@ -424,15 +455,27 @@ const handleSubmit = () => {
                 placeholder="Type here..."
               />
             </div>
-            <div>
-              <label className="block mb-1 text-sm font-semibold text-gray-700">Tags</label>
-              <input
-                name="tags"
-                value={formData.tags}
-                onChange={handleInputChange}
-                placeholder="furniture, modern, oak, dining (comma-separated)"
-                className="w-full border border-gray-300 bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none"
-              />
+            <div className="relative">
+              <label className="block mb-1 popbold text-[14px] text-gray-700">Category</label>
+              <div 
+                className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none cursor-pointer"
+                onClick={() => setShowSizeDropdown(!showSizeDropdown)}
+              >
+                {formData.sizes.length > 0 ? formData.sizes.join(', ') : 'Select Category'}
+              </div>
+              {showSizeDropdown && (
+                <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                  {FURNITURE_CATEGORIES.map(size => (
+                    <div 
+                      key={size}
+                      className={`px-4 py-2 hover:bg-gray-100 cursor-pointer ${formData.sizes.includes(size) ? 'bg-blue-50' : ''}`}
+                      onClick={() => toggleSize(size)}
+                    >
+                      {size}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
