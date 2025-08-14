@@ -3,9 +3,12 @@ import React from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import Breadcrumb from '../others/Breadcrumb';
 import { MdDelete } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Checkout1 = () => {
+   const location = useLocation();
+
+   console.log(location.state,"this is lovation")
     return (
         <div className='bg-[#FAF8F2] pb-10'>
 <div className='mx-40'>

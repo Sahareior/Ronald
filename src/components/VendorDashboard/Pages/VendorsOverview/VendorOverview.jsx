@@ -132,7 +132,7 @@ const cards = [
       {/* Best Selling Products */}
       <div className="bg-white p-5 rounded-xl shadow-md">
         <p className="popbold text-[20px] mb-4">Best Selling Products</p>
-        <div className="flex h-[40vh] overflow-y-scroll flex-col gap-4">
+        <div className="flex h-[60vh] overflow-y-scroll flex-col gap-4">
           {[1, 2, 3, 4].map((items) => (
             <div
               key={items}

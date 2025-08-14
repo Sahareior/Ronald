@@ -69,33 +69,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => (
 );
 
 const Cart = () => {
-  // const [cartItems, setCartItems] = useState([
-  //   {
-  //     id: 1,
-  //     title: "Luxury Velvet Sectional Sofa",
-  //     brand: "Elegant Furniture Co.",
-  //     price: 3000,
-  //     img: "https://images.unsplash.com/photo-1577977404260-4bf12328b122?q=80&w=1169&auto=format&fit=crop",
-  //     quantity: 3,
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Modern Coffee Table",
-  //     brand: "Home Decor Masters",
-  //     price: 1200,
-  //     img: "https://plus.unsplash.com/premium_photo-1661916464054-a39482dad13e?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //     quantity: 3,
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Contemporary Lounge Chair",
-  //     brand: "Modern Living Co.",
-  //     price: 1800,
-  //     img: "https://plus.unsplash.com/premium_photo-1661962649777-055b23f7a5e8?q=80&w=804&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //     quantity: 2,
-  //   },
-  // ]);
-
+const [deliveryType, setDeliveryType] = useState("standard");
 const cart = useSelector(state => state.customer.cart)
 const [cartItems, setCartItems] = useState(
   cart.map(item => ({
@@ -198,7 +172,18 @@ const [cartItems, setCartItems] = useState(
 
             {/* Checkout Buttons */}
             <div className="mt-6 flex flex-col gap-3">
-<Link to='checkout1' className='w-full block'>
+<Link 
+  to='checkout1' 
+  state={{
+    cartItems,
+    subtotal,
+    deliveryFee,
+    tax,
+    total,
+    deliveryType: "standard" // You'll need to track this from the Radio.Group
+  }} 
+  className='w-full block'
+>
   <button className="h-[56px] rounded-md w-full bg-[#CBA135] text-white font-semibold hover:bg-yellow-600">
     Proceed to Checkout
   </button>
@@ -209,11 +194,15 @@ const [cartItems, setCartItems] = useState(
           </div>
 <div className="bg-white p-4 py-8 rounded-lg shadow-sm space-y-3">
   <h3 className="text-lg font-semibold text-gray-800">Delivery Type</h3>
-  <Radio.Group className="flex flex-col gap-4 custom-radio">
-    <Radio value="standard">Standard</Radio>
-    <Radio value="express">Express</Radio>
-    <Radio value="pickup">Pickup</Radio>
-  </Radio.Group>
+<Radio.Group 
+  className="flex flex-col gap-4 custom-radio"
+  value={deliveryType}
+  onChange={(e) => setDeliveryType(e.target.value)}
+>
+  <Radio value="standard">Standard</Radio>
+  <Radio value="express">Express</Radio>
+  <Radio value="pickup">Pickup</Radio>
+</Radio.Group>
 </div>
 </div>
         </div>

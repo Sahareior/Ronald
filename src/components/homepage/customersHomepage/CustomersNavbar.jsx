@@ -14,6 +14,12 @@ const CustomersNavbar = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
+  const handleLogout =() => {
+        localStorage.setItem('token', " ");
+localStorage.setItem('customerId', " ");
+// navigate('/login')
+  }
+
   const categories = [
     'Living Room',
     'Bedroom',
@@ -115,7 +121,7 @@ const CustomersNavbar = () => {
               alt="User Avatar"
             />
           </Link>
-          <Link to='/login'>
+          <Link onClick={()=> handleLogout()} to='/login'>
           <RxExit size={22} />
           </Link>
         </div>

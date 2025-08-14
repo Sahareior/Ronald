@@ -117,7 +117,7 @@ const selectedKey = activeItem ? [activeItem.key] : [];
       
       selectedKeys={selectedKey}
       items={items}
-      className="popreg text-lg space-y-1"
+      className="popreg text-lg space-y-2"
       
     />
   </div>

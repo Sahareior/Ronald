@@ -1,20 +1,22 @@
 import React from 'react';
 import { Form, Input, Checkbox, Button, Select } from 'antd';
 import Breadcrumb from '../others/Breadcrumb';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const { Option } = Select;
 
 const Checkout = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate()
 
   const onFinish = (values) => {
     console.log('Form Values:', values);
+    navigate('/cart/checkout1')
   };
 
   return (
 <div className='bg-[#FAF8F2] pb-12'>
-  <div className=' pb-7 px-40'>
+  <div className=' pb-7 md:px-20 '>
      <Breadcrumb />
    <div className='py-4 pb-6'>
     <h2 className='text-[30px] pb-3 popbold font-bold'>Checkout</h2>
@@ -159,39 +161,7 @@ const Checkout = () => {
 </div>
 </div>
 
-<div className="space-y-4  px-40 mx-auto ">
-<div className='bg-[#E6E3DD] p-6'>
-    <h3 className="text-[20px] py-9 popbold">Payment Method</h3>
 
-  <div className="flex flex-col md:flex-row gap-6">
-    {/* Left Textarea */}
-    <div className="w-full md:w-3/5">
-      <label htmlFor="sellerCode1" className="block popmed text-sm mb-2">
-        Seller Code (optional)
-      </label>
-      <textarea
-        id="sellerCode1"
-        rows={5}
-        placeholder="Enter seller code or comments"
-        className="w-full rounded-md border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] transition-all resize-none"
-      ></textarea>
-    </div>
-
-    {/* Right Textarea */}
-    <div className="w-full">
-      <label htmlFor="sellerCode2" className="block popmed text-sm mb-2">
-        Seller Code (optional)
-      </label>
-      <textarea
-        id="sellerCode2"
-        rows={5}
-        placeholder="Enter seller code or comments"
-        className="w-full rounded-md border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#6366F1] transition-all resize-none"
-      ></textarea>
-    </div>
-  </div>
-</div>
-</div>
 
 
 </div>

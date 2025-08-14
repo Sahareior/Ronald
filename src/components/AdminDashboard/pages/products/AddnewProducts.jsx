@@ -63,15 +63,33 @@ const AddnewProducts = () => {
         <div>
 
           <div className="grid md:grid-cols-3 gap-4">
-            {[1, 2, 3].map((item) => (
-              <div key={item}>
-                <label className="block mb-1 popbold text-[14px] text-gray-700">Price Option {item}</label>
+           
+        
+              <div>
+                  <label className="block mb-1 popbold text-[14px] text-gray-700">Product Price </label>
                 <input
                   placeholder="Enter Price"
                   className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none"
                 />
               </div>
-            ))}
+        
+              <div>
+                  <label className="block mb-1 popbold text-[14px] text-gray-700">Discount Price </label>
+                <input
+                  placeholder="Enter Price"
+                  className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none"
+                />
+              </div>
+        
+              <div>
+                  <label className="block mb-1 popbold text-[14px] text-gray-700">Commission Price </label>
+                <input
+                  placeholder="Enter Price"
+                  className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none"
+                />
+              </div>
+        
+   
           </div>
         </div>
 
@@ -82,15 +100,37 @@ const AddnewProducts = () => {
         <div>
     
           <div className="grid md:grid-cols-2 gap-4">
-            {[1, 2, 3, 4].map((item) => (
-              <div key={item}>
-                <label className="block mb-1 popbold text-[14px] text-gray-700">Option {item}</label>
+           
+              <div >
+                <label className="block mb-1 popbold text-[14px] text-gray-700">SKU</label>
                 <input
                   placeholder="Enter Detail"
                   className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none"
                 />
               </div>
-            ))}
+              <div >
+                <label className="block mb-1 popbold text-[14px] text-gray-700">Stock Quantity *</label>
+                <input
+                  placeholder="Enter Detail"
+                  className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none"
+                />
+              </div>
+        
+              <div >
+                <label className="block mb-1 popbold text-[14px] text-gray-700">Color</label>
+                <input
+                  placeholder="Enter Detail"
+                  className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none"
+                />
+              </div>
+              <div >
+                <label className="block mb-1 popbold text-[14px] text-gray-700">Size</label>
+                <input
+                  placeholder="Enter Detail"
+                  className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none"
+                />
+              </div>
+          
           </div>
         </div>
 

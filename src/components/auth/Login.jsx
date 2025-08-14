@@ -3,28 +3,44 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { selectedLocation } from '../../redux/slices/customerSlice';
+import { addCustomerId, selectedLocation } from '../../redux/slices/customerSlice';
+import { useCustomerLoginMutation } from '../../redux/slices/apiSlice';
 
 
 const Login = () => {
   const dispatch = useDispatch();
-
+  const [customerLogin] = useCustomerLoginMutation()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate()
 
 const data = useSelector(state => state.customer.location)
-  const handleLogin = (e) => {
+
+    // if (email === 'customer@gmail.com') {
+    //   dispatch(selectedLocation('customer'));
+    //   navigate('/')
+    // } else if (email === 'sells@gmail.com') {
+    //   dispatch(selectedLocation('seller'));
+    //   navigate('/')
+    // } else {
+    //   console.log('Unknown user');
+    // }
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-console.log(email)
-    if (email === 'customer@gmail.com') {
-      dispatch(selectedLocation('customer'));
+ const loginData = { email, password };
+
+    const res = await customerLogin(loginData).unwrap()
+    console.log(res)
+    localStorage.setItem('token', res.token);
+localStorage.setItem('customerId', res.customer.id);
+
+    const token = localStorage.getItem('token')
+
+    if(res.customer.id){
+      dispatch(selectedLocation('customer'))
+      dispatch(addCustomerId(res.customer.id))
       navigate('/')
-    } else if (email === 'sells@gmail.com') {
-      dispatch(selectedLocation('seller'));
-      navigate('/')
-    } else {
-      console.log('Unknown user');
     }
   };
 

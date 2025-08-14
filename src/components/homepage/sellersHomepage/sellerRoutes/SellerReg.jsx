@@ -1,5 +1,5 @@
-import { Button, DatePicker, Input, Select, Steps } from 'antd';
-import React from 'react';
+import { Button, DatePicker, Input, Select, Steps, message } from 'antd';
+import React, { useState } from 'react';
 import { CgProfile } from 'react-icons/cg';
 import { FaCar, FaCloudUploadAlt } from 'react-icons/fa';
 import { FaHandshakeSimple } from 'react-icons/fa6';
@@ -7,8 +7,139 @@ import { FiChevronDown } from 'react-icons/fi';
 
 const { Option } = Select;
 
+// Reusable components
+const SectionHeader = ({ icon, title, subtitle }) => (
+  <div className="flex items-center gap-3 mb-6">
+    <p className='p-2 rounded-full bg-[#CBA135]'>{icon}</p>
+    <div>
+      <p className="text-[20px] font-bold">{title}</p>
+      <p className="text-[14px] text-gray-600">{subtitle}</p>
+    </div>
+  </div>
+);
+
+const FileUploader = ({ title, name, onChange, multiple = false }) => (
+  <div className="space-y-3 mt-7">
+    <h2 className="popbold text-[18px] text-gray-800">{title}</h2>
+    <div className="bg-[#EAE7E1] rounded-xl border border-dashed border-gray-400 p-6 flex flex-col items-center justify-center space-y-3 hover:shadow-md transition-all">
+      <FaCloudUploadAlt className="text-4xl text-[#CBA135]" />
+      <p className="popmed text-[16px] text-gray-700">Drag & drop images here</p>
+      <p className="popreg text-[14px] text-gray-600 text-center">
+        or click to browse (Min 1, Max 6 images)
+      </p>
+      <input
+        type="file"
+        id={name}
+        className="hidden"
+        accept="image/*"
+        multiple={multiple}
+        onChange={(e) => onChange(name, multiple ? e.target.files : e.target.files[0])}
+      />
+      <label
+        htmlFor={name}
+        className="bg-[#CBA135] hover:bg-[#b8962e] text-white px-6 py-2 rounded-md shadow-sm transition-all cursor-pointer"
+      >
+        Browse Files
+      </label>
+    </div>
+  </div>
+);
+
 const SellerReg = () => {
-  const description = 'This is a description.';
+  const [currentStep, setCurrentStep] = useState(0);
+  const [formData, setFormData] = useState({
+    // Contact Information
+    firstName: '',
+    lastName: '',
+    jobTitle: '',
+    email: '',
+    phone: '',
+
+    // Business Information
+    businessName: '',
+    businessAddress: '',
+    country: '',
+    city: '',
+    state: '',
+    postalCode: '',
+    date: '',
+    businessType: '',
+    taxpayerNumber: '',
+    tradeRegisterNumber: '',
+
+    // Verify Information
+    frontId: [],
+    backId: [],
+    businessOwner: [],
+    homeLocalizationPlan: '',
+    businessLocalizationPlan: '',
+    taxFile: null,
+    tradeFile: null,
+    
+    // Verification
+    captcha: ''
+  });
+
+  const steps = [
+    {
+      title: 'Contact Info',
+      content: <ContactInfoStep formData={formData} setFormData={setFormData} />,
+    },
+    {
+      title: 'Business Info',
+      content: <BusinessInfoStep formData={formData} setFormData={setFormData} />,
+    },
+    {
+      title: 'Verify',
+      content: <VerifyInfoStep formData={formData} setFormData={setFormData} />,
+    },
+  ];
+
+  const nextStep = () => {
+    if (validateStep(currentStep)) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const prevStep = () => {
+    setCurrentStep(currentStep - 1);
+  };
+
+  const validateStep = (step) => {
+    switch (step) {
+      case 0: // Contact Info
+        if (!formData.firstName || !formData.lastName || !formData.jobTitle || !formData.email || !formData.phone) {
+          message.error('Please fill all required fields in Contact Information');
+          return false;
+        }
+        return true;
+      case 1: // Business Info
+        if (!formData.businessName || !formData.businessAddress || !formData.country || 
+            !formData.city || !formData.state || !formData.postalCode || !formData.date || 
+            !formData.businessType || !formData.taxpayerNumber || !formData.tradeRegisterNumber) {
+          message.error('Please fill all required fields in Business Information');
+          return false;
+        }
+        return true;
+      case 2: // Verify
+        if (formData.frontId.length === 0 || formData.backId.length === 0 || 
+            formData.businessOwner.length === 0 || !formData.homeLocalizationPlan || 
+            !formData.businessLocalizationPlan || !formData.taxFile || !formData.tradeFile) {
+          message.error('Please fill all required fields in Verification');
+          return false;
+        }
+        return true;
+      default:
+        return true;
+    }
+  };
+
+  const handleApply = () => {
+    if (validateStep(2)) {
+      console.log('Form Data:', formData);
+      message.success('Application submitted successfully!');
+    }
+  };
 
   return (
     <div className="bg-[#FAF8F2] px-6 md:px-20 py-10">
@@ -25,329 +156,380 @@ const SellerReg = () => {
 
       {/* Steps */}
       <div className="max-w-4xl mx-auto mb-12">
-        <Steps
-          current={1}
-          items={[
-            {
-              title: 'Finished',
-              description,
-            },
-            {
-              title: 'In Progress',
-              description,
-              // subTitle: 'Left 00:00:08',
-            },
-            {
-              title: 'Waiting',
-              description,
-            },
-          ]}
-        />
+        <Steps current={currentStep}>
+          {steps.map((item) => (
+            <Steps.Step key={item.title} title={item.title} />
+          ))}
+        </Steps>
       </div>
 
-      {/* Contact Info Section */}
+      {/* Current Step Content */}
       <div className="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-xl">
-        <div className="flex items-center gap-3 mb-6">
-          <p className='p-2 rounded-full  bg-[#CBA135]'><CgProfile  size={20} className="text-white " /></p>
-          <div>
-            <p className="text-[20px] font-bold">Contact Information</p>
-            <p className="text-[14px] text-gray-600">Tell us how to reach you</p>
-          </div>
-        </div>
-
-        {/* Form */}
-        <div className="grid md:grid-cols-2  gap-4">
-                   <div className='mt-2'>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">First Name</label>
-            <input placeholder="Enter First Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
-          </div>
-
-                  <div className='mt-2'>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">Last Name *</label>
-            <input placeholder="Enter Last Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
-          </div>
-
-<div>
-      <label className="block mb-1 popbold text-[14px] text-gray-700">Job Title *</label>
-      <Select
-        placeholder="Select Your Role"
-        className="w-full h-[44px]"
-        suffixIcon={<FiChevronDown className="text-gray-500" />}
-      >
-        <Option value="owner">Owner</Option>
-        <Option value="manager">Manager</Option>
-        <Option value="designer">Designer</Option>
-      </Select>
-    </div>
-
-                  <div className='mt-2'>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">Email Address *</label>
-            <input placeholder="Enter Email Address" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
-          </div>
-          
-        </div>
-                  <div className='mt-2'>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">Phone Number *</label>
-            <input placeholder="Enter Phone Number" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
-          </div>
+        {steps[currentStep].content}
       </div>
-      {/* Business */}
 
-            <div className="max-w-3xl mx-auto mt-9 bg-white p-6 rounded-xl shadow-xl">
-        <div className="flex items-center gap-3 mb-6">
-          <p className='p-2 rounded-full  bg-[#CBA135]'><CgProfile  size={20} className="text-white " /></p>
-          <div>
-            <p className="text-[20px] font-bold">Business Information</p>
-            <p className="text-[14px] text-gray-600">Details about your company</p>
-          </div>
-        </div>
-
-        {/* Form */}
-
-                  <div className='mt-2'>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">Legal Business Name *</label>
-            <input placeholder="Enter Business Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
-          </div>
-
-                            <div className='mt-2'>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">Business Address *</label>
-                 <input placeholder="Enter Business Address" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
-          </div>
-        
-        <div className="grid md:grid-cols-2 mt-3 gap-4">
-          <div>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">Country *</label>
-                <input placeholder="Enter Country Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
-          </div>
-          <div>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">City/Town *</label>
-                 <input placeholder="Enter City/Town Name" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
-          </div>
-          <div>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">State/Province *</label>
-            <Select placeholder="Select Your Role" className="w-full h-[44px]">
-              <Option value="owner">Owner</Option>
-              <Option value="manager">Manager</Option>
-              <Option value="designer">Designer</Option>
-            </Select>
-          </div>
-          <div>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">Postal Code *</label>
-                 <input placeholder="Enter Postal Code" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
-          </div>
-          
-        </div>
-        <div className="grid md:grid-cols-2 mt-3 gap-4">
-<div>
-  <label className="block mb-1 popbold text-[14px] text-gray-700">Date*</label>
-  <DatePicker
-    className="w-full h-[44px] border border-[#D1D5DB] rounded-md px-4 py-2 text-gray-700"
-    placeholder="Enter Date"
-    style={{ width: '100%' }}
-    popupClassName="custom-datepicker-popup"
-  />
-</div>
-          <div>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">Business Type *</label>
-                 <input placeholder="Enter Business Type" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
-          </div>
-          <div>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">Tax payer Number*</label>
-            <Select placeholder="Select Your Role" className="w-full h-[44px]" suffixIcon={<FiChevronDown className="text-gray-500" />}>
-              <Option value="owner">Owner</Option>
-              <Option value="manager">Manager</Option>
-              <Option value="designer">Designer</Option>
-            </Select>
-          </div>
-          <div>
-            <label className="block mb-1 popbold text-[14px] text-gray-700">Trade register number*</label>
-                 <input placeholder="Enter register number" className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" />
-          </div>
-          
-        </div>
-
+      {/* Navigation Buttons */}
+      <div className="flex justify-between max-w-3xl mx-auto mt-6">
+        {currentStep > 0 && (
+          <Button onClick={prevStep} className="bg-gray-200 hover:bg-gray-300 py-4 px-8">
+            Previous
+          </Button>
+        )}
+        {currentStep < steps.length - 1 ? (
+          <Button onClick={nextStep} className="bg-[#CBA135] hover:bg-[#b8962e] text-white py-4 px-8 ml-auto">
+            Next
+          </Button>
+        ) : (
+          <Button 
+            onClick={handleApply}
+            className="bg-[#CBA135] hover:bg-[#b8962e] text-white py-4 px-8 ml-auto"
+          >
+            Apply Now
+          </Button>
+        )}
       </div>
-{/* ...........................................Uploading System............................................ */}
-
-        <div className="max-w-3xl mx-auto mt-9 bg-white p-6 rounded-xl shadow-xl">
-<div className='flex items-center gap-3'>
-  <p className='bg-[#CBA135] h-10 w-10 rounded-full flex justify-center items-center text-white'>
-    <FaCar />
-  </p>
-  <div>
-    <h3 className='popbold text-[24px]'>Verify Information</h3>
-  <h4 className='text-sm popreg'>Your shipping and fulfillment capabilities</h4>
-</div>
-</div>
-
-<div className="space-y-3 mt-7">
-  <h2 className="popbold text-[18px] text-gray-800">Front of National ID</h2>
-
-  <div className="bg-[#EAE7E1] rounded-xl border border-dashed border-gray-400 p-6 flex flex-col items-center justify-center space-y-3 hover:shadow-md transition-all">
-    <FaCloudUploadAlt className="text-4xl text-[#CBA135]" />
-
-    <p className="popmed text-[16px] text-gray-700">Drag & drop images here</p>
-    <p className="popreg text-[14px] text-gray-600 text-center">
-      or click to browse (Min 1, Max 6 images)
-    </p>
-
-    <Button className="bg-[#CBA135] hover:bg-[#b8962e] text-white px-6 py-2 rounded-md shadow-sm transition-all">
-      Browse Files
-    </Button>
-  </div>
-</div>
-{/* .................. */}
-<div className="space-y-3 mt-7">
-  <h2 className="popbold text-[18px] text-gray-800">Back of national ID</h2>
-
-  <div className="bg-[#EAE7E1] rounded-xl border border-dashed border-gray-400 p-6 flex flex-col items-center justify-center space-y-3 hover:shadow-md transition-all">
-    <FaCloudUploadAlt className="text-4xl text-[#CBA135]" />
-
-    <p className="popmed text-[16px] text-gray-700">Drag & drop images here</p>
-    <p className="popreg text-[14px] text-gray-600 text-center">
-      or click to browse (Min 1, Max 6 images)
-    </p>
-
-    <Button className="bg-[#CBA135] hover:bg-[#b8962e] text-white px-6 py-2 rounded-md shadow-sm transition-all">
-      Browse Files
-    </Button>
-  </div>
-</div>
-{/* .................. */}
-<div className="space-y-3 mt-7">
-  <h2 className="popbold text-[18px] text-gray-800">Business owner</h2>
-
-  <div className="bg-[#EAE7E1] rounded-xl border border-dashed border-gray-400 p-6 flex flex-col items-center justify-center space-y-3 hover:shadow-md transition-all">
-    <FaCloudUploadAlt className="text-4xl text-[#CBA135]" />
-
-    <p className="popmed text-[16px] text-gray-700">Drag & drop images here</p>
-    <p className="popreg text-[14px] text-gray-600 text-center">
-      or click to browse (Min 1, Max 6 images)
-    </p>
-
-    <Button className="bg-[#CBA135] hover:bg-[#b8962e] text-white px-6 py-2 rounded-md shadow-sm transition-all">
-      Browse Files
-    </Button>
-  </div>
-</div>
-{/* .................. */}
-
-<div className="flex flex-col sm:flex-row mt-6 gap-4">
-  <div className="flex-1 mt-2">
-    <label className="block mb-1 popbold text-[14px] text-gray-700">
-     Home localization plan *
-    </label>
-    <input
-      placeholder="Enter Home localization plan"
-      className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]"
-    />
-  </div>
-
-  <div className="flex-1 mt-2">
-    <label className="block mb-1 popbold text-[14px] text-gray-700">
-      Business Localization plan *
-    </label>
-    <input
-      placeholder="Enter Business Localization plan "
-      className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]"
-    />
-  </div>
-</div>
-
-
-<div className="flex flex-col sm:flex-row mt-6 gap-4">
-  {/* File Picker 1 */}
-  <div className="flex-1">
-    <label className="block mb-1 popbold text-[14px] text-gray-700">
-      Taxpayer Number *
-    </label>
-    <div className="flex gap-2">
-      <label
-        htmlFor="file-tax"
-        className="bg-[#676767] text-white px-4 py-2 rounded-md cursor-pointer flex items-center justify-center whitespace-nowrap"
-      >
-        Choose File
-      </label>
-      <input
-        type="file"
-        id="file-tax"
-        className="hidden"
-        onChange={(e) => console.log(e.target.files[0])}
-      />
-      <input
-        placeholder="No file chosen"
-        readOnly
-        className="flex-1 border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]"
-      />
     </div>
-  </div>
+  );
+};
 
-  {/* File Picker 2 */}
-  <div className="flex-1">
-    <label className="block mb-1 popbold text-[14px] text-gray-700">
-      Trade Register Number *
-    </label>
-    <div className="flex gap-2">
-      <label
-        htmlFor="file-trade"
-        className="bg-[#676767] text-white px-4 py-2 rounded-md cursor-pointer flex items-center justify-center whitespace-nowrap"
-      >
-        Choose File
-      </label>
-      <input
-        type="file"
-        id="file-trade"
-        className="hidden"
-        onChange={(e) => console.log(e.target.files[0])}
+// Step Components
+const ContactInfoStep = ({ formData, setFormData }) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSelect = (name, value) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  return (
+    <>
+      <SectionHeader
+        icon={<CgProfile size={20} className="text-white" />}
+        title="Contact Information"
+        subtitle="Tell us how to reach you"
       />
-      <input
-        placeholder="No file chosen"
-        readOnly
-        className="flex-1 border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]"
-      />
-    </div>
-  </div>
-</div>
 
-
-
-
-  <p className='text-center py-5 pt-7 popreg'>Upload a high-quality image </p>
-      </div>
-  <div className="  mt-6 bg-[#FAF8F2] flex items-center justify-center">
-      <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-3xl">
-        <h2 className="text-lg popbold mb-6">Verify here</h2>
-
-        <div className="border rounded-md p-5 w-full max-w-sm space-y-3">
-          {/* Captcha text */}
-          <div className="text-2xl font-mono popbold">ZWzybux6</div>
-
-          {/* Label */}
-          <div className="bg-gray-200 text-sm px-2  rounded">ReCaptcha text enter below</div>
-
-          {/* Input */}
-          <input
-            type="text"
-            placeholder="Type text"
-            className="w-full px-4 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#CBA135] placeholder:px-1"
+      <div className="grid md:grid-cols-2 gap-4">
+        <div className='mt-2'>
+          <label className="block mb-1 popbold text-[14px] text-gray-700">First Name</label>
+          <input 
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            placeholder="Enter First Name" 
+            className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" 
           />
         </div>
 
-        {/* Button */}
-        <div className="flex justify-center mt-6">
-          <button className="bg-[#CBA135] hover:bg-[#b8932f] text-white font-medium py-2 px-6 rounded shadow">
-            Verify
-          </button>
+        <div className='mt-2'>
+          <label className="block mb-1 popbold text-[14px] text-gray-700">Last Name *</label>
+          <input 
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            placeholder="Enter Last Name" 
+            className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" 
+          />
+        </div>
+
+        <div>
+          <label className="block mb-1 popbold text-[14px] text-gray-700">Job Title *</label>
+          <Select
+            placeholder="Select Your Role"
+            className="w-full h-[44px]"
+            suffixIcon={<FiChevronDown className="text-gray-500" />}
+            onChange={(value) => handleSelect('jobTitle', value)}
+            value={formData.jobTitle}
+          >
+            <Option value="owner">Owner</Option>
+            <Option value="manager">Manager</Option>
+            <Option value="designer">Designer</Option>
+          </Select>
+        </div>
+
+        <div className='mt-2'>
+          <label className="block mb-1 popbold text-[14px] text-gray-700">Email Address *</label>
+          <input 
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Enter Email Address" 
+            className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" 
+          />
         </div>
       </div>
-    </div>
-<div>
-</div>
-      <div className='p-5 flex mt-8 justify-center flex-col gap-4 items-center'>
-        <Button className='border-[#CBA135] bg-[#FAF8F2] py-6 px-11'>Apply Now</Button>
-        <p className='popreg text-[14px]'>Your information will be kept confidential and secure.</p>
+      <div className='mt-2'>
+        <label className="block mb-1 popbold text-[14px] text-gray-700">Phone Number *</label>
+        <input 
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
+          placeholder="Enter Phone Number" 
+          className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" 
+        />
       </div>
-    </div>
+    </>
+  );
+};
+
+const BusinessInfoStep = ({ formData, setFormData }) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSelect = (name, value) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleDate = (date, dateString) => {
+    setFormData(prev => ({ ...prev, date: dateString }));
+  };
+
+  return (
+    <>
+      <SectionHeader
+        icon={<CgProfile size={20} className="text-white" />}
+        title="Business Information"
+        subtitle="Details about your company"
+      />
+
+      <div className='mt-2'>
+        <label className="block mb-1 popbold text-[14px] text-gray-700">Legal Business Name *</label>
+        <input 
+          name="businessName"
+          value={formData.businessName}
+          onChange={handleChange}
+          placeholder="Enter Business Name" 
+          className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" 
+        />
+      </div>
+
+      <div className='mt-2'>
+        <label className="block mb-1 popbold text-[14px] text-gray-700">Business Address *</label>
+        <input 
+          name="businessAddress"
+          value={formData.businessAddress}
+          onChange={handleChange}
+          placeholder="Enter Business Address" 
+          className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" 
+        />
+      </div>
+      
+      <div className="grid md:grid-cols-2 mt-3 gap-4">
+        <div>
+          <label className="block mb-1 popbold text-[14px] text-gray-700">Country *</label>
+          <input 
+            name="country"
+            value={formData.country}
+            onChange={handleChange}
+            placeholder="Enter Country Name" 
+            className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" 
+          />
+        </div>
+        <div>
+          <label className="block mb-1 popbold text-[14px] text-gray-700">City/Town *</label>
+          <input 
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            placeholder="Enter City/Town Name" 
+            className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" 
+          />
+        </div>
+        <div>
+          <label className="block mb-1 popbold text-[14px] text-gray-700">State/Province *</label>
+          <input 
+            name="state"
+            value={formData.state}
+            onChange={handleChange}
+            placeholder="Enter State/Province" 
+            className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" 
+          />
+        </div>
+        <div>
+          <label className="block mb-1 popbold text-[14px] text-gray-700">Postal Code *</label>
+          <input 
+            name="postalCode"
+            value={formData.postalCode}
+            onChange={handleChange}
+            placeholder="Enter Postal Code" 
+            className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" 
+          />
+        </div>
+      </div>
+      <div className="grid md:grid-cols-2 mt-3 gap-4">
+        <div>
+          <label className="block mb-1 popbold text-[14px] text-gray-700">Date*</label>
+          <DatePicker
+            className="w-full h-[44px] border border-[#D1D5DB] rounded-md px-4 py-2 text-gray-700"
+            placeholder="Enter Date"
+            style={{ width: '100%' }}
+            popupClassName="custom-datepicker-popup"
+            onChange={handleDate}
+          />
+        </div>
+        <div>
+          <label className="block mb-1 popbold text-[14px] text-gray-700">Business Type *</label>
+          <input 
+            name="businessType"
+            value={formData.businessType}
+            onChange={handleChange}
+            placeholder="Enter Business Type" 
+            className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" 
+          />
+        </div>
+        <div>
+          <label className="block mb-1 popbold text-[14px] text-gray-700">Tax payer Number*</label>
+          <input 
+            name="taxpayerNumber"
+            value={formData.taxpayerNumber}
+            onChange={handleChange}
+            placeholder="Enter Taxpayer Number" 
+            className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" 
+          />
+        </div>
+        <div>
+          <label className="block mb-1 popbold text-[14px] text-gray-700">Trade register number*</label>
+          <input 
+            name="tradeRegisterNumber"
+            value={formData.tradeRegisterNumber}
+            onChange={handleChange}
+            placeholder="Enter register number" 
+            className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]" 
+          />
+        </div>
+      </div>
+    </>
+  );
+};
+
+const VerifyInfoStep = ({ formData, setFormData }) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = (name, files) => {
+    setFormData(prev => ({ ...prev, [name]: files }));
+  };
+
+  return (
+    <>
+      <div className='flex items-center gap-3'>
+        <p className='bg-[#CBA135] h-10 w-10 rounded-full flex justify-center items-center text-white'>
+          <FaCar />
+        </p>
+        <div>
+          <h3 className='popbold text-[24px]'>Verify Information</h3>
+          <h4 className='text-sm popreg'>Your shipping and fulfillment capabilities</h4>
+        </div>
+      </div>
+
+      <FileUploader 
+        title="Front of National ID"
+        name="frontId"
+        onChange={handleFileChange}
+        multiple
+      />
+
+      <FileUploader 
+        title="Back of national ID"
+        name="backId"
+        onChange={handleFileChange}
+        multiple
+      />
+
+      <FileUploader 
+        title="Business owner"
+        name="businessOwner"
+        onChange={handleFileChange}
+        multiple
+      />
+
+      <div className="flex flex-col sm:flex-row mt-6 gap-4">
+        <div className="flex-1 mt-2">
+          <label className="block mb-1 popbold text-[14px] text-gray-700">
+            Home localization plan *
+          </label>
+          <input
+            name="homeLocalizationPlan"
+            value={formData.homeLocalizationPlan}
+            onChange={handleChange}
+            placeholder="Enter Home localization plan"
+            className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]"
+          />
+        </div>
+
+        <div className="flex-1 mt-2">
+          <label className="block mb-1 popbold text-[14px] text-gray-700">
+            Business Localization plan *
+          </label>
+          <input
+            name="businessLocalizationPlan"
+            value={formData.businessLocalizationPlan}
+            onChange={handleChange}
+            placeholder="Enter Business Localization plan "
+            className="w-full border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col sm:flex-row mt-6 gap-4">
+        <div className="flex-1">
+          <label className="block mb-1 popbold text-[14px] text-gray-700">
+            Taxpayer Number *
+          </label>
+          <div className="flex gap-2">
+            <label
+              htmlFor="file-tax"
+              className="bg-[#676767] text-white px-4 py-2 rounded-md cursor-pointer flex items-center justify-center whitespace-nowrap"
+            >
+              Choose File
+            </label>
+            <input
+              type="file"
+              id="file-tax"
+              className="hidden"
+              onChange={(e) => handleFileChange('taxFile', e.target.files[0])}
+            />
+            <input
+              placeholder={formData.taxFile ? formData.taxFile.name : "No file chosen"}
+              readOnly
+              className="flex-1 border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]"
+            />
+          </div>
+        </div>
+
+        <div className="flex-1">
+          <label className="block mb-1 popbold text-[14px] text-gray-700">
+            Trade Register Number *
+          </label>
+          <div className="flex gap-2">
+            <label
+              htmlFor="file-trade"
+              className="bg-[#676767] text-white px-4 py-2 rounded-md cursor-pointer flex items-center justify-center whitespace-nowrap"
+            >
+              Choose File
+            </label>
+            <input
+              type="file"
+              id="file-trade"
+              className="hidden"
+              onChange={(e) => handleFileChange('tradeFile', e.target.files[0])}
+            />
+            <input
+              placeholder={formData.tradeFile ? formData.tradeFile.name : "No file chosen"}
+              readOnly
+              className="flex-1 border border-[#D1D5DB] rounded-md px-4 py-2 placeholder:pl-1 focus:outline-none focus:ring-0 focus:border-[#D1D5DB]"
+            />
+          </div>
+        </div>
+      </div>
+
+    </>
   );
 };
 

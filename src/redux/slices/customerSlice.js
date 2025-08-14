@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   value: 0,
   route: [],
+  customerid:null,
   location: null,
   cart: [],
   wishlist: []
@@ -35,6 +36,9 @@ export const customerSlice = createSlice({
       console.log(action)
       state.location = action.payload
     },
+    addCustomerId: (state,action) => {
+      state.customerid = action.payload
+    },
 
 addToCart: (state, action) => {
   const itemExists = state.cart.find(item => item.id === action.payload.id);
@@ -55,6 +59,6 @@ addToWishList: (state, action) => {
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount,selectedLocation,addToCart,addToWishList } = customerSlice.actions
+export const { increment, decrement,addCustomerId, incrementByAmount,selectedLocation,addToCart,addToWishList } = customerSlice.actions
 
 export default customerSlice.reducer

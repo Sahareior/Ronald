@@ -4,6 +4,9 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 
 import { customerSlice } from './slices/customerSlice';
 import { apiSlice } from './slices/apiSlice';
+import { dashboardApis } from './slices/Apis/DashboardApis';
+import { vendorsApi } from './slices/Apis/vendorsApi';
+import { customersApi } from './slices/Apis/customersApi';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +14,9 @@ export const store = configureStore({
 
     // Add the generated reducer as a specific top-level slice
     [apiSlice.reducerPath]: apiSlice.reducer,
+    [dashboardApis.reducerPath]: dashboardApis.reducer,
+    [vendorsApi.reducerPath]: vendorsApi.reducer,
+    [customersApi.reducerPath]: customersApi.reducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
