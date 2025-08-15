@@ -33,6 +33,24 @@ const VendorOverViewModal = ({ isModalOpen, setIsModalOpen,location }) => {
     setIsModalOpen(false);
   };
 
+  const handleSubmit = () => {
+  const payload = {
+    amount: amount,
+    payment_method: method,
+    note: note
+  };
+
+  console.log("Payload for DB:", payload);
+  
+  // You can then send it to your API if needed:
+  // fetch('/your-api-endpoint', {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify(payload)
+  // });
+};
+
+
   return (
     <>
       <Modal
@@ -116,7 +134,7 @@ const VendorOverViewModal = ({ isModalOpen, setIsModalOpen,location }) => {
         <button className="w-full py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100">
           Cancel
         </button>
-        <button className="w-full py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">
+        <button onClick={handleSubmit} className="w-full py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">
           Submit Request
         </button>
       </div>

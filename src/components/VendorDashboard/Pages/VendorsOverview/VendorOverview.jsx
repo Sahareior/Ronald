@@ -15,10 +15,14 @@ import { IoIosTime } from "react-icons/io";
 import VendorOverViewModal from "../../../AdminDashboard/pages/Overview/_subComponents/VendorOverView";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useVendorDashboardQuery } from "../../../../redux/slices/Apis/vendorsApi";
 
 
 const VendorOverview = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const {data} = useVendorDashboardQuery()
+
+  console.log('datataa', data)
 const cards = [
   {
     title: "Total Products",

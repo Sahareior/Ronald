@@ -62,6 +62,7 @@ const VAddnewProducts = () => {
 
   const [showColorDropdown, setShowColorDropdown] = useState(false);
   const [showSizeDropdown, setShowSizeDropdown] = useState(false);
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const [vendorProductCreate] = useVendorProductCreateMutation()
   const fileInputRef = useRef(null);
 
@@ -129,24 +130,39 @@ const VAddnewProducts = () => {
     });
   };
 
+  const toggleCategory = (category) => {
+  setFormData(prev => {
+    const newCategories = prev.category.includes(category)
+      ? prev.category.filter(c => c !== category)
+      : [...prev.category, category];
+    return { ...prev, category: newCategories };
+  });
+};
+
 const handleSubmit = async () => {
   let optionCount = 1;
+
+  const deliveryOptions = Object.entries(formData.deliveryOptions)
+    .filter(([_, value]) => value.checked)
+    .reduce((acc, [_, value]) => {
+      acc[`option${optionCount}`] = value.price;
+      optionCount++;
+      return acc;
+    }, {});
 
   const submissionData = {
     ...formData,
     images: formData.images.map(img => img.file),
-    deliveryOptions: Object.entries(formData.deliveryOptions)
-      .filter(([_, value]) => value.checked)
-      .reduce((acc, [_, value]) => {
-        acc[`option${optionCount}`] = value.price;
-        optionCount++;
-        return acc;
-      }, {})
+    ...deliveryOptions // <-- destructured into top level
   };
-const res =  await vendorProductCreate(submissionData)
+
+  // Send directly to API
+  const res = await vendorProductCreate(submissionData);
+
   console.log('Submitted Product Data:', res);
   message.success('Product submitted successfully!');
 };
+
 
 
   return (
@@ -176,28 +192,28 @@ const res =  await vendorProductCreate(submissionData)
               className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none"
             />
           </div>
-            <div className="relative">
-              <label className="block mb-1 popbold text-[14px] text-gray-700">Category</label>
-              <div 
-                className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none cursor-pointer"
-                onClick={() => setShowSizeDropdown(!showSizeDropdown)}
-              >
-                {formData.sizes.length > 0 ? formData.sizes.join(', ') : 'Select Category'}
-              </div>
-              {showSizeDropdown && (
-                <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
-                  {FURNITURE_CATEGORIES.map(size => (
-                    <div 
-                      key={size}
-                      className={`px-4 py-2 hover:bg-gray-100 cursor-pointer ${formData.sizes.includes(size) ? 'bg-blue-50' : ''}`}
-                      onClick={() => toggleSize(size)}
-                    >
-                      {size}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+<div className="relative">
+  <label className="block mb-1 popbold text-[14px] text-gray-700">Category</label>
+  <div 
+    className="w-full border border-[#D1D5DB] bg-[#EAE7E1] rounded-md px-4 py-2 focus:outline-none cursor-pointer"
+    onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
+  >
+    {formData.category.length > 0 ? formData.category.join(', ') : 'Select Category'}
+  </div>
+  {showCategoryDropdown && (
+    <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
+      {FURNITURE_CATEGORIES.map(category => (
+        <div 
+          key={category}
+          className={`px-4 py-2 hover:bg-gray-100 cursor-pointer ${formData.category.includes(category) ? 'bg-blue-50' : ''}`}
+          onClick={() => toggleCategory(category)}
+        >
+          {category}
+        </div>
+      ))}
+    </div>
+  )}
+</div>
         </div>
 
         {/* Descriptions */}
@@ -403,12 +419,14 @@ const res =  await vendorProductCreate(submissionData)
               <label key={key} className="flex items-center gap-2 text-gray-700 mb-2">
                 <input 
                   type="checkbox" 
+
                   checked={value.checked}
                   onChange={(e) => handleDeliveryOptionChange(key, 'checked', e.target.checked)}
                 />
                 {key.split(/(?=[A-Z])/).join(' ')}
                 <input 
                   value={value.price}
+                  type='number'
                   onChange={(e) => handleDeliveryOptionChange(key, 'price', e.target.value)}
                   className='border border-[#D1D5DB] bg-[#EAE7E1] rounded-md w-12 focus:outline-none' 
                 />
@@ -420,6 +438,7 @@ const res =  await vendorProductCreate(submissionData)
               </label>
               <input
                 name="deliveryTime"
+                type='number'
                 value={formData.deliveryTime}
                 onChange={handleInputChange}
                 placeholder="e.g., 3-5"

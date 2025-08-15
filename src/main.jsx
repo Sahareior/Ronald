@@ -208,6 +208,10 @@ const router = createBrowserRouter([
       element: <PromotionsList />
     },
     {
+  path: 'd',
+  element: <ApproveSellers />
+},
+    {
       path: 'create-promotion',
       element: <CreatePromotion />
     },
@@ -221,10 +225,7 @@ const router = createBrowserRouter([
     }
   ]
 },
-{
-  path: 'd',
-  element: <ApproveSellers />
-}
+
 
 ]);
 
