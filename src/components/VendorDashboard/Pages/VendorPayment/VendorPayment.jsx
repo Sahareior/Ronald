@@ -9,38 +9,43 @@ import PaymentGraph from "./PaymentGraph";
 import { IoIosTime } from "react-icons/io";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
 import VendorTable from "./VendorTable";
+import { useGetVendorPaymentStatQuery } from "../../../../redux/slices/Apis/vendorsApi";
 
 
 const VendorPayment = () => {
+const {data:paymentState} = useGetVendorPaymentStatQuery()
+
+console.log(paymentState)
+
 const cards = [
   {
     title: "Total Sales",
-    value: "$1127,500",
-    change: "+12.5%",
+    value: `$ ${paymentState?.total_sales?.amount}`,
+    change: `+ ${paymentState?.total_sales?.change}%`,
     color: "#16A34A",
     icon: <FaBox className="text-[#CBA135]" size={26} />,
     footerText: "+12.5% from last month",
   },
   {
     title: "Paid Out",
-    value: "3,420",
-    change: "+8.2%",
+    value: paymentState?.paid_out?.count,
+    change: `+ ${paymentState?.paid_out?.week_change}%`,
     color: "#16A34A",
     icon: <IoCheckmarkDoneCircleSharp className="text-[#2563EB]" size={26} />,
     footerText: "+8.2% this week",
   },
   {
     title: "Pending Payout",
-    value: "1,120",
-    change: "+5.7%",
+    value: paymentState?.pending_payout?.count,
+    change: `+${paymentState?.pending_payout?.change}%`,
     color: "#EA580C",
     icon: <IoIosTime className="text-[#EA580C]" size={26} />,
     footerText: "Needs attention",
   },
   {
     title: "Total Orders",
-    value: "23%",
-    change: "-3.2%",
+    value: `${paymentState?.total_orders?.count}`,
+    change: `-${paymentState?.total_orders?.change}%`,
     color: "#3B82F6",
     icon: <FaCartShopping className="text-[#3B82F6]" size={26} />,
     footerText: "Ready for payout",

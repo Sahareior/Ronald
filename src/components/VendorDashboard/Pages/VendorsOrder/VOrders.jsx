@@ -6,6 +6,7 @@ import { FaDownload } from 'react-icons/fa';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import VOrdersTable from './VOrdersTable';
 import { FiSearch } from 'react-icons/fi';
+import { useGetVendorOrdersQuery } from '../../../../redux/slices/Apis/vendorsApi';
 // import { Input } from 'antd';
 const { TextArea } = Input;
 
@@ -15,6 +16,10 @@ const { RangePicker } = DatePicker;
 
 
 const VOrders = () => {
+const {data} = useGetVendorOrdersQuery()
+
+console.log(data)
+
   return (
     <div className="px-6 py-4">
 

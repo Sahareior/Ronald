@@ -7,7 +7,7 @@ const token = localStorage.getItem("access_token");
 export const apiSlice = createApi({
   reducerPath: "apiSlice",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://c05a898a1689.ngrok-free.app/api/",
+    baseUrl: "http://10.10.13.16:15000/api/",
     prepareHeaders: (headers) => {
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);

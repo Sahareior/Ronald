@@ -1,25 +1,14 @@
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-
-const data = [
-  { name: 'Jan', uv: 10 },
-  { name: 'Feb', uv: 3000 },
-  { name: 'March', uv: 2000 },
-  { name: 'April' },
-  { name: 'May', uv: 1890 },
-  { name: 'June', uv: 2390 },
-  { name: 'July', uv: 3490 },
-  { name: 'Aug', uv: 11490 },
-];
-
+import { useVendorOverviewQuery } from '../../../../redux/slices/Apis/vendorsApi';
 
 const PaymentGraph = () => {
-    return (
-           <div className='bg-white' style={{ width: '100%' }}>
-             <ResponsiveContainer width="100%" height={300}>
+  const { data: graph } = useVendorOverviewQuery();
+
+  return (
+    <div className="bg-white" style={{ width: '100%' }}>
+      <ResponsiveContainer width="100%" height={300}>
         <LineChart
-          width={500}
-          height={200}
-          data={data}
+          data={graph?.sales_overview}
           margin={{
             top: 10,
             right: 30,
@@ -27,16 +16,21 @@ const PaymentGraph = () => {
             bottom: 0,
           }}
         >
-        <CartesianGrid stroke="#E5E5E5" />
-
-          <XAxis dataKey="name" />
+          <CartesianGrid stroke="#E5E5E5" />
+          <XAxis dataKey="date" />
           <YAxis />
-          <Tooltip />
-          <Line connectNulls type="monotone" dataKey="uv" stroke="#CBA135" fill="#CBA135" />
+          <Tooltip formatter={(val) => `$${val}`} />
+          <Line
+            connectNulls
+            type="monotone"
+            dataKey="value"
+            stroke="#CBA135"
+            fill="#CBA135"
+          />
         </LineChart>
       </ResponsiveContainer>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default PaymentGraph;

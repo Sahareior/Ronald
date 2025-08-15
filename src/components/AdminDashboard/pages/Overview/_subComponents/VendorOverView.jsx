@@ -25,13 +25,21 @@ const notifications = [
   },
 ];
 
-const VendorOverViewModal = ({ isModalOpen, setIsModalOpen,location }) => {
+const VendorOverViewModal = ({ isModalOpen, setIsModalOpen,location,payouts }) => {
       const [amount, setAmount] = useState('');
   const [method, setMethod] = useState('');
   const [note, setNote] = useState('');
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  console.log("Payload for DB:", payouts);
+
+  // Calculate total payout (convert string to float first)
+const totalPayout = payouts?.results?.reduce(
+  (sum, payout) => sum + parseFloat(payout.amount || 0),
+  0
+);
+
 
   const handleSubmit = () => {
   const payload = {
@@ -40,7 +48,6 @@ const VendorOverViewModal = ({ isModalOpen, setIsModalOpen,location }) => {
     note: note
   };
 
-  console.log("Payload for DB:", payload);
   
   // You can then send it to your API if needed:
   // fetch('/your-api-endpoint', {
@@ -85,7 +92,9 @@ const VendorOverViewModal = ({ isModalOpen, setIsModalOpen,location }) => {
       <div className="bg-white border border-[#EFE8D9] flex justify-between rounded-lg p-4 mb-4">
   <div>
           <p className="text-sm popreg text-gray-500">Available to Withdraw</p>
-        <p className="text-2xl popbold font-bold text-[#C29D2A]">$12,500</p>
+         <p className="text-2xl popbold font-bold text-[#C29D2A]">
+      ${totalPayout?.toLocaleString()}
+    </p>
   </div>
         <FaWallet className='text-[#C29D2A]' />
       </div>

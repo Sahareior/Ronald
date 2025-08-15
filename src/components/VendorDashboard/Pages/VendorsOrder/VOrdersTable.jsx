@@ -1,33 +1,74 @@
 import React, { useState } from 'react';
 import { Table, Select, message } from 'antd';
-import { FaEdit } from 'react-icons/fa';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 import { RiArrowDropDownLine } from 'react-icons/ri';
-
 import Swal from 'sweetalert2';
 import VOrderModal from './VOrderModal/VOrderModal';
+import { useGetVendorOrdersQuery } from '../../../../redux/slices/Apis/vendorsApi';
 
 const { Option } = Select;
 
 const VOrdersTable = () => {
   const [pageSize, setPageSize] = useState(10);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [target,setTarget] = useState("")
-  
-  const [dataSource, setDataSource] = useState(
-    Array.from({ length: 247 }, (_, i) => ({
-      key: i + 1,
-      orderId: `Wrioko24${i + 1}`,
-      customer: ['Fatiha Jahan', 'John Doe', 'Jane Smith'][i % 3],
-      seller : 'Home decor',
-      date: 'July 15, 2025',
-      total: 3290 + (i % 10) * 100,
-      payment: ['Mobile banking', 'Cash', 'Card'][i % 3],
-      status: ['Paid', 'Processing', 'Pending'][i % 3],
-    }))
-  );
+  const [target, setTarget] = useState("");
+  const { data, isLoading, error } = useGetVendorOrdersQuery();
+
+  // Transform API data to match table structure
+  const dataSource = data?.results?.map(order => ({
+    key: order.id,
+    orderId: order.order_id,
+    customer: order.customer_name,
+    seller: order.vendor_name,
+    date: new Date(order.order_date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    }),
+    total: parseFloat(order.total || 0),
+    payment: order.payment_method_display || 'N/A',
+    status: order.order_status_display,
+    originalData: order // Keep original data for reference
+  })) || [];
+
+  const handleDelete = (keys) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // In a real app, you would call a delete API here
+        // For now, we'll just show a success message
+        setSelectedRowKeys([]);
+        message.success(`${keys.length} order(s) deleted.`);
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your order has been deleted.",
+          icon: "success"
+        });
+      }
+    });
+  };
+
+  const handleBulkAction = (action) => {
+    if (selectedRowKeys.length === 0) {
+      message.warning('Please select at least one row.');
+      return;
+    }
+
+    if (action === 'delete') {
+      handleDelete(selectedRowKeys);
+    } else if (action === 'edit') {
+      message.info('Bulk edit not implemented.');
+    }
+  };
 
   const columns = [
     {
@@ -44,7 +85,7 @@ const VOrdersTable = () => {
       title: 'Customer',
       dataIndex: 'customer',
       key: 'customer',
-       render: text => (
+      render: text => (
         <div>
           <a className="popmed text-[16px]">{text}</a>
         </div>
@@ -53,14 +94,13 @@ const VOrdersTable = () => {
     {
       title: 'Seller',
       dataIndex: 'seller',
-      key: 'customer',
+      key: 'seller',
       render: text => (
         <div>
           <a className="popmed text-[16px]">{text}</a>
         </div>
       ),
     },
-  
     {
       title: 'Date',
       dataIndex: 'date',
@@ -77,7 +117,7 @@ const VOrdersTable = () => {
       key: 'total',
       render: text => (
         <div>
-          <a className="popmed text-[16px]">{text}</a>
+          <a className="popmed text-[16px]">৳{text.toFixed(2)}</a>
         </div>
       ),
     },
@@ -98,7 +138,7 @@ const VOrdersTable = () => {
       render: status => (
         <span
           className={`px-2 py-1 popmed rounded text-[16px] font-medium ${
-            status === 'Paid'
+            status === 'Paid' || status === 'Delivered'
               ? 'bg-green-100 text-green-600'
               : 'bg-yellow-100 text-yellow-600'
           }`}
@@ -112,59 +152,29 @@ const VOrdersTable = () => {
       key: 'action',
       render: (_, record) => (
         <div className="flex items-center gap-3">
-        
-          <IoEyeOutline onClick={()=> setIsModalOpen(true)} className="text-gray-400 cursor-pointer" size={20} />
-            <MdDelete
-                     className="text-red-400 cursor-pointer"
-                     size={20}
-                     onClick={() => handleDelete([record.key])}
-                   />
+          <IoEyeOutline 
+            onClick={() => {
+              setTarget(record.originalData);
+              setIsModalOpen(true);
+            }} 
+            className="text-gray-400 cursor-pointer" 
+            size={20} 
+          />
+          <MdDelete
+            className="text-red-400 cursor-pointer"
+            size={20}
+            onClick={() => handleDelete([record.key])}
+          />
         </div>
       ),
     },
   ];
 
-  const handleBulkAction = (action) => {
-    if (selectedRowKeys.length === 0) {
-      message.warning('Please select at least one row.');
-      return;
-    }
-
-    if (action === 'delete') {
-      handleDelete(selectedRowKeys);
-    } else if (action === 'edit') {
-      message.info('Bulk edit not implemented.');
-    }
-  };
-
-const handleDelete = (keys) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!"
-  }).then((result) => {
-    if (result.isConfirmed) {
-      const newData = dataSource.filter(item => !keys.includes(item.key));
-      setDataSource(newData);
-      setSelectedRowKeys([]);
-      message.success(`${keys.length} order(s) deleted.`);
-
-      Swal.fire({
-        title: "Deleted!",
-        text: "Your file has been deleted.",
-        icon: "success"
-      });
-    }
-  });
-};
-
+  if (isLoading) return <p>Loading orders...</p>;
+  if (error) return <p>Error loading orders</p>;
 
   return (
-    <div className="bg-white p-4 rounded relative ">
+    <div className="bg-white p-4 rounded relative">
       {/* Bulk Action Dropdown */}
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-2">
@@ -179,7 +189,6 @@ const handleDelete = (keys) => {
             <Option value="none">None</Option>
             <Option value="Paid">Paid</Option>
             <Option value="Unpaid">Unpaid</Option>
-            {/* <Option value="edit">Edit Selected</Option> */}
           </Select>
           <span className="text-sm text-gray-500">
             {selectedRowKeys.length} selected
@@ -198,7 +207,7 @@ const handleDelete = (keys) => {
         className="relative"
         pagination={{
           pageSize,
-          total: dataSource.length,
+          total: data?.count || 0,
           showTotal: (total, range) =>
             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
           showSizeChanger: false,
@@ -207,7 +216,7 @@ const handleDelete = (keys) => {
         }}
         footer={() => (
           <div className="flex justify-between items-center px-2">
-            <div className="flex items-center  gap-2 text-sm">
+            <div className="flex items-center gap-2 text-sm">
               <span>Show</span>
               <Select
                 value={pageSize}
@@ -227,7 +236,11 @@ const handleDelete = (keys) => {
           </div>
         )}
       />
-      <VOrderModal isModalOpen={isModalOpen} target={target} setIsModalOpen={setIsModalOpen} />
+      <VOrderModal 
+        isModalOpen={isModalOpen} 
+        target={target} 
+        setIsModalOpen={setIsModalOpen} 
+      />
     </div>
   );
 };

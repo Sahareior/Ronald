@@ -6,6 +6,7 @@ import { MdDelete } from 'react-icons/md';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import ProductsModal from './ProductsModal/ProductsModal';
 import Swal from 'sweetalert2';
+import { FaEdit } from 'react-icons/fa';
 
 const { Option } = Select;
 
@@ -150,6 +151,7 @@ const ProductsTable = () => {
       render: (_, record) => (
         <div className="flex items-center gap-6">
           <IoEyeOutline onClick={() => setIsModalOpen(true)} className="text-gray-400 cursor-pointer" size={20} />
+            <FaEdit className="text-gray-400 cursor-pointer" size={20}/>
           <MdDelete
             className="text-red-400 cursor-pointer"
             size={20}

@@ -15,47 +15,51 @@ import { IoIosTime } from "react-icons/io";
 import VendorOverViewModal from "../../../AdminDashboard/pages/Overview/_subComponents/VendorOverView";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useVendorDashboardQuery } from "../../../../redux/slices/Apis/vendorsApi";
+import { useGetTopSellsQuery, useGetVendorPayoutQuery, useVendorDashboardQuery, useVendorOverviewQuery } from "../../../../redux/slices/Apis/vendorsApi";
 
 
 const VendorOverview = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const {data} = useVendorDashboardQuery()
+  const {data,refetch} = useVendorDashboardQuery()
+  const {data:payouts} = useGetVendorPayoutQuery()
+  const {data:topProduct} = useGetTopSellsQuery()
 
-  console.log('datataa', data)
+
+  console.log('datataa', payouts)
 const cards = [
   {
     title: "Total Products",
-    value: "$1127,500",
-    change: "+12.5%",
+    value: data?.total_products?.count,
+    change: `+ ${data?.total_products?.change}`,
     color: "#16A34A",
     icon: <FaBox className="text-[#CBA135]" size={26} />,
     footerText: "+12.5% from last month",
   },
   {
     title: "Sales This Month",
-    value: "3,420",
-    change: "+8.2%",
+    value: data?.sales_this_month?.count,
+    change: data?.sales_this_month?.week_change,
     color: "#16A34A",
     icon: <FaCartShopping className="text-[#2563EB]" size={26} />,
     footerText: "+8.2% this week",
   },
   {
     title: "Pending Orders",
-    value: "1,120",
-    change: "+5.7%",
+    value: data?.pending_orders?.count,
+    change: data?.pending_orders?.change,
     color: "#EA580C",
     icon: <IoIosTime className="text-[#EA580C]" size={26} />,
     footerText: "Needs attention",
   },
-  {
-    title: "Earnings This Month",
-    value: "23%",
-    change: "-3.2%",
-    color: "#3B82F6",
-    icon: <FaWallet className="text-[#3B82F6]" size={26} />,
-    footerText: "Ready for payout",
-  },
+{
+  title: "Earnings This Month",
+  value: data?.earnings_this_month?.amount, // no extra curly braces
+  change: `${data?.earnings_this_month?.change}%`, // proper template literal
+  color: "#3B82F6",
+  icon: <FaWallet className="text-[#3B82F6]" size={26} />,
+  footerText: "Ready for payout",
+}
+
 
 ];
 
@@ -105,7 +109,7 @@ const cards = [
   <div className="flex flex-col lg:flex-row gap-6">
     {/* === Left Column === */}
     <div className="flex-1 flex flex-col space-y-6">
-      <SalesOverview />
+      <SalesOverview  />
 
       <div className="bg-white rounded-md p-5">
         <p className="text-[20px] popbold pb-5">Recent Notifications</p>
@@ -134,33 +138,49 @@ const cards = [
     {/* === Right Sidebar === */}
     <div className="w-full lg:w-5/12 flex flex-col  space-y-6">
       {/* Best Selling Products */}
-      <div className="bg-white p-5 rounded-xl shadow-md">
-        <p className="popbold text-[20px] mb-4">Best Selling Products</p>
-        <div className="flex h-[60vh] overflow-y-scroll flex-col gap-4">
-          {[1, 2, 3, 4].map((items) => (
-            <div
-              key={items}
-              className="flex items-center justify-between gap-4 bg-[#F9FAFB] rounded-md border border-[#E5E7EB] p-3"
-            >
-              <div className="flex gap-3 items-center">
-                <img
-                  className="w-[65px] h-[65px] rounded object-cover"
-                  src="https://assets.wfcdn.com/im/70824598/resize-h1200-w1200%5Ecompr-r85/3029/302904186/Wynny+27%22W+Round+Lift-Top+Wood+Coffee+Table+with+Storage-1840764940.jpg"
-                  alt="product"
-                />
-                <div>
-                  <h3 className="text-[16px] popmed text-[#2B2B2B]">Modern Dining Chair</h3>
-                  <p className="popreg text-sm">124 sold this month</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="text-[16px] popbold">$8,500</p>
-                <p className="text-[#16A34A] text-sm popreg">+15%</p>
-              </div>
-            </div>
-          ))}
+<div className="bg-white p-5 rounded-xl shadow-md">
+  <p className="popbold text-[20px] mb-4">Best Selling Products</p>
+  <div className="flex h-[60vh] overflow-y-scroll flex-col gap-4">
+    {topProduct?.results?.map((items) => (
+      <div
+        key={items.id}
+        className="flex items-center justify-between gap-4 bg-[#F9FAFB] rounded-md border border-[#E5E7EB] p-3"
+      >
+        {/* Left side: Image + Product info */}
+        <div className="flex gap-3 items-center">
+          <img
+            className="w-[65px] h-[65px] rounded object-cover"
+            src={
+              items.images?.length > 0
+                ? items.images[0] // Use first image from API
+                : "https://via.placeholder.com/65" // Fallback image
+            }
+            alt={items.name}
+          />
+          <div>
+            <h3 className="text-[16px] popmed text-[#2B2B2B]">
+              {items.name}
+            </h3>
+            <p className="popreg text-sm">
+              {items.total_quantity_sold} sold this month
+            </p>
+          </div>
+        </div>
+
+        {/* Right side: Price + Change */}
+        <div className="text-right">
+          <p className="text-[16px] popbold">
+            ${parseFloat(items.active_price).toLocaleString()}
+          </p>
+          <p className="text-[#16A34A] text-sm popreg">
+            +15% {/* Replace with real change if available */}
+          </p>
         </div>
       </div>
+    ))}
+  </div>
+</div>
+
 
       {/* Getting Started Section */}
       <div className="bg-white p-6 rounded-xl shadow-md">
@@ -187,7 +207,7 @@ const cards = [
       </div>
     </div>
   </div>
-  <VendorOverViewModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+  <VendorOverViewModal payouts={payouts} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
 </div>
 
   );

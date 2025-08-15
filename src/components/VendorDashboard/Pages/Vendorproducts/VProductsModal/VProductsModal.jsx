@@ -11,9 +11,7 @@ const VProductsModal = ({ isModalOpen, setIsModalOpen }) => {
 
   return (
     <>
-      <Button type="primary" onClick={() => setIsModalOpen(true)}>
-        Open Modal
-      </Button>
+
 
       {/* Customer Details Modal */}
       <Modal
@@ -29,10 +27,7 @@ const VProductsModal = ({ isModalOpen, setIsModalOpen }) => {
             <h2 className="text-2xl popbold text-gray-900">Products Details</h2>
           </div>
 
-          <div className='flex py-4 justify-end items-center gap-2'>
-            <Button className='bg-[#CBA135] text-white'>Approve</Button>
-            <Button className='bg-[#F87171] text-white'>Reject</Button>
-          </div>
+
 
           {/* Content */}
           <div className="p-6 bg-white shadow-sm rounded mt-4">

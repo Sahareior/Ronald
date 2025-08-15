@@ -59,6 +59,7 @@ import TermsAndConditions from './components/homepage/customersHomepage/TermsAnd
 import PrivacyPolicy from './components/homepage/customersHomepage/PrivacyPolicy.jsx';
 import VAddnewProducts from './components/VendorDashboard/Pages/Vendorproducts/VAddnewProducts.jsx';
 import ApproveSellers from './components/AdminDashboard/pages/Overview/_subComponents/ApproveSellers.jsx';
+import VEditProducts from './components/VendorDashboard/Pages/Vendorproducts/VEditProducts.jsx';
 
 const router = createBrowserRouter([
   {
@@ -198,6 +199,10 @@ const router = createBrowserRouter([
     {
       path: 'addproducts',
       element: <VAddnewProducts />
+    },
+    {
+      path: 'editproducts',
+      element: <VEditProducts />
     },
     {
       path: 'vendor-products',
