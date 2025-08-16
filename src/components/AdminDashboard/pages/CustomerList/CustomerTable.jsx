@@ -1,100 +1,107 @@
 import React, { useState } from 'react';
-import { Table, Select, Checkbox, Button, message } from 'antd';
-import { FaEdit } from 'react-icons/fa';
+import { Table, Select, message } from 'antd';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 import { RiArrowDropDownLine } from 'react-icons/ri';
-import CustomModal from '../../../checkout/modal/CustomModal';
 import CustomerModal from './CustomerModal/CustomerModal';
 import Swal from 'sweetalert2';
+import { useDeleteCustomersMutation, useGetAllCustomersQuery } from '../../../../redux/slices/Apis/dashboardApis';
 
 const { Option } = Select;
 
 const CustomerTable = () => {
+  const { data: customerList } = useGetAllCustomersQuery();
   const [pageSize, setPageSize] = useState(10);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-     const [isModalOpen, setIsModalOpen] = useState(false);
-const [dataSource, setDataSource] = useState(
-  Array.from({ length: 247 }, (_, i) => ({
-    key: i + 1,
-    orderId: `Wrioko24${i + 1}`,
-    customer: ['Fatiha Jahan', 'John Doe', 'Jane Smith'][i % 3],
-    status: ['Paid', 'Processing', 'Pending'][i % 3],
-    signupDate: `July ${10 + (i % 20)}, 2025`,
-    lastActivity: ['Mobile banking', 'Cash', 'Card'][i % 3],
-  }))
-);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteCustomers] = useDeleteCustomersMutation()
 
+  // Transform API data for table
+  const dataSource =
+    customerList?.results?.map((c, index) => ({
+      key: index + 1,
+      id: c.user_id,
+      customer: c.customer_name,
+      status: c.payment_status, // N/A, completed, etc.
+      signupDate: c.signup_date,
+      lastActivity: c.last_activity || '—',
+      actions: c.actions,
+    })) || [];
 
-const columns = [
-  {
-    title: 'ID',
-    dataIndex: 'orderId',
-    key: 'orderId',
-    render: text => <a className=" popmed text-[16px]">{text}</a>,
-  },
-  {
-    title: 'Customer',
-    dataIndex: 'customer',
-    key: 'customer',
-     render: text => (
+  const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      render: text => <a className="popmed text-[16px]">{text}</a>,
+    },
+    {
+      title: 'Customer',
+      dataIndex: 'customer',
+      key: 'customer',
+      render: text => (
         <div>
           <a className="popmed text-[16px]">{text}</a>
         </div>
       ),
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
-     render: status => (
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      render: status => (
         <span
           className={`px-3 py-1 popmed rounded-xl text-[16px] font-medium ${
-            status === 'Paid'
+            status === 'completed'
               ? 'bg-green-100 text-green-600'
+              : status === 'N/A'
+              ? 'bg-gray-100 text-gray-600'
               : 'bg-yellow-100 text-yellow-600'
           }`}
         >
           {status}
         </span>
       ),
-  },
-  {
-    title: 'Signup Date',
-    dataIndex: 'signupDate',
-    key: 'signupDate',
-     render: text => (
+    },
+    {
+      title: 'Signup Date',
+      dataIndex: 'signupDate',
+      key: 'signupDate',
+      render: text => (
         <div>
           <a className="popmed text-[16px]">{text}</a>
         </div>
       ),
-  },
-  {
-    title: 'Last Activity',
-    dataIndex: 'lastActivity',
-    key: 'lastActivity',
-     render: text => (
+    },
+    {
+      title: 'Last Activity',
+      dataIndex: 'lastActivity',
+      key: 'lastActivity',
+      render: text => (
         <div>
           <a className="popmed text-[16px]">{text}</a>
         </div>
       ),
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <div className="flex items-center gap-3">
-        <IoEyeOutline onClick={() => setIsModalOpen(true)} className="text-gray-400 cursor-pointer" size={20} />
-        <MdDelete
-          className="text-red-400 cursor-pointer"
-          size={20}
-          onClick={() => handleDelete([record.key])}
-        />
-      </div>
-    ),
-  },
-];
-
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_, record) => (
+        <div className="flex items-center gap-3">
+          <IoEyeOutline
+            onClick={() => setIsModalOpen(true)}
+            className="text-gray-400 cursor-pointer"
+            size={20}
+          />
+          <MdDelete
+            className="text-red-400 cursor-pointer"
+            size={20}
+            onClick={() => handleDelete([record.key], record.actions?.delete_url)}
+          />
+        </div>
+      ),
+    },
+  ];
 
   const handleBulkAction = (action) => {
     if (selectedRowKeys.length === 0) {
@@ -109,28 +116,35 @@ const columns = [
     }
   };
 
+  // http://10.10.13.16:15000/api/admin/customers/4/delete  /admin/customers/2/delete
 
-const handleDelete = (keys) => {
+const handleDelete = (keys, apiUrl) => {
+  console.log(keys, apiUrl);
   Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
-    icon: "warning",
+    title: 'Are you sure?',
+    text: "This action can't be undone!",
+    icon: 'warning',
     showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!"
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!',
   }).then((result) => {
     if (result.isConfirmed) {
-      const newData = dataSource.filter(item => !keys.includes(item.key));
-      setDataSource(newData);
-      setSelectedRowKeys([]);
-      message.success(`${keys.length} order(s) deleted.`);
+      // Call DELETE API dynamically
+      fetch(apiUrl, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("Delete response:", data);
 
-      Swal.fire({
-        title: "Deleted!",
-        text: "Your file has been deleted.",
-        icon: "success"
-      });
+          message.success(`${keys.length} customer(s) deleted.`);
+          Swal.fire('Deleted!', 'Customer has been deleted.', 'success');
+        })
+        .catch((error) => {
+          console.error("Delete error:", error);
+          message.error("Failed to delete customer(s).");
+        });
     }
   });
 };
@@ -149,7 +163,6 @@ const handleDelete = (keys) => {
             suffixIcon={<RiArrowDropDownLine />}
           >
             <Option value="delete">Delete Selected</Option>
-
           </Select>
           <span className="text-sm text-gray-500">
             {selectedRowKeys.length} selected

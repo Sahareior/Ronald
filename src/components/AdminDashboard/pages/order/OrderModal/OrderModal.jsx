@@ -18,9 +18,7 @@ const OrderModal = ({ isModalOpen, setIsModalOpen,target }) => {
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
-        Open Modal
-      </Button>
+
       <Modal
         title={
      target === 'eye' && (

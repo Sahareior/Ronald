@@ -15,7 +15,7 @@ import { IoIosTime } from "react-icons/io";
 import VendorOverViewModal from "../../../AdminDashboard/pages/Overview/_subComponents/VendorOverView";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useGetTopSellsQuery, useGetVendorPayoutQuery, useVendorDashboardQuery, useVendorOverviewQuery } from "../../../../redux/slices/Apis/vendorsApi";
+import { useGetTopSellsQuery, useGetVendorPayoutQuery, useVendorDashboardQuery } from "../../../../redux/slices/Apis/vendorsApi";
 
 
 const VendorOverview = () => {

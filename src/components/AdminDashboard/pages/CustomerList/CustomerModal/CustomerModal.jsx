@@ -10,9 +10,6 @@ const CustomerModal = ({ isModalOpen, setIsModalOpen }) => {
 
   return (
     <>
-      <Button type="primary" onClick={() => setIsModalOpen(true)}>
-        Open Modal
-      </Button>
 
       {/* Customer Details Modal */}
       <Modal

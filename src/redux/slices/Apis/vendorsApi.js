@@ -78,12 +78,19 @@ export const vendorsApi = createApi({
 
     getVendorPaymentStat: build.query({
       query: ()=> 'vendor/payments-stats/'
+    }),
+
+    getTotalEarnings: build.query({
+      query:()=> 'payouts/total_earnings/'
     })
+// /payouts/total_earnings/
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetPokemonByNameQuery,useVendorProductCreateMutation, useGetVendorProductByIdQuery,useGetAllProductsQuery, useGetVendorPaymentStatQuery,useGetVendorPayoutQuery,
+export const { useGetPokemonByNameQuery,useVendorProductCreateMutation,
+   useGetVendorProductByIdQuery,useGetAllProductsQuery, useGetVendorPaymentStatQuery,
+   useGetVendorPayoutQuery, useGetTotalEarningsQuery,
   useVendorDashboardQuery,useVendorOverviewQuery,useGetTopSellsQuery, useGetVendorOrdersQuery, useCreatePromotionMutation,useGetPromotionQuery, useVendorSellsPerfomenceQuery
  } = vendorsApi;

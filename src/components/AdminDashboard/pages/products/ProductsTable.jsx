@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Select, message } from 'antd';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
-// import { RiArrowDropDownLine } from 'react-icons/ri';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import ProductsModal from './ProductsModal/ProductsModal';
 import Swal from 'sweetalert2';
@@ -10,23 +9,39 @@ import { FaEdit } from 'react-icons/fa';
 
 const { Option } = Select;
 
-const ProductsTable = () => {
+const ProductsTable = ({ products }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [pageSize, setPageSize] = useState(10);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [dataSource, setDataSource] = useState([]);
+  const [selected,setSelected] = useState({})
 
-  const [dataSource, setDataSource] = useState(
-    Array.from({ length: 100 }, (_, i) => ({
-      key: i + 1,
-      productName: ['Nike Air Max', 'Apple iPhone 14', 'Sony Headphones'][i % 3],
-      productId: `PROD-${1000 + i}`,
-      category: ['Shoes', 'Electronics', 'Accessories'][i % 3],
-      price: 49 + (i % 10) * 5,
-      stock: ['In Stock', 'Low Stock', 'Out of Stock'][i % 3],
-      status: ['Active', 'Pending', 'Draft'][i % 3],
+  // Map API products to table format
+useEffect(() => {
+  if (products?.results) {
+    const mappedData = products.results.map((p) => ({
+      key: p.id,
+      productId: p.prod_id,
+      productName: p.name,
+      category: p.categories?.length ? p.categories.join(', ') : '—',
+      is_approve: p.is_approve ? 'Approved' : 'Not Approved',
+      price: parseFloat(p.active_price || 0),
+      stock: p.is_stock
+        ? `In Stock (${p.stock_quantity})`
+        : 'Out of Stock',
+      status:
+        p.status === 'approved'
+          ? 'Active'
+          : p.status === 'active'
+          ? 'Active'
+          : p.status === 'draft'
+          ? 'Draft'
+          : 'Pending',
+    }));
+    setDataSource(mappedData);
+  }
+}, [products]);
 
-    }))
-  );
 
   const handleDelete = (keys) => {
     Swal.fire({
@@ -63,28 +78,46 @@ const ProductsTable = () => {
   };
 
   const columns = [
-
     {
       title: 'ID',
       dataIndex: 'productId',
       key: 'productId',
-       render: text => (
+      render: (text) => (
         <div>
           <a className="popmed text-[16px]">{text}</a>
         </div>
       ),
     },
-        {
+    {
       title: 'Product Name',
       dataIndex: 'productName',
       key: 'productName',
-      render: (text) => <span className="popmed flex items-center gap-3 text-[16px]"><img className='w-7 rounded-full h-7' src="https://plus.unsplash.com/premium_photo-1661964014750-963a28aeddea?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /> {text}</span>,
+      render: (text) => (
+        <span className="popmed flex items-center gap-3 text-[16px]">
+          <img
+            className="w-7 rounded-full h-7"
+            src="https://plus.unsplash.com/premium_photo-1661964014750-963a28aeddea?q=80&w=1170&auto=format&fit=crop"
+            alt=""
+          />{' '}
+          {text}
+        </span>
+      ),
     },
     {
       title: 'Category',
       dataIndex: 'category',
       key: 'category',
-       render: text => (
+      render: (text) => (
+        <div>
+          <a className="popmed text-[16px]">{text}</a>
+        </div>
+      ),
+    },
+    {
+      title: 'State',
+      dataIndex: 'is_approve',
+      key: 'is_approve',
+      render: (text) => (
         <div>
           <a className="popmed text-[16px]">{text}</a>
         </div>
@@ -100,58 +133,66 @@ const ProductsTable = () => {
       title: 'Stock',
       dataIndex: 'stock',
       key: 'stock',
-       render: text => (
+      render: (text) => (
         <div>
           <a className="popmed text-[16px]">{text}</a>
         </div>
       ),
     },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      render: (status, record) => {
+        const statusColor = {
+          Active: 'bg-green-100 text-green-600',
+          Pending: 'bg-yellow-100 text-yellow-600',
+          Draft: 'bg-red-100 text-red-600',
+        };
 
-
-{
-  title: 'Status',
-  dataIndex: 'status',
-  key: 'status',
-  render: (status, record) => {
-    const statusColor = {
-      Active: 'bg-green-100 text-green-600',
-      Pending: 'bg-yellow-100 text-yellow-600',
-      Draft: 'bg-red-100 text-red-600',
-    };
-
-    return (
-      <div className={`rounded px-2 py-1 text-xs font-medium w-[110px] ${statusColor[status]}`}>
-        <Select
-          value={status}
-          size="small"
-          onChange={(value) => {
-            const newData = dataSource.map(item =>
-              item.key === record.key ? { ...item, status: value } : item
-            );
-            setDataSource(newData);
-            message.success(`Status changed to ${value}`);
-          }}
-          bordered={false}
-          dropdownMatchSelectWidth={false}
-          className="w-full"
-          suffixIcon={<RiArrowDropDownLine className="text-[16px] popmed text-gray-600" />}
-        >
-          <Option value="Active">Active</Option>
-          <Option value="Pending">Pending</Option>
-          <Option value="Draft">Draft</Option>
-        </Select>
-      </div>
-    );
-  },
-},
-
+        return (
+          <div
+            className={`rounded px-2 py-1 text-xs font-medium w-[110px] ${statusColor[status]}`}
+          >
+            <Select
+              value={status}
+              size="small"
+              onChange={(value) => {
+                const newData = dataSource.map((item) =>
+                  item.key === record.key ? { ...item, status: value } : item
+                );
+                setDataSource(newData);
+                message.success(`Status changed to ${value}`);
+              }}
+              bordered={false}
+              dropdownMatchSelectWidth={false}
+              className="w-full"
+              suffixIcon={
+                <RiArrowDropDownLine className="text-[16px] popmed text-gray-600" />
+              }
+            >
+              <Option value="Active">Active</Option>
+              <Option value="Pending">Pending</Option>
+              <Option value="Draft">Draft</Option>
+            </Select>
+          </div>
+        );
+      },
+    },
     {
       title: 'Action',
       key: 'action',
       render: (_, record) => (
         <div className="flex items-center gap-6">
-          <IoEyeOutline onClick={() => setIsModalOpen(true)} className="text-gray-400 cursor-pointer" size={20} />
-            <FaEdit className="text-gray-400 cursor-pointer" size={20}/>
+          <IoEyeOutline
+            onClick={() => {
+              setIsModalOpen(true),
+              setSelected(record)
+            }}
+            className="text-gray-400 cursor-pointer"
+            size={20}
+          />
+          <FaEdit className="text-gray-400 cursor-pointer" size={20} />
           <MdDelete
             className="text-red-400 cursor-pointer"
             size={20}
@@ -176,7 +217,9 @@ const ProductsTable = () => {
           >
             <Option value="delete">Delete Selected</Option>
           </Select>
-          <span className="text-sm text-gray-500">{selectedRowKeys.length} selected</span>
+          <span className="text-sm text-gray-500">
+            {selectedRowKeys.length} selected
+          </span>
         </div>
       </div>
 
@@ -191,7 +234,8 @@ const ProductsTable = () => {
         pagination={{
           pageSize,
           total: dataSource.length,
-          showTotal: (total, range) => `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+          showTotal: (total, range) =>
+            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
           showSizeChanger: false,
           position: ['bottomRight'],
         }}
@@ -218,7 +262,11 @@ const ProductsTable = () => {
         )}
       />
 
-      <ProductsModal setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
+      <ProductsModal
+        setIsModalOpen={setIsModalOpen}
+        isModalOpen={isModalOpen}
+        productData={selected}
+      />
     </div>
   );
 };

@@ -1,55 +1,45 @@
-import React, { useState } from 'react';
-import { Table, Select, Checkbox, Button, message, Popover } from 'antd';
-import { FaEdit, FaStar } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { Table, Select, Button, message } from 'antd';
+import { FaStar } from 'react-icons/fa';
 import { IoEyeOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 
 import VendorModal from './VendorModal/VendorModal';
+import { useGetAllVendorsQuery } from '../../../../redux/slices/Apis/dashboardApis';
 
 const { Option } = Select;
 
 const VendorTable = () => {
   const [pageSize, setPageSize] = useState(10);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-     const [isModalOpen, setIsModalOpen] = useState(false);
-         const [open, setOpen] = useState(false);
-         const [openPopoverKey, setOpenPopoverKey] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { data: vendors } = useGetAllVendorsQuery();
 
-     
-   const [dataSource, setDataSource] = useState(
-    Array.from({ length: 247 }, (_, i) => ({
-      key: i + 1,
-      id: `Wrioko24${i + 1}`,
-      vendor: ['Fatiha Jahan', 'John Doe', 'Jane Smith'][i % 3],
-      status: ['Paid', 'Processing', 'Pending'][i % 3],
-      products: `${3 + (i % 5)} items`,
-      orders: 10 + (i % 20),
-      rating: (Math.floor(Math.random() * 5) + 1), // Random rating between 1-5
-    }))
-  );
+  // Transform API data for table
+  const dataSource = vendors?.results?.map((v, index) => ({
+    key: index + 1,
+    id: v.user_id,
+    vendor: v.vendor_name,
+    status: v.approval_status, // approved/pending/rejected
+    products: v.products_count,
+    orders: v.orders_count,
+    rating: v.ratings,
+    actions: v.actions,
+  })) || [];
 
-          const hide = () => {
-         setOpen(false);
-       };
-       
-       const handleOpenChange = newOpen => {
-         setOpen(newOpen);
-       };
-
-
-const columns = [
+  const columns = [
     {
       title: 'ID',
       dataIndex: 'id',
       key: 'id',
-      render: text => <a className=" text-[16px] popmed">{text}</a>,
+      render: text => <a className="text-[16px] popmed">{text}</a>,
     },
     {
       title: 'Vendor',
       dataIndex: 'vendor',
       key: 'vendor',
-       render: text => (
+      render: text => (
         <div>
           <a className="popmed text-[16px]">{text}</a>
         </div>
@@ -59,12 +49,14 @@ const columns = [
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-            render: status => (
+      render: status => (
         <span
           className={`px-3 py-1 popmed rounded-xl text-[16px] font-medium ${
-            status === 'Paid'
+            status === 'approved'
               ? 'bg-green-100 text-green-600'
-              : 'bg-yellow-100 text-yellow-600'
+              : status === 'pending'
+              ? 'bg-yellow-100 text-yellow-600'
+              : 'bg-red-100 text-red-600'
           }`}
         >
           {status}
@@ -75,35 +67,25 @@ const columns = [
       title: 'Products',
       dataIndex: 'products',
       key: 'products',
-       render: text => (
-        <div>
-          <a className="popmed text-[16px]">{text}</a>
-        </div>
-      ),
+      render: text => <span className="popmed text-[16px]">{text}</span>,
     },
     {
       title: 'Orders',
       dataIndex: 'orders',
       key: 'orders',
-       render: text => (
-        <div>
-          <a className="popmed text-[16px]">{text}</a>
-        </div>
-      ),
+      render: text => <span className="popmed text-[16px]">{text}</span>,
     },
     {
       title: 'Rating',
       dataIndex: 'rating',
       key: 'rating',
       render: rating => (
-        <div className="flex items-center"><span className='px-2 text-[16px] popmed'>4</span>
-          {Array.from({ length: 1 }, (_, i) => (
-            <FaStar
-              key={i}
-              className={i < rating ? 'text-yellow-400' : 'text-gray-300'}
-              size={14}
-            />
-          ))}
+        <div className="flex items-center">
+          <span className="px-2 text-[16px] popmed">{rating}</span>
+          <FaStar
+            className={rating > 0 ? 'text-yellow-400' : 'text-gray-300'}
+            size={14}
+          />
         </div>
       ),
     },
@@ -112,7 +94,11 @@ const columns = [
       key: 'action',
       render: (_, record) => (
         <div className="flex items-center gap-3">
-          <IoEyeOutline onClick={() => setIsModalOpen(true)} className="text-gray-400 cursor-pointer" size={20} />
+          <IoEyeOutline
+            onClick={() => setIsModalOpen(true)}
+            className="text-gray-400 cursor-pointer"
+            size={20}
+          />
           <MdDelete
             className="text-red-400 cursor-pointer"
             size={20}
@@ -123,24 +109,21 @@ const columns = [
     },
   ];
 
+  const handleDelete = (keys) => {
+    message.success(`${keys.length} row(s) deleted.`); 
+    // ⚡️ You’ll need to call API delete here instead of just showing message
+  };
+
   const handleBulkAction = (action) => {
     if (selectedRowKeys.length === 0) {
       message.warning('Please select at least one row.');
       return;
     }
-
     if (action === 'delete') {
       handleDelete(selectedRowKeys);
     } else if (action === 'edit') {
       message.info('Bulk edit not implemented in this example.');
     }
-  };
-
-  const handleDelete = (keys) => {
-    const newData = dataSource.filter(item => !keys.includes(item.key));
-    setDataSource(newData);
-    setSelectedRowKeys([]);
-    message.success(`${keys.length} row(s) deleted.`);
   };
 
   return (
@@ -155,11 +138,8 @@ const columns = [
             onChange={handleBulkAction}
             suffixIcon={<RiArrowDropDownLine />}
           >
-            <Option value="delete">All</Option>
-            <Option value="delete">None</Option>
-            <Option value="delete">Paid</Option>
-            <Option value="delete">Unpaid</Option>
-
+            <Option value="delete">Delete</Option>
+            <Option value="edit">Edit</Option>
           </Select>
           <span className="text-sm text-gray-500">
             {selectedRowKeys.length} selected
@@ -181,7 +161,6 @@ const columns = [
           showTotal: (total, range) =>
             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
           showSizeChanger: false,
-          itemRender: (current, type, originalElement) => originalElement,
           position: ['bottomRight'],
         }}
         footer={() => (

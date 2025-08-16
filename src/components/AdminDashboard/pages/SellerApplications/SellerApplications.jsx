@@ -1,15 +1,15 @@
 import React from "react";
-import ProductsTable from "./ProductsTable";
+
 import { Button, Select } from "antd";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import { useGetAllProductsQuery, useVendorAcceptProductMutation } from "../../../../redux/slices/Apis/dashboardApis";
-import { useGetAllAdminProductsQuery } from "../../../../redux/slices/Apis/customersApi";
-// import { useVendorAcceptProductMutation } from "../../../../redux/slices/Apis/vendorsApi";
+import SellersTable from "./_components/SellersTable";
+
 
 const { Option } = Select;
 
-const ProductsList = () => {
+const SellerApplications = () => {
   const { data: products } = useGetAllProductsQuery();
   const [acceptProduct, { isLoading }] = useVendorAcceptProductMutation();
 
@@ -89,10 +89,10 @@ const ProductsList = () => {
 
       {/* Product Table Section */}
       <div>
-        <ProductsTable products={products} />
+        <SellersTable products={products} />
       </div>
     </div>
   );
 };
 
-export default ProductsList;
+export default SellerApplications;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Select, message } from 'antd';
 import { FaEdit } from 'react-icons/fa';
 import { IoEyeOutline } from 'react-icons/io5';
@@ -6,88 +6,74 @@ import { MdDelete } from 'react-icons/md';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import OrderModal from './OrderModal/OrderModal';
 import Swal from 'sweetalert2';
+import { useGetAllCustomersQuery, useGetAllOrdersQuery, useGetAllVendorsQuery } from '../../../../redux/slices/Apis/dashboardApis';
 
 const { Option } = Select;
 
 const OrdersTable = () => {
+  const { data: orders } = useGetAllOrdersQuery();
   const [pageSize, setPageSize] = useState(10);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const {data:vendors} =useGetAllVendorsQuery()
+  const {data:customers} =useGetAllCustomersQuery()
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [target,setTarget] = useState(true)
-  const [dataSource, setDataSource] = useState(
-    Array.from({ length: 247 }, (_, i) => ({
-      key: i + 1,
-      orderId: `Wrioko24${i + 1}`,
-      customer: ['Fatiha Jahan', 'John Doe', 'Jane Smith'][i % 3],
-      seller : 'Home decor',
-      date: 'July 15, 2025',
-      total: 3290 + (i % 10) * 100,
-      payment: ['Mobile banking', 'Cash', 'Card'][i % 3],
-      status: ['Paid', 'Processing', 'Pending'][i % 3],
-    }))
-  );
+  const [target, setTarget] = useState(true);
+  const [dataSource, setDataSource] = useState([]);
+  // console.log(customers.results)
+
+  // Map API data to table format
+  useEffect(() => {
+    if (orders?.results) {
+      const mappedData = orders.results.map((order) => ({
+        key: order.id,
+        orderId: order.order_id,
+        customer: order.customer, // You can replace with customer name if you have it
+        seller: order.vendor, // Replace with vendor name if available
+        date: new Date(order.order_date).toLocaleDateString(),
+        total: parseFloat(order.total_amount).toFixed(2),
+        payment: order.payment_status_display || order.payment_status,
+        status: order.order_status_display || order.order_status,
+      }));
+      setDataSource(mappedData);
+    }
+  }, [orders]);
 
   const columns = [
     {
       title: 'Order ID',
       dataIndex: 'orderId',
       key: 'orderId',
-      render: text => (
-        <div>
-          <a className="text-[#CBA135]">{text}</a>
-        </div>
-      ),
+      render: text => <a className="text-[#CBA135]">{text}</a>,
     },
     {
       title: 'Customer',
       dataIndex: 'customer',
       key: 'customer',
-       render: text => (
-        <div>
-          <a className="popmed text-[16px]">{text}</a>
-        </div>
-      ),
+      render: text => <div><a className="popmed text-[16px]">{text}</a></div>,
     },
     {
       title: 'Seller',
       dataIndex: 'seller',
-      key: 'customer',
-      render: text => (
-        <div>
-          <a className="popmed text-[16px]">{text}</a>
-        </div>
-      ),
+      key: 'seller',
+      render: text => <div><a className="popmed text-[16px]">{text}</a></div>,
     },
-  
     {
       title: 'Date',
       dataIndex: 'date',
       key: 'date',
-      render: text => (
-        <div>
-          <a className="popmed text-[16px]">{text}</a>
-        </div>
-      ),
+      render: text => <div><a className="popmed text-[16px]">{text}</a></div>,
     },
     {
       title: 'Total',
       dataIndex: 'total',
       key: 'total',
-      render: text => (
-        <div>
-          <a className="popmed text-[16px]">{text}</a>
-        </div>
-      ),
+      render: text => <div><a className="popmed text-[16px]">{text}</a></div>,
     },
     {
       title: 'Payment',
       dataIndex: 'payment',
       key: 'payment',
-      render: text => (
-        <div>
-          <a className="popmed text-[16px]">{text}</a>
-        </div>
-      ),
+      render: text => <div><a className="popmed text-[16px]">{text}</a></div>,
     },
     {
       title: 'Status',
@@ -96,9 +82,7 @@ const OrdersTable = () => {
       render: status => (
         <span
           className={`px-2 py-1 popmed rounded text-[16px] font-medium ${
-            status === 'Paid'
-              ? 'bg-green-100 text-green-600'
-              : 'bg-yellow-100 text-yellow-600'
+            status.toLowerCase() === 'paid' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'
           }`}
         >
           {status}
@@ -110,21 +94,9 @@ const OrdersTable = () => {
       key: 'action',
       render: (_, record) => (
         <div className="flex items-center gap-3">
-<FaEdit
-size={20}
-onClick={
-  ()=> {
-    setIsModalOpen(true);
-    setTarget(true)
-  }
-}
-/>
-          <IoEyeOutline onClick={()=> { setTarget(false); setIsModalOpen(true)}} className="text-gray-400 cursor-pointer" size={20} />
-            <MdDelete
-                     className="text-red-400 cursor-pointer"
-                     size={20}
-                     onClick={() => handleDelete([record.key])}
-                   />
+          <FaEdit size={20} onClick={() => { setIsModalOpen(true); setTarget(true); }} />
+          <IoEyeOutline size={20} className="text-gray-400 cursor-pointer" onClick={() => { setIsModalOpen(true); setTarget(false); }} />
+          <MdDelete size={20} className="text-red-400 cursor-pointer" onClick={() => handleDelete([record.key])} />
         </div>
       ),
     },
@@ -135,103 +107,58 @@ onClick={
       message.warning('Please select at least one row.');
       return;
     }
-
     if (action === 'delete') {
       handleDelete(selectedRowKeys);
-    } else if (action === 'edit') {
+    } else {
       message.info('Bulk edit not implemented.');
     }
   };
 
-const handleDelete = (keys) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!"
-  }).then((result) => {
-    if (result.isConfirmed) {
-      const newData = dataSource.filter(item => !keys.includes(item.key));
-      setDataSource(newData);
-      setSelectedRowKeys([]);
-      message.success(`${keys.length} order(s) deleted.`);
-
-      Swal.fire({
-        title: "Deleted!",
-        text: "Your file has been deleted.",
-        icon: "success"
-      });
-    }
-  });
-};
-
+  const handleDelete = (keys) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newData = dataSource.filter(item => !keys.includes(item.key));
+        setDataSource(newData);
+        setSelectedRowKeys([]);
+        message.success(`${keys.length} order(s) deleted.`);
+        Swal.fire("Deleted!", "Your order(s) has been deleted.", "success");
+      }
+    });
+  };
 
   return (
-    <div className="bg-white p-4 rounded relative ">
-      {/* Bulk Action Dropdown */}
+    <div className="bg-white p-4 rounded relative">
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-2">
-          <Select
-            placeholder="Bulk Actions"
-            size="small"
-            className="min-w-[140px]"
-            onChange={handleBulkAction}
-            suffixIcon={<RiArrowDropDownLine />}
-          >
+          <Select placeholder="Bulk Actions" size="small" className="min-w-[140px]" onChange={handleBulkAction} suffixIcon={<RiArrowDropDownLine />}>
             <Option value="All">All</Option>
             <Option value="none">None</Option>
             <Option value="Paid">Paid</Option>
             <Option value="Unpaid">Unpaid</Option>
-            {/* <Option value="edit">Edit Selected</Option> */}
           </Select>
-          <span className="text-sm text-gray-500">
-            {selectedRowKeys.length} selected
-          </span>
+          <span className="text-sm text-gray-500">{selectedRowKeys.length} selected</span>
         </div>
       </div>
 
-      {/* Table */}
       <Table
-        rowSelection={{
-          selectedRowKeys,
-          onChange: (selectedKeys) => setSelectedRowKeys(selectedKeys),
-        }}
+        rowSelection={{ selectedRowKeys, onChange: setSelectedRowKeys }}
         columns={columns}
         dataSource={dataSource}
-        className="relative"
         pagination={{
           pageSize,
           total: dataSource.length,
-          showTotal: (total, range) =>
-            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+          showTotal: (total, range) => `Showing ${range[0]} to ${range[1]} of ${total} entries`,
           showSizeChanger: false,
-          itemRender: (current, type, originalElement) => originalElement,
           position: ['bottomRight'],
         }}
-        footer={() => (
-          <div className="flex justify-between items-center px-2">
-            <div className="flex items-center relative gap-2 text-sm">
-              <span>Show</span>
-              <Select
-                value={pageSize}
-                onChange={(value) => setPageSize(value)}
-                size="small"
-                style={{ width: 70 }}
-                suffixIcon={<RiArrowDropDownLine />}
-              >
-                {[10, 20, 50].map((size) => (
-                  <Option key={size} value={size}>
-                    {size}
-                  </Option>
-                ))}
-              </Select>
-              <span>entries</span>
-            </div>
-          </div>
-        )}
       />
       <OrderModal isModalOpen={isModalOpen} target={target} setIsModalOpen={setIsModalOpen} />
     </div>

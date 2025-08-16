@@ -1,9 +1,54 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'antd';
 import { LiaStarSolid } from "react-icons/lia";
+import { useAcceptProductsMutation } from '../../../../../redux/slices/Apis/dashboardApis';
 
-const ProductsModal = ({ isModalOpen, setIsModalOpen }) => {
+const ProductsModal = ({ isModalOpen, setIsModalOpen,productData }) => {
   const [isOrderHistoryOpen, setIsOrderHistoryOpen] = useState(false);
+  const [acceptProducts] = useAcceptProductsMutation()
+
+  console.log('selected', productData.key)
+
+const handleApprove = async () => {
+  if (!productData) return;
+
+  const payload = {
+    categories: productData.category ? [parseInt(productData.category)] : [0],
+    tags: [0],
+    seo: 0,
+    name: productData.productName || 'string',
+    sku: productData.productId || 'string',
+    short_description: 'string',
+    full_description: 'string',
+    price1: productData.price?.toString() || '0',
+    price2: '0',
+    price3: '0',
+    option1: 'string',
+    option2: 'string',
+    option3: 'string',
+    option4: 'string',
+    is_stock: productData.stock?.includes('In Stock') || true,
+    stock_quantity: productData.stock
+      ? parseInt(productData.stock.match(/\d+/)?.[0] || '0')
+      : 0,
+    home_delivery: true,
+    pickup: true,
+    partner_delivery: true,
+    is_approve: true,
+    estimated_delivery_days: 0,
+  };
+
+  const productId = productData.key; // separate id
+
+  try {
+    // Send id separately, for example as the first argument to the mutation
+    const res = await acceptProducts({ id: productId, data:payload }).unwrap();
+    console.log('Approved:', res);
+  } catch (err) {
+    console.error('Error approving product:', err);
+  }
+};
+
 
   const handleOk = () => setIsModalOpen(false);
   const handleCancel = () => setIsModalOpen(false);
@@ -29,7 +74,7 @@ const ProductsModal = ({ isModalOpen, setIsModalOpen }) => {
           </div>
 
           <div className='flex py-4 justify-end items-center gap-2'>
-            <Button className='bg-[#CBA135] text-white'>Approve</Button>
+            <Button onClick={()=> handleApprove()} className='bg-[#CBA135] text-white'>Approve</Button>
             <Button className='bg-[#F87171] text-white'>Reject</Button>
           </div>
 

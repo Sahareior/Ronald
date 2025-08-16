@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'antd';
 import { FaEdit, FaTrash, FaWallet } from 'react-icons/fa';
 import { FiBell } from 'react-icons/fi';
+import { useGetTotalEarningsQuery } from '../../../../../redux/slices/Apis/vendorsApi';
 
 
 const notifications = [
@@ -25,20 +26,21 @@ const notifications = [
   },
 ];
 
-const VendorOverViewModal = ({ isModalOpen, setIsModalOpen,location,payouts }) => {
+const VendorOverViewModal = ({ isModalOpen, setIsModalOpen,location }) => {
       const [amount, setAmount] = useState('');
   const [method, setMethod] = useState('');
+  const {data:PayOuts} =useGetTotalEarningsQuery()
+  // console.log(payouts)
   const [note, setNote] = useState('');
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  console.log("Payload for DB:", payouts);
+  console.log("Payload for DB:", PayOuts);
 
   // Calculate total payout (convert string to float first)
-const totalPayout = payouts?.results?.reduce(
-  (sum, payout) => sum + parseFloat(payout.amount || 0),
-  0
-);
+
+
+
 
 
   const handleSubmit = () => {
@@ -93,7 +95,7 @@ const totalPayout = payouts?.results?.reduce(
   <div>
           <p className="text-sm popreg text-gray-500">Available to Withdraw</p>
          <p className="text-2xl popbold font-bold text-[#C29D2A]">
-      ${totalPayout?.toLocaleString()}
+      ${PayOuts?.total_earnings}
     </p>
   </div>
         <FaWallet className='text-[#C29D2A]' />

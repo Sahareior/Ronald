@@ -60,6 +60,7 @@ import PrivacyPolicy from './components/homepage/customersHomepage/PrivacyPolicy
 import VAddnewProducts from './components/VendorDashboard/Pages/Vendorproducts/VAddnewProducts.jsx';
 import ApproveSellers from './components/AdminDashboard/pages/Overview/_subComponents/ApproveSellers.jsx';
 import VEditProducts from './components/VendorDashboard/Pages/Vendorproducts/VEditProducts.jsx';
+import SellerApplications from './components/AdminDashboard/pages/SellerApplications/SellerApplications.jsx';
 
 const router = createBrowserRouter([
   {
@@ -141,6 +142,10 @@ const router = createBrowserRouter([
       {
         path: 'vendors',
         element: <VendorList />
+      },
+      {
+        path: 'sellers-apply',
+        element: <SellerApplications />
       },
       {
         path: 'productslist',

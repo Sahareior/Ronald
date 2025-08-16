@@ -43,6 +43,11 @@ const items = [
     label: <Link to="vendors">Vendor</Link>,
   },
   {
+    key: 'sellers-apply',
+    icon: <IoPricetagSharp size={16}/>,
+    label: <Link to="sellers-apply">Sellers Apply</Link>,
+  },
+  {
     key: 'productslist',
     icon: <FaBox  size={16}/>,
     label: <Link to="productslist">Products</Link>,
