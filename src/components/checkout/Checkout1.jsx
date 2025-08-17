@@ -4,6 +4,7 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import Breadcrumb from '../others/Breadcrumb';
 import { MdDelete } from 'react-icons/md';
 import { Link, useLocation } from 'react-router-dom';
+import { useCreateOrdersMutation } from '../../redux/slices/Apis/customersApi';
 
 
 
@@ -11,6 +12,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 const Checkout1 = () => {
   const location = useLocation();
+  const [createOrders] = useCreateOrdersMutation()
   const { 
     cartItems = [], 
     subtotal = 0, 
@@ -20,8 +22,25 @@ const Checkout1 = () => {
     coupon = null 
   } = location.state || {};
 
+  console.log(location.state)
   // Calculate total items count
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
+const handleClick = () => {
+  const deliveryData = location.state;
+
+  // Rename cartItems to cart for backend
+  const orderData = {
+    ...deliveryData,
+    cart: deliveryData.cartItems, // rename cartItems to cart
+  };
+
+  // Optional: remove cartItems to avoid duplicate key
+  delete orderData.cartItems;
+
+  createOrders(orderData);
+};
+
 
   console.log(cartItems,"asda")
 
@@ -121,7 +140,7 @@ const Checkout1 = () => {
             </div>
 
             {/* Place Order Button */}
-            <button className="w-full bg-[#CBA135] popbold text-white font-semibold text-sm py-3 mt-5 rounded-md hover:bg-yellow-600">
+            <button onClick={()=> handleClick()} className="w-full bg-[#CBA135] popbold text-white font-semibold text-sm py-3 mt-5 rounded-md hover:bg-yellow-600">
               Place Order
             </button>
 

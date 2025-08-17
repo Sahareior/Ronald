@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Define a service using a base URL and expected endpoints
-const token = localStorage.getItem("access_token");
 export const customersApi = createApi({
   reducerPath: "customersApi",
-     baseQuery: fetchBaseQuery({
-       baseUrl: "http://10.10.13.16:15000/api/",
-       prepareHeaders: (headers) => {
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://10.10.13.16:15000/api/",
+    prepareHeaders: (headers) => {
+         const token = localStorage.getItem("access_token");
          if (token) {
            headers.set("Authorization", `Bearer ${token}`);
          }
@@ -18,8 +18,28 @@ export const customersApi = createApi({
       query: (name) => `pokemon/${name}`,
     }),
 
-    getAllAdminProducts: build.query({
+    getCustomerProducts: build.query({
       query: () => 'products/'
+    }),
+
+    addProductToCart: build.mutation({
+      query: (data)=>({
+        url:'cart/',
+        method:"POST",
+        body:data
+      }) 
+    }),
+
+    getAppCart: build.query({
+      query: ()=> 'cart/'
+    }),
+
+    createOrders: build.mutation({
+      query: (data)=> ({
+        url:'orders/create-from-cart/',
+        method:"POST",
+        body:data
+      })
     })
 
   }),
@@ -27,4 +47,4 @@ export const customersApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetPokemonByNameQuery,useGetAllAdminProductsQuery } = customersApi;
+export const { useGetPokemonByNameQuery,useGetCustomerProductsQuery,useAddProductToCartMutation,useGetAppCartQuery,useCreateOrdersMutation } = customersApi;

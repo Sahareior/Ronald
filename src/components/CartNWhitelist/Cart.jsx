@@ -5,6 +5,7 @@ import { IoChatbubblesOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Breadcrumb from '../others/Breadcrumb';
+import { useGetAppCartQuery } from '../../redux/slices/Apis/customersApi';
 
 const products = [
   {
@@ -17,26 +18,28 @@ const products = [
 
 ];
 
-const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => (
+const CartItem = ({ item, onIncrease, onDecrease, onRemove, formatXAF }) => (
   <div className="bg-white rounded-xl mt-6 p-5 flex items-center gap-6 shadow-sm">
     <img
-      src={item.img}
-      alt="Product"
+      src={item.images?.[0]?.url || "https://via.placeholder.com/150"}
+      alt={item.name}
       className="h-32 w-32 object-cover rounded-lg"
     />
 
     <div className="flex-1">
-      <h2 className="text-lg font-semibold">{item.title}</h2>
-      <p className="text-sm text-gray-500">by {item.brand}</p>
-      <p className="text-xl font-bold text-[#CBA135] mt-2">{item.price}</p>
+      <h2 className="text-lg font-semibold">{item.name}</h2>
+      <p className="text-sm text-gray-500">SKU: {item.sku}</p>
+      <p className="text-xl font-bold text-[#CBA135] mt-2">
+        {formatXAF(parseFloat(item.active_price))}
+      </p>
     </div>
 
     <div className="flex items-center gap-2">
-      <button onClick={() => onDecrease(item.id)} className="w-8 h-8 bg-white border rounded-full hover:bg-gray-100 flex justify-center items-center">
+      <button onClick={() => onDecrease(item.id)} className="w-8 h-8 border rounded-full hover:bg-gray-100 flex justify-center items-center">
         <AiOutlineMinus size={16} />
       </button>
       <span className="px-2 font-medium">{item.quantity}</span>
-      <button onClick={() => onIncrease(item.id)} className="w-8 h-8 bg-white border rounded-full hover:bg-gray-100 flex justify-center items-center">
+      <button onClick={() => onIncrease(item.id)} className="w-8 h-8 border rounded-full hover:bg-gray-100 flex justify-center items-center">
         <AiOutlinePlus size={16} />
       </button>
       <button onClick={() => onRemove(item.id)} className="ml-3 text-gray-400 hover:text-red-500">
@@ -46,51 +49,32 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => (
   </div>
 );
 
+
+
 const Cart = () => {
-  const [deliveryType, setDeliveryType] = useState("standard");
+ const [deliveryType, setDeliveryType] = useState("standard");
   const [couponCode, setCouponCode] = useState("");
   const [deliveryInstructions, setDeliveryInstructions] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState(null);
-  const cart = useSelector(state => state.customer.cart);
-  
-  const [cartItems, setCartItems] = useState(
-    cart.map(item => ({
-      ...item,
-      quantity: item.quantity || 1 // Default to 1 if quantity doesn't exist
-    }))
-  );
 
-  // Helper function to extract numeric value from price string (e.g., "XAF 699" => 699)
-  const getPriceValue = (priceStr) => {
-    const numericValue = priceStr.replace(/[^0-9]/g, '');
-    return parseInt(numericValue, 10);
-  };
+  const { data: cartData } = useGetAppCartQuery();
+   console.log(cartData,"aca")
+  // Map API cart data to local state
+  const [cartItems, setCartItems] = useState([]);
 
-  // Calculate dynamic values
- // Calculate dynamic values
-const subtotal = cartItems.reduce(
-  (acc, item) => acc + (getPriceValue(item.price) * item.quantity),
-  0
-);
-
-const deliveryFee =
-  deliveryType === "express"
-    ? 100
-    : deliveryType === "pickup"
-    ? 0
-    : 50; // XAF values
-
-const tax = Math.round(subtotal * 0.05);
-const discount = appliedCoupon ? appliedCoupon.discount : 0;
-const total = subtotal + deliveryFee + tax - discount;
-
-  // Calculate total items count for display
-  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  React.useEffect(() => {
+    if (cartData?.results) {
+      const items = cartData.results.map((item) => ({
+        id: item.id,
+        quantity: item.quantity,
+        ...item.product,
+      }));
+      setCartItems(items);
+    }
+  }, [cartData]);
 
   // Format XAF currency
-  const formatXAF = (amount) => {
-    return `XAF ${amount.toLocaleString()}`;
-  };
+  const formatXAF = (amount) => `XAF ${Number(amount).toLocaleString()}`;
 
   const increaseQuantity = (id) => {
     setCartItems(prev =>
@@ -112,6 +96,19 @@ const total = subtotal + deliveryFee + tax - discount;
     setCartItems(prev => prev.filter(item => item.id !== id));
   };
 
+  const subtotal = cartItems.reduce(
+    (acc, item) => acc + (parseFloat(item.active_price || 0) * item.quantity),
+    0
+  );
+
+  const deliveryFee =
+    deliveryType === "express" ? 100 : deliveryType === "pickup" ? 0 : 50;
+  const tax = Math.round(subtotal * 0.05);
+  const discount = appliedCoupon ? appliedCoupon.discount : 0;
+  const total = subtotal + deliveryFee + tax - discount;
+
+  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
   return (
     <div className="bg-[#FAF8F2] min-h-screen pb-10">
       <div className='m'></div>
@@ -123,13 +120,15 @@ const total = subtotal + deliveryFee + tax - discount;
           {/* Cart Items */}
           <div className="flex-1 p-5 bg-[#EAE7E1]">
             {cartItems.map(item => (
-              <CartItem
-                key={item.id}
-                item={item}
-                onIncrease={increaseQuantity}
-                onDecrease={decreaseQuantity}
-                onRemove={removeItem}
-              />
+             <CartItem
+  key={item.id}
+  item={item}
+  onIncrease={increaseQuantity}
+  onDecrease={decreaseQuantity}
+  onRemove={removeItem}
+  formatXAF={formatXAF}   // 👈 pass it
+/>
+
             ))}
 
             <div className="bg-white rounded-2xl mt-6 p-6 shadow-sm">
@@ -204,16 +203,7 @@ const total = subtotal + deliveryFee + tax - discount;
               <div className="mt-6 flex flex-col gap-3">
                 <Link 
                   to='checkout1' 
-                  state={{
-                    cartItems,
-                    subtotal,
-                    deliveryFee,
-                    tax,
-                    total,
-                    deliveryType,
-                    deliveryInstructions,
-                    coupon: appliedCoupon,
-                  }} 
+                  state={cartData} 
                   className='w-full block'
                 >
                   <button className="h-[56px] rounded-md w-full bg-[#CBA135] text-white font-semibold hover:bg-yellow-600">

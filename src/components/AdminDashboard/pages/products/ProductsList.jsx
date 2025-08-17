@@ -4,7 +4,7 @@ import { Button, Select } from "antd";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import { useGetAllProductsQuery, useVendorAcceptProductMutation } from "../../../../redux/slices/Apis/dashboardApis";
-import { useGetAllAdminProductsQuery } from "../../../../redux/slices/Apis/customersApi";
+// import { useGetAllAdminProductsQuery } from "../../../../redux/slices/Apis/customersApi";
 // import { useVendorAcceptProductMutation } from "../../../../redux/slices/Apis/vendorsApi";
 
 const { Option } = Select;

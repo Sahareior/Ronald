@@ -8,7 +8,7 @@ import { addCustomerId, selectedLocation } from '../../redux/slices/customerSlic
 import { useEffect } from 'react';
 
 const Homepage = () => {
-  const userType = 'seller'; // hardcoded for now
+  const userType = 'customer'; // hardcoded for now
   const dispatch = useDispatch();
 
   // const data = useSelector(state => state.customer.location)

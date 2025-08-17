@@ -138,30 +138,64 @@ const VAddnewProducts = () => {
     return { ...prev, category: newCategories };
   });
 };
-
 const handleSubmit = async () => {
-  let optionCount = 1;
+  try {
+    const formDataToSend = new FormData();
 
-  const deliveryOptions = Object.entries(formData.deliveryOptions)
-    .filter(([_, value]) => value.checked)
-    .reduce((acc, [_, value]) => {
-      acc[`option${optionCount}`] = value.price;
-      optionCount++;
-      return acc;
-    }, {});
+    // Append basic fields
+    formDataToSend.append('name', formData.name);
+    formDataToSend.append('short_description', formData.shortDescription);
+    formDataToSend.append('full_description', formData.fullDescription);
+    formDataToSend.append('price1', formData.price1);
+    formDataToSend.append('price2', formData.price2);
+    formDataToSend.append('price3', formData.price3);
+    formDataToSend.append('sku', formData.sku);
+    formDataToSend.append('stock_quantity', formData.stockQuantity);
+    formDataToSend.append('is_stock', formData.inStock);
+    formDataToSend.append('estimated_delivery_days', formData.deliveryTime);
+    formDataToSend.append('seo', formData.seoTitle || '');
+    
+    // Append arrays as JSON
+    formDataToSend.append('categories', JSON.stringify(formData.category));
+    formDataToSend.append('tags', JSON.stringify(formData.tags));
+    formDataToSend.append('colors', JSON.stringify(formData.colors));
+    formDataToSend.append('sizes', JSON.stringify(formData.sizes));
 
-  const submissionData = {
-    ...formData,
-    images: formData.images.map(img => img.file),
-    ...deliveryOptions // <-- destructured into top level
-  };
+    // Append delivery options
+    Object.entries(formData.deliveryOptions).forEach(([key, value]) => {
+      formDataToSend.append(key, value.checked); // true/false
+      if (value.checked) formDataToSend.append(`${key}_price`, value.price);
+    });
 
-  // Send directly to API
-  const res = await vendorProductCreate(submissionData);
+    // Append images in backend expected format
+    formData.images.forEach((image, index) => {
+      formDataToSend.append(`images[${index}][image]`, image.file); // MUST be "image"
+      formDataToSend.append(`images[${index}][is_primary]`, index === 0); // first image primary
+      formDataToSend.append(`images[${index}][alt_text]`, `Product image ${index + 1}`);
+    });
 
-  console.log('Submitted Product Data:', res);
-  message.success('Product submitted successfully!');
+    // Debug: check FormData content
+    for (let pair of formDataToSend.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+
+    // Send to API
+    const res = await vendorProductCreate(formDataToSend);
+
+    if (res.error) {
+      message.error('Failed to create product');
+      console.error('API Error:', res.error);
+    } else {
+      message.success('Product created successfully!');
+      console.log('Response:', res.data);
+    }
+
+  } catch (error) {
+    console.error('Submission error:', error);
+    message.error('An error occurred while submitting the product');
+  }
 };
+
 
 
 

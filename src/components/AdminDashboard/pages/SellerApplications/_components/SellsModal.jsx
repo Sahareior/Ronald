@@ -177,6 +177,7 @@ const handleAccept = () => {
                 {sellerInfo?.documents?.nidFront && (
                   <div className="flex flex-col items-center">
                     <p className="popmed text-xs text-gray-500 mb-1">Front</p>
+                    <img src={sellerInfo.documents.nidFront} alt="" />
                     <Image
                       width={100}
                       src={sellerInfo.documents.nidFront}
