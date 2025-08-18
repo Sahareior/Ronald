@@ -61,6 +61,7 @@ import VAddnewProducts from './components/VendorDashboard/Pages/Vendorproducts/V
 import ApproveSellers from './components/AdminDashboard/pages/Overview/_subComponents/ApproveSellers.jsx';
 import VEditProducts from './components/VendorDashboard/Pages/Vendorproducts/VEditProducts.jsx';
 import SellerApplications from './components/AdminDashboard/pages/SellerApplications/SellerApplications.jsx';
+import NewVendorAddProducts from './components/VendorDashboard/Pages/Vendorproducts/NewVendorAddProducts.jsx';
 
 const router = createBrowserRouter([
   {
@@ -203,7 +204,7 @@ const router = createBrowserRouter([
     },
     {
       path: 'addproducts',
-      element: <VAddnewProducts />
+      element: <NewVendorAddProducts />
     },
     {
       path: 'editproducts',

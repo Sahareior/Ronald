@@ -82,6 +82,9 @@ export const vendorsApi = createApi({
 
     getTotalEarnings: build.query({
       query:()=> 'payouts/total_earnings/'
+    }),
+    getCategories: build.query({
+      query: ()=> 'categories/'
     })
 // /payouts/total_earnings/
   }),
@@ -91,6 +94,6 @@ export const vendorsApi = createApi({
 // auto-generated based on the defined endpoints
 export const { useGetPokemonByNameQuery,useVendorProductCreateMutation,
    useGetVendorProductByIdQuery,useGetAllProductsQuery, useGetVendorPaymentStatQuery,
-   useGetVendorPayoutQuery, useGetTotalEarningsQuery,
+   useGetVendorPayoutQuery, useGetTotalEarningsQuery,useGetCategoriesQuery,
   useVendorDashboardQuery,useVendorOverviewQuery,useGetTopSellsQuery, useGetVendorOrdersQuery, useCreatePromotionMutation,useGetPromotionQuery, useVendorSellsPerfomenceQuery
  } = vendorsApi;
